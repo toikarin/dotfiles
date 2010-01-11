@@ -1,0 +1,11 @@
+[user]
+	name = Tomi Oikarinen
+	email = ext-tomi.1.oikarinen@nokia.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[http]
+	sslVerify = false
+[merge]
+	tool = vimdiff
