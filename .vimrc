@@ -75,10 +75,10 @@ set number
 set laststatus=2
 " When a bracket is inserted, briefly jump to the matching one
 set showmatch
-" Show (partial) command in the last line of the screen.
-set showcmd
 " Tenths of a second to show the matching paren
 set matchtime=15
+" Show (partial) command in the last line of the screen.
+set showcmd
 " Try to use colors that look good on a dark background
 set background=dark
 " Minimal number of screen lines to keep above and below the cursor
@@ -87,11 +87,27 @@ set scrolloff=5
 set foldenable
 " Set colorscheme
 colorscheme xoria256
+" Set the strings to use in 'list' mode.
+set listchars=tab:▸\ ,eol:¬
+
+"
+"" GUI
+"
+
+if has("gui_running")
+   " Remove toolbar
+   set guioptions-=T
+   " Remove menubar
+   set guioptions-=m
+endif
 
 "
 "" Mouse
 "
+
+" Enable the use of mouse in all modes
 set mouse=a
+" Name of the terminal type of which mouse codes are to be recognized.
 set ttymouse=xterm2
 
 "
@@ -105,17 +121,19 @@ set statusline+=%2*%-3.3n%0*
 " Append filename
 set statusline+=%f
 " Append help buffer ([help]), modified flag ([+]), readonly flag ([RO]), preview window flag ([Preview])
-set statusline+=%h%1*%m%r%w%0*
+set statusline+=\ %(%h%1*%m%r%w%0*%)
 " Append filetype
 set statusline+=\[%{strlen(&ft)?&ft:'none'},
 " Append encoding
 set statusline+=%{&encoding},
 " Append fileformat
-set statusline+=%{&fileformat}]
-" Append separation point between left and right aligned items
-set statusline+=%=
+set statusline+=%{&fileformat}
+" Append separation point between left and right aligned items and change color to black
+set statusline+=]%=%2*
+" Set git branch info
+set statusline+=%(%{GitBranchInfoString()}\ %)
 " Append value of byte under cursor in hexadecimal
-set statusline+=%2*0x%-8B
+set statusline+=0x%-8B
 " Append line number, column number, virtual column number, append truncation point
 " and percentage through file of displayed window
 set statusline+=%-14.(%l,%c%V%)\ %<%P
@@ -160,6 +178,9 @@ let mapleader = ","
 " Run ctags
 map <silent> <leader>r :!ctags -R --exclude=.svn --exclude=.git --exclude=log *<cr>
 
+" Show invisible characters
+nmap <leader>l :set list!<cr>
+
 " Toggle NERDTree plugin
 map <C-B> :NERDTreeToggle <cr>
 
@@ -194,7 +215,7 @@ map <F1> :set number!<cr>
 "
 " When we reload, tell vim to restore the cursor to the saved position
 augroup JumpCursorOnEdit
- au!
+ autocmd!
  autocmd BufReadPost *
  \ if expand("<afile>:p:h") !=? $TEMP |
  \ if line("'\"") > 1 && line("'\"") <= line("$") |
@@ -217,4 +238,19 @@ augroup JumpCursorOnEdit
  \ unlet b:doopenfold |
  \ endif
 augroup END
+
+" Git branch plugin
+let g:git_branch_status_nogit=""
+let g:git_branch_status_text=""
+let g:git_branch_status_head_current=1
+let g:git_branch_status_around="[]"
+
+if has("autocmd")
+   " Set noexpandtab automatically when editing makefiles
+   autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+   " Reload vimrc after editing
+   autocmd BufWritePost ~/.vimrc source ~/.vimrc
+endif
+
+
 
