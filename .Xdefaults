@@ -1,0 +1,49 @@
+!
+!! Allows ion3 to send events
+!
+XTerm*allowSendEvents: true
+UXTerm*allowSendEvents: true
+
+!
+!! Colors
+!
+XTerm.VT100.Background: black
+XTerm.VT100.Foreground: white
+UXTerm.VT100.Background: black
+UXTerm.VT100.Foreground: white
+
+! Highlight only the positions that contain text that can be selected
+XTerm*highlightSelection: true
+UXTerm*highlightSelection: true
+
+!
+!! Scroll bar
+!
+
+XTerm.VT100.scrollBar: true
+UXTerm.VT100.scrollBar: true
+
+XTerm.VT100.rightScrollBar: true
+UXTerm.VT100.rightScrollBar: true
+
+XTerm.VT100.scrollbar.Thickness: 5
+! Use width for uxterm because debian seems to overwrite that using app-defaults.
+UXTerm.VT100.scrollbar.width: 5
+
+XTerm.VT100.scrollbar.Background: black
+XTerm.VT100.scrollbar.Foreground: white
+
+UXTerm.VT100.scrollbar.Background: black
+UXTerm.VT100.scrollbar.Foreground: white
+
+XTerm.VT100.scrollbar.borderWidth: 1
+UXTerm.VT100.scrollbar.borderWidth: 1
+
+XTerm.VT100.scrollbar.thumb: black
+UXTerm.VT100.scrollbar.thumb: black
+
+XTerm*cutNewline: on
+UXTerm*cutNewLine: on
+
+
+

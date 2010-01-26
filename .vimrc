@@ -182,7 +182,7 @@ map <silent> <leader>r :!ctags -R --exclude=.svn --exclude=.git --exclude=log *<
 nmap <leader>l :set list!<cr>
 
 " Toggle NERDTree plugin
-map <C-B> :NERDTreeToggle <cr>
+map <c-b> :NERDTreeToggle<cr>
 
 " Disable arrows
 map <down> <nop>
@@ -199,16 +199,16 @@ imap <up> <nop>
 map <leader>cd :cd %:p:h<cr>
 
 " Remove the Windows ^M
-noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+noremap <leader>m mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
 
 " Paste toggle
-set pastetoggle=<F3>
+set pastetoggle=<f3>
 
 " Remove indenting on empty lines
-map <F2> :%s/\s*$//g<cr>:noh<cr>''
+map <f2> :%s/\s*$//g<cr>:noh<cr>''
 
 " Toggle line numbers
-map <F1> :set number!<cr>
+map <f1> :set number!<cr>
 
 "
 "" Tip 80
@@ -252,5 +252,16 @@ if has("autocmd")
    autocmd BufWritePost ~/.vimrc source ~/.vimrc
 endif
 
-
+if &diff
+   " Jump backwards to the previous start of a change.
+   map <up> [c
+   " Jump forwards to the next start of a change.
+   map <down> ]c
+   " Modify the current buffer to undo difference with another buffer.
+   map <left> :diffget<cr>
+   " Modify another buffer to undo difference with the current buffer.
+   map <right> :diffput<cr>
+   " Update the diff highlighting and folds
+   map <f5> :diffupdate<cr>
+endif
 
