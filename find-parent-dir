@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+if [ $# != 1 ]; then
+   echo "Usage: . find-parent-dir <parent-dir-name>"
+   return 0
+fi
+
+start_dir=$(pwd)
+cur_full_path=$start_dir
+wanted_dir=$1
+
+while [ $cur_full_path != "/" ] 
+do
+   cur_dir=$(basename $cur_full_path)
+
+   if [ $cur_dir == $wanted_dir ]; then
+      cd $cur_full_path
+      return 0
+   else
+      cd ..
+   fi
+
+   cur_full_path=$(pwd)
+done
+
+if [ $cur_full_path != $wanted_dir ]; then
+   echo "Parent directory '$wanted_dir' not found."
+   cd $start_dir
+fi
+
+return 0
+
