@@ -86,9 +86,11 @@ set scrolloff=5
 " Turn on folding
 set foldenable
 " Set colorscheme
-colorscheme xoria256
+"colorscheme xoria256
 " Set the strings to use in 'list' mode.
 set listchars=tab:▸\ ,eol:¬
+" Splitting a windowwill put the new window right of the current one.
+set splitright
 
 "
 "" GUI
@@ -131,7 +133,9 @@ set statusline+=%{&fileformat}
 " Append separation point between left and right aligned items and change color to black
 set statusline+=]%=%2*
 " Set git branch info
-set statusline+=%(%{GitBranchInfoString()}\ %)
+if exists("*GitBranchInfoString")
+   set statusline+=%(%{GitBranchInfoString()}\ %)
+endif
 " Append value of byte under cursor in hexadecimal
 set statusline+=0x%-8B
 " Append line number, column number, virtual column number, append truncation point
@@ -174,6 +178,11 @@ set spelllang=en_us,fi
 
 " Set mapleader
 let mapleader = ","
+" Set localleader (for plugins)
+let maplocalleader = ";"
+
+" Update help
+map <leader>uh :helptags ~/.vim/doc<cr>
 
 " Run ctags
 map <silent> <leader>r :!ctags -R --exclude=.svn --exclude=.git --exclude=log *<cr>
@@ -197,6 +206,9 @@ imap <up> <nop>
 
 " Switch to current directory
 map <leader>cd :cd %:p:h<cr>
+
+" Detect filetype again
+map <leader>fd :filetype detect<cr>
 
 " Remove the Windows ^M
 noremap <leader>m mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
@@ -239,11 +251,33 @@ augroup JumpCursorOnEdit
  \ endif
 augroup END
 
-" Git branch plugin
+"
+"" Git branch plugin
+"
+
+" Don't show any message when there is no git repository on the current dir
 let g:git_branch_status_nogit=""
+" Don't show any text before branch name.
 let g:git_branch_status_text=""
+" Show just the current head branch name.
 let g:git_branch_status_head_current=1
+" Characters to put around the branch strings.
 let g:git_branch_status_around="[]"
+
+"
+" VimClojure plugin
+"
+
+" Activate the interactive interface
+let clj_want_gorilla=1
+" Highlight clojure's builtin functions
+let g:clj_highlight_builtins=1
+" Highlight clojure-contrib's builtin functions
+let g:clj_highlight_contrib=1
+" Highlight differing levels of parenthesisations
+let g:clj_paren_rainbow=1
+" Set path to nailgun client
+let vimclojure#NailgunClient="/home/oikku/bin/ng"
 
 if has("autocmd")
    " Set noexpandtab automatically when editing makefiles
@@ -265,3 +299,8 @@ if &diff
    map <f5> :diffupdate<cr>
 endif
 
+"
+"" Commands
+"
+
+command! -nargs=? Vhelp vert help <args> 
