@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
+if [ $BASH_SOURCE == $0 ]; then
+   echo "Don't call directly (./find-parent-dir), use source instead (. find-parent-dir)"
+
+   exit 1
+fi
+
 if [ $# != 1 ]; then
    echo "Usage: . find-parent-dir <parent-dir-name>"
-   return 0
+   return 1
 fi
 
 start_dir=$(pwd)
