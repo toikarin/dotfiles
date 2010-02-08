@@ -10,6 +10,11 @@ filetype plugin on
 " Load the indent file for specific file types
 filetype indent on
 
+" Force 256 colors if xterm is in use
+if &term == "xterm"
+   set t_Co=256
+endif
+
 " Allow backspacing over autoindent and over the start of insert
 set backspace=indent,start
 
@@ -22,7 +27,7 @@ set wildmenu
 " When more than one match, list all matches and complete till longest common string
 set wildmode=list:longest
 " Ignore these file extensions
-set wildignore=*.o,*.obj,*.class,*.pyc,*.jpg,*.png,*.gif,*.pdf
+set wildignore=*.o,*.obj,*.exe,*.class,*.pyc,*.jpg,*.png,*.gif,*.pdf
 
 " Set backup directory
 set backupdir=~/.vim/backups
@@ -41,8 +46,6 @@ set fileformats=unix,dos,mac
 
 " Ignore changes in amount of white spaces.
 set diffopt+=iwhite
-
-
 
 "
 " Indent
@@ -86,7 +89,9 @@ set scrolloff=5
 " Turn on folding
 set foldenable
 " Set colorscheme
-colorscheme xoria256
+if &t_Co == 256 && filereadable(expand("$HOME/.vim/colors/xoria256.vim"))
+   colorscheme xoria256
+endif
 " Set the strings to use in 'list' mode.
 set listchars=tab:▸\ ,eol:¬
 " Splitting a windowwill put the new window right of the current one.
@@ -272,24 +277,33 @@ let g:git_branch_status_around="[]"
 " VimClojure plugin
 "
 
-" Activate the interactive interface
-let clj_want_gorilla=1
 " Highlight clojure's builtin functions
 let g:clj_highlight_builtins=1
 " Highlight clojure-contrib's builtin functions
 let g:clj_highlight_contrib=1
 " Highlight differing levels of parenthesisations
 let g:clj_paren_rainbow=1
-" Set path to nailgun client
-let vimclojure#NailgunClient="/home/oikku/bin/ng"
 
-if has("autocmd")
+" Set path to nailgun client
+let s:ngclient=expand("$HOME/bin/ng")
+
+if exists("s:ngclient") && filereadable(s:ngclient)
+   " Activate the interactive interface
+   let clj_want_gorilla=1
+   " Set path to nailgun client
+   let vimclojure#NailgunClient=s:ngclient
+endif
+
+" Make sure autocommands are loaded only once
+if !exists("autocommands_loaded") && has("autocmd")
    " Set noexpandtab automatically when editing makefiles
    autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
    " Reload vimrc after editing
    autocmd BufWritePost ~/.vimrc source ~/.vimrc
    " Commit todo-list after write
    autocmd BufWritePost ~/todo/todo.otl !git --git-dir=$HOME/todo/.git --work-tree=$HOME/todo commit -a --message="Updated todo list"
+
+   let autocommands_loaded=1
 endif
 
 if &diff
@@ -310,3 +324,4 @@ endif
 "
 
 command! -nargs=? Vhelp vert help <args> 
+
