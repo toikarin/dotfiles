@@ -45,5 +45,7 @@ UXTerm.VT100.scrollbar.thumb: black
 XTerm*cutNewline: on
 UXTerm*cutNewLine: on
 
+XTerm.VT100.saveLines: 64000
+UXTerm.VT100.saveLines: 64000
 
 
