@@ -138,7 +138,7 @@ set statusline+=%{&fileformat}
 " Append separation point between left and right aligned items and change color to black
 set statusline+=]%=%2*
 " Set git branch info
-if exists("*GitBranchInfoString")
+if exists("*GitBranchInfoString()")
    set statusline+=%(%{GitBranchInfoString()}\ %)
 endif
 " Append value of byte under cursor in hexadecimal
