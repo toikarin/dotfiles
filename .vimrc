@@ -216,8 +216,12 @@ noremap <leader>m mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
 " Paste toggle
 set pastetoggle=<f3>
 
+" C/C++/C#/Java // comments
+map <leader>c :s.^.// .<cr> :nohlsearch <cr>
+map <leader>C :s.^// ..<cr> :nohlsearch <cr>
+
 " Remove indenting on empty lines
-map <f2> :%s/\s*$//g<cr>:noh<cr>''
+map <f2> :%s/\s*$//g<cr> :nohlsearch <cr>''
 
 " Toggle line numbers
 map <f1> :set number!<cr>
