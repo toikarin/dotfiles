@@ -26,6 +26,7 @@ done
 if [ $cur_full_path != $wanted_dir ]; then
    echo "Parent directory '$wanted_dir' not found."
    cd $start_dir
+   return 1
 fi
 
 return 0

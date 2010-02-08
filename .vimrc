@@ -86,7 +86,7 @@ set scrolloff=5
 " Turn on folding
 set foldenable
 " Set colorscheme
-"colorscheme xoria256
+colorscheme xoria256
 " Set the strings to use in 'list' mode.
 set listchars=tab:▸\ ,eol:¬
 " Splitting a windowwill put the new window right of the current one.
@@ -170,7 +170,7 @@ set t_vb=
 "" Spelling
 "
 set nospell
-set spelllang=en_us,fi
+set spelllang=en_us
 
 "
 "" Keyboard mappings
@@ -284,6 +284,8 @@ if has("autocmd")
    autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
    " Reload vimrc after editing
    autocmd BufWritePost ~/.vimrc source ~/.vimrc
+   " Commit todo-list after write
+   autocmd BufWritePost ~/todo/todo.otl !git --git-dir=$HOME/todo/.git --work-tree=$HOME/todo commit -a --message="Updated todo list"
 endif
 
 if &diff

@@ -40,7 +40,18 @@ function budir {
 }
 
 function bcc {
-   bc_bin=`which bc`
+   bc_bin=$(which bc)
 
    echo "scale=5; $1" | $bc_bin 
 }
+
+function sudo {
+   if [ "$1" == "vim" ]; then
+      echo "Use sudoedit instead."
+      return 1
+   fi
+
+   sudo_bin=$(which sudo)
+   $sudo_bin $@
+}
+
