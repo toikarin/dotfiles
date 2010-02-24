@@ -9,6 +9,9 @@ xscreensaver -no-splash &
 # Set default keyboard layout
 setxkbmap -layout us &
 
+# Load xmodmap
+xmodmap ~/.Xmodmap &
+
 # Load X resources
 xrdb ~/.Xresources &
 

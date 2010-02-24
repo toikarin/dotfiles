@@ -94,7 +94,7 @@ if &t_Co == 256 && filereadable(expand("$HOME/.vim/colors/xoria256.vim"))
 endif
 " Set the strings to use in 'list' mode.
 set listchars=tab:▸\ ,eol:¬
-" Splitting a windowwill put the new window right of the current one.
+" Splitting a window will put the new window right of the current one.
 set splitright
 
 "
@@ -106,6 +106,10 @@ if has("gui_running")
    set guioptions-=T
    " Remove menubar
    set guioptions-=m
+   " Remove right-hand scrollbar
+   set guioptions-=r
+   " Remove left-hand scrollbar when there is a vertically split window
+   set guioptions-=L
 endif
 
 "
@@ -180,9 +184,9 @@ set spelllang=en_us
 " 
 
 " Set mapleader
-let mapleader = ","
+let mapleader = ";"
 " Set localleader (for plugins)
-let maplocalleader = ";"
+let maplocalleader = ","
 
 " Update help
 map <leader>uh :helptags ~/.vim/doc<cr>
@@ -194,7 +198,7 @@ map <silent> <leader>r :!ctags -R --exclude=.svn --exclude=.git --exclude=log *<
 nmap <leader>l :set list!<cr>
 
 " Toggle NERDTree plugin
-map <c-b> :NERDTreeToggle<cr>
+map <silent> <c-b> :NERDTreeToggle<cr>
 
 " Disable arrows
 map <down> <nop>
@@ -219,16 +223,27 @@ noremap <leader>m mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
 " Paste toggle
 set pastetoggle=<f3>
 
-" C/C++/C#/Java // comments
-map <leader>c :s.^.// .<cr> :nohlsearch <cr>
-map <leader>C :s.^// ..<cr> :nohlsearch <cr>
-
 " Remove indenting on empty lines
 map <f2> :%s/\s*$//g<cr> :nohlsearch <cr>''
 
 " Toggle line numbers
 map <f1> :set number!<cr>
 
+"
+"" Autocommands
+"
+
+" Make sure autocommands are loaded only once
+if !exists("autocommands_loaded") && has("autocmd")
+   " Set noexpandtab automatically when editing makefiles
+   autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+   " Reload vimrc after editing
+   autocmd BufWritePost ~/.vimrc source ~/.vimrc
+   " Commit todo-list after write
+   autocmd BufWritePost ~/todo/todo.otl !git --git-dir=$HOME/todo/.git --work-tree=$HOME/todo commit -a --message="Updated todo list"
+
+   let autocommands_loaded=1
+endif
 "
 "" Tip 80
 "
@@ -272,7 +287,7 @@ let g:git_branch_status_head_current=1
 let g:git_branch_status_around="[]"
 
 "
-" VimClojure plugin
+"" VimClojure plugin
 "
 
 " Highlight clojure's builtin functions
@@ -281,7 +296,6 @@ let g:clj_highlight_builtins=1
 let g:clj_highlight_contrib=1
 " Highlight differing levels of parenthesisations
 let g:clj_paren_rainbow=1
-
 " Set path to nailgun client
 let s:ngclient=expand("$HOME/bin/ng")
 
@@ -292,17 +306,9 @@ if exists("s:ngclient") && filereadable(s:ngclient)
    let vimclojure#NailgunClient=s:ngclient
 endif
 
-" Make sure autocommands are loaded only once
-if !exists("autocommands_loaded") && has("autocmd")
-   " Set noexpandtab automatically when editing makefiles
-   autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-   " Reload vimrc after editing
-   autocmd BufWritePost ~/.vimrc source ~/.vimrc
-   " Commit todo-list after write
-   autocmd BufWritePost ~/todo/todo.otl !git --git-dir=$HOME/todo/.git --work-tree=$HOME/todo commit -a --message="Updated todo list"
-
-   let autocommands_loaded=1
-endif
+"
+"" vimdiff
+"
 
 if &diff
    " Jump backwards to the previous start of a change.
