@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+#
+## Colors
+#
+
+COLOR_WHITE="\[\033[1;37m\]"
+COLOR_LIGHTGRAY="\[\033[0;37m\]"
+COLOR_GRAY="\[\033[1;30m\]"
+COLOR_BLACK="\[\033[0;30m\]"
+COLOR_RED="\[\033[0;31m\]"
+COLOR_LIGHTRED="\[\033[1;31m\]"
+COLOR_GREEN="\[\033[0;32m\]"
+COLOR_LIGHTGREEN="\[\033[1;32m\]"
+COLOR_BROWN="\[\033[0;33m\]"
+COLOR_YELLOW="\[\033[1;33m\]"
+COLOR_BLUE="\[\033[0;34m\]"
+COLOR_LIGHTBLUE="\[\033[1;34m\]"
+COLOR_PURPLE="\[\033[0;35m\]"
+COLOR_PINK="\[\033[1;35m\]"
+COLOR_CYAN="\[\033[0;36m\]"
+COLOR_LIGHTCYAN="\[\033[1;36m\]"
+COLOR_DEFAULT="\[\033[0m\]" 
+
+function set_temp_color() {
+   echo "$1$2$COLOR_DEFAULT"
+}
+
+function get_bg_jobs() {
+   job_count=$(get_job_count $(jobs -r | wc -l))
+
+   echo ${job_count:+" (bg: $job_count)"}
+}
+
+function get_stopped_jobs() {
+   job_count=$(get_job_count $(jobs -s | wc -l))
+
+   echo ${job_count:+" (stopped: $job_count)"}
+}
+
+function get_job_count {
+   job_count=$1
+   if [ $job_count -gt 0 ]; then
+      color=""
+      if [ $job_count -gt 2 ]; then
+         color=$COLOR_RED
+      else
+         color=$COLOR_YELLOW
+      fi
+
+      echo "$(set_temp_color $color $job_count)"
+   fi
+}
+
+function parse_git_branch {
+   branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+   if [ -n "$branch" ]; then
+      echo " (git: $(set_temp_color $COLOR_LIGHTGREEN $branch))"
+   fi
+}
+
+function prompt_command() {
+   P_USER=$(set_temp_color $COLOR_GREEN "\u")
+   P_HOST=$(set_temp_color $COLOR_GREEN"\h")
+   P_DIR=$(set_temp_color $COLOR_LIGHTCYAN "\w")
+   P_BG_JOBS=$(get_bg_jobs)
+   P_STOPPED_JOBS=$(get_stopped_jobs)
+   P_GIT_BRANCH=$(parse_git_branch)
+
+   PS1="${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_GIT_BRANCH}\$ "
+}
+
+#
+# Set prompt
+# 
+
+export PROMPT_COMMAND=prompt_command
+
+
+

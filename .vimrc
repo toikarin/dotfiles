@@ -241,6 +241,8 @@ if !exists("autocommands_loaded") && has("autocmd")
    autocmd BufWritePost ~/.vimrc source ~/.vimrc
    " Commit todo-list after write
    autocmd BufWritePost ~/todo/todo.otl !git --git-dir=$HOME/todo/.git --work-tree=$HOME/todo commit -a --message="Updated todo list"
+   " Automatically make shell scripts executable
+   autocmd BufWritePost *.sh if getline(1) =~ "^#!/usr/bin/env [a-z]*sh$" | silent !chmod u+x <afile> | endif
 
    let autocommands_loaded=1
 endif
