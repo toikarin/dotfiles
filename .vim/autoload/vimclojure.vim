@@ -535,22 +535,23 @@ endfunction
 let vimclojure#Repl = copy(vimclojure#Buffer)
 let vimclojure#Repl.__superBufferInit = vimclojure#Repl.Init
 
-let vimclojure#Repl._prompt = "user=>"
 let vimclojure#Repl._history = []
 let vimclojure#Repl._historyDepth = 0
-let vimclojure#Repl._replCommands = [ ",close", ",st", ",ct" ]
+let vimclojure#Repl._replCommands = [ ",close", ",st", ",ct", ",toggle-pprint" ]
 
-function! vimclojure#Repl.New() dict
+function! vimclojure#Repl.New(namespace) dict
 	let instance = copy(self)
 
 	call g:vimclojure#Buffer.MakeBuffer()
-	call self.Init(instance)
+	call self.Init(instance, a:namespace)
 
 	return instance
 endfunction
 
-function! vimclojure#Repl.Init(instance) dict
+function! vimclojure#Repl.Init(instance, namespace) dict
 	call self.__superBufferInit(a:instance)
+
+	let a:instance._prompt = a:namespace . "=>"
 
 	setlocal buftype=nofile
 	setlocal noswapfile
@@ -565,12 +566,13 @@ function! vimclojure#Repl.Init(instance) dict
 		imap <buffer> <silent> <C-Down> <Plug>ClojureReplDownHistory
 	endif
 
-	call append(line("$"), ["Clojure", self._prompt . " "])
+	call append(line("$"), ["Clojure", a:instance._prompt . " "])
 
-	let a:instance._id = vimclojure#ExecuteNail("Repl", "-s")
+	let a:instance._id = vimclojure#ExecuteNail("Repl", "-s",
+				\ "-n", a:namespace)
 	call vimclojure#ExecuteNailWithInput("Repl",
-				\ "(require 'clojure.stacktrace)", "-r",
-				\ "-i", a:instance._id)
+				\ "(require 'clojure.stacktrace)",
+				\ "-r", "-i", a:instance._id)
 
 	let b:vimclojure_repl = a:instance
 
@@ -603,6 +605,12 @@ function! vimclojure#Repl.doReplCommand(cmd) dict
 	elseif a:cmd == ",ct"
 		let result = vimclojure#ExecuteNailWithInput("Repl",
 					\ "(clojure.stacktrace/print-cause-trace *e)", "-r",
+					\ "-i", self._id)
+		call self.showText(result)
+		call self.showPrompt()
+	elseif a:cmd == ",toggle-pprint"
+		let result = vimclojure#ExecuteNailWithInput("Repl",
+					\ "(set! vimclojure.repl/*print-pretty* (not vimclojure.repl/*print-pretty*))", "-r",
 					\ "-i", self._id)
 		call self.showText(result)
 		call self.showPrompt()

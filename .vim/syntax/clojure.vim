@@ -41,7 +41,7 @@ if exists("g:clj_highlight_builtins") && g:clj_highlight_builtins != 0
 		\            . "*compile-path* *file* *flush-on-newline* "
 		\            . "*macro-meta* *math-context* *print-dup* "
 		\            . "*print-level* *use-context-classloader* "
-		\            . "*source-path* *clojure-version* *read-eval*"
+		\            . "*source-path* *clojure-version* *read-eval* "
 		\            . "*1 *2 *3 *e",
 		\ "Define":    "def- defn defn- defmacro defmulti defmethod "
 		\            . "defstruct defonce declare definline ",
@@ -158,7 +158,7 @@ syn cluster clojureTopCluster    contains=@clojureAtomCluster,clojureComment,clo
 syn keyword clojureTodo contained FIXME XXX
 syn match   clojureComment contains=clojureTodo ";.*$"
 
-syn match   clojureKeyword "\c:\{1,2}[a-z?!\-_+*./=<>#][a-z0-9?!\-_+*\./=<>#]*"
+syn match   clojureKeyword "\c:\{1,2}[a-z?!\-_+*./=<>#$][a-z0-9?!\-_+*\./=<>#$]*"
 
 syn region  clojureString start=/L\="/ skip=/\\\\\|\\"/ end=/"/
 

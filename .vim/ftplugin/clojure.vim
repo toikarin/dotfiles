@@ -14,7 +14,7 @@ set cpo&vim
 
 let b:undo_ftplugin = "setlocal fo< com< cms< cpt< isk< def<"
 
-setlocal iskeyword+=?,-,*,!,+,/,=,<,>,.
+setlocal iskeyword+=?,-,*,!,+,/,=,<,>,.,:
 
 setlocal define=^\\s*(def\\(-\\|n\\|n-\\|macro\\|struct\\|multi\\)?
 
@@ -153,8 +153,10 @@ if exists("b:vimclojure_namespace")
 	call vimclojure#MapPlug("n", "et", "EvalToplevel")
 	call vimclojure#MapPlug("n", "ep", "EvalParagraph")
 
-	call vimclojure#MakePlug("n", "StartRepl", 'vimclojure#Repl.New()')
+	call vimclojure#MakePlug("n", "StartRepl", 'vimclojure#Repl.New("user")')
+	call vimclojure#MakePlug("n", "StartLocalRepl", 'vimclojure#Repl.New(b:vimclojure_namespace)')
 	call vimclojure#MapPlug("n", "sr", "StartRepl")
+	call vimclojure#MapPlug("n", "sR", "StartLocalRepl")
 
 	inoremap <Plug>ClojureReplEnterHook <Esc>:call b:vimclojure_repl.enterHook()<CR>
 	inoremap <Plug>ClojureReplUpHistory <C-O>:call b:vimclojure_repl.upHistory()<CR>
