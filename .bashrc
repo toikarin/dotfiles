@@ -12,6 +12,10 @@ shopt -s histappend
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# argument to the cd builtin command that is not a directory is assumed to be the
+# name of a variable whose value is the directory to change to.
+shopt -s cdable_vars
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -34,19 +38,21 @@ export PATH=$PATH:~/bin:$JAVA_HOME/bin
 # Load other files
 #
 
-if [ -f ~/.bash_prompt ]; then
-   . ~/.bash_prompt
-fi
+function load_file() {
+   local file=$1
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+   if [ -f "$file" ]; then
+      source $file
+   fi
+}
 
-if [ -f ~/.bash_functons ]; then
-   . ~/.bash_functions
-fi
+function reload() {
+   load_file ~/.bashrc
+}
 
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
+load_file ~/.bash_prompt
+load_file ~/.bash_cdable
+load_file ~/.bash_aliases
+load_file ~/.bash_functions
+load_file /etc/bash_completion
 

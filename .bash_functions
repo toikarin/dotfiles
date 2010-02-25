@@ -55,3 +55,15 @@ function sudo {
    $sudo_bin $@
 }
 
+function cdable {
+   local cdable_file="$HOME/.bash_cdable"
+   local grep_bin=$(which grep)
+   local awk_bin=$(which awk)
+
+   if [ -f $cdable_file ]; then
+      $grep_bin export $cdable_file | $awk_bin '{print $2}'
+   else
+      echo "File '$cdable_file' doesn't exist."
+   fi
+}
+
