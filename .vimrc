@@ -31,9 +31,9 @@ set wildignore=*.o,*.obj,*.exe,*.class,*.pyc,*.jpg,*.png,*.gif,*.pdf
 
 " Set backup directory
 set backupdir=~/.vim/backups
-
 " Set swap file directory
-set directory=~/.vim/swap
+let $VIM_SWAP_DIR=expand("~/.vim/swap")
+set directory=$VIM_SWAP_DIR
 
 " Sets how many lines of history VIM has to remember
 set history=500
@@ -180,6 +180,25 @@ set nospell
 set spelllang=en_us
 
 "
+" Functions
+"
+
+"
+"" Open current line in browser
+"
+let s:browser="firefox"
+
+function! Browser()
+   if exists("s:browser")
+      let line = getline(".")
+      let line = matchstr(line, "http[^ ]*")
+      if strlen(line) > 0
+         execute "!".s:browser." ".line
+      endif
+   endif
+endfunction
+
+"
 "" Keyboard mappings
 " 
 
@@ -229,6 +248,9 @@ map <f2> :%s/\s*$//g<cr> :nohlsearch <cr>''
 " Toggle line numbers
 map <f1> :set number!<cr>
 
+" Open current line in browser
+map <silent> <leader>w :call Browser()<cr>
+
 "
 "" Autocommands
 "
@@ -246,6 +268,7 @@ if !exists("autocommands_loaded") && has("autocmd")
 
    let autocommands_loaded=1
 endif
+
 "
 "" Tip 80
 "
@@ -274,6 +297,17 @@ augroup JumpCursorOnEdit
  \ unlet b:doopenfold |
  \ endif
 augroup END
+
+"
+"" Create backup and swap directories
+"
+if !isdirectory(&backupdir)
+   call mkdir(&backupdir)
+endif
+
+if exists("$VIM_SWAP_DIR") && !isdirectory($VIM_SWAP_DIR)
+   call mkdir($VIM_SWAP_DIR)
+endif
 
 "
 "" Git branch plugin

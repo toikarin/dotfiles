@@ -23,6 +23,8 @@ shopt -s cdable_vars
 ## Set environment variables
 #
 
+export EDITOR=vim
+
 # Don't save lines matching the previous history entry
 export HISTCONTROL=ignoredups
 # The number of commands to remember in the command history
@@ -31,8 +33,13 @@ export HISTSIZE=5000
 export HISTFILESIZE=$HISTSIZE
 
 export JAVA_HOME="/usr/lib/jvm/java-6-sun"
-export PATH=$PATH:~/bin:$JAVA_HOME/bin
 
+#
+# Set path
+#
+export PATH=$PATH:/sbin:/usr/sbin
+export PATH=$PATH:~/bin
+export PATH=$PATH:$JAVA_HOME/bin
 
 #
 # Load other files
