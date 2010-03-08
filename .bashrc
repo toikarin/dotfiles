@@ -61,5 +61,6 @@ load_file ~/.bash_prompt
 load_file ~/.bash_cdable
 load_file ~/.bash_aliases
 load_file ~/.bash_functions
+load_file ~/.bash_completion
 load_file /etc/bash_completion
 

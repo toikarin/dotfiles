@@ -45,6 +45,7 @@ function bcc {
    echo "scale=5; $1" | $bc_bin 
 }
 
+# Reminder to use sudoedit instead of sudo vim
 function sudo {
    if [ "$1" == "vim" ]; then
       echo "Use sudoedit instead."

@@ -1,11 +1,18 @@
 [user]
-	name = Tomi Oikarinen
-	email = tomi.oikarinen@iki.fi
+   name = Tomi Oikarinen
+   email = tomi.oikarinen@iki.fi
+   editor = vim
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+   diff = auto
+   status = auto
+   branch = auto
 [http]
-	sslVerify = false
+   sslVerify = false
 [merge]
-	tool = vimdiff
+   tool = vimdiff
+[alias]
+# Short log
+   l = log --pretty=format:'%Cred%h%Creset - %C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset %C(yellow)%d%Creset' --abbrev-commit --date=relative
+# Longer log with patches
+   lg = log --pretty=format:'---%n%Cred%H%Creset %C(yellow)%d%Creset%n%C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset%n' -p --stat --abbrev-commit --date=relative
+   co = checkout
