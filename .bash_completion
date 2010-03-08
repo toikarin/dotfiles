@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 _cdd() {
-   local dirnames
+   local dirnames cur
    cur="${COMP_WORDS[COMP_CWORD]}"
-   prev="${COMP_WORDS[COMP_CWORD-1]}"
 
    if [ ${#COMP_WORDS[*]} -lt 3 ]; then
       dirnames="$(pwd | xargs dirname | tr '/' ' ')"
