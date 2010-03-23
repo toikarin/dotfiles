@@ -55,9 +55,13 @@ function get_job_count {
 function parse_git_branch {
    branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
    modified=$(git diff --quiet 2> /dev/null || echo " (mod)")
+   staged=$(git diff --staged --quiet 2> /dev/null || echo " (staged)")
 
    if [ -n "$branch" ]; then
-      echo " (git: $(set_temp_color $COLOR_LIGHTGREEN $branch)$(set_temp_color $COLOR_RED "$modified"))"
+      clr_branch=$(set_temp_color $COLOR_LIGHTGREEN $branch)
+      clr_modified=$(set_temp_color $COLOR_RED "$modified")
+      clr_staged=$(set_temp_color $COLOR_BLUE "$staged")
+      echo " (git: ${clr_branch}${clr_modified}${clr_staged})"
    fi
 }
 
