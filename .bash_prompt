@@ -20,7 +20,7 @@ COLOR_PURPLE="\[\033[0;35m\]"
 COLOR_PINK="\[\033[1;35m\]"
 COLOR_CYAN="\[\033[0;36m\]"
 COLOR_LIGHTCYAN="\[\033[1;36m\]"
-COLOR_DEFAULT="\[\033[0m\]" 
+COLOR_DEFAULT="\[\033[0m\]"
 
 function set_temp_color() {
    echo "$1$2$COLOR_DEFAULT"
@@ -54,8 +54,10 @@ function get_job_count {
 
 function parse_git_branch {
    branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+   modified=$(git diff --quiet 2> /dev/null || echo " (mod)")
+
    if [ -n "$branch" ]; then
-      echo " (git: $(set_temp_color $COLOR_LIGHTGREEN $branch))"
+      echo " (git: $(set_temp_color $COLOR_LIGHTGREEN $branch)$(set_temp_color $COLOR_RED "$modified"))"
    fi
 }
 
@@ -72,9 +74,7 @@ function prompt_command() {
 
 #
 # Set prompt
-# 
+#
 
 export PROMPT_COMMAND=prompt_command
-
-
 
