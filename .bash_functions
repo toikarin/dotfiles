@@ -62,9 +62,15 @@ function cdable {
    local awk_bin=$(which awk)
 
    if [ -f $cdable_file ]; then
-      $grep_bin export $cdable_file | $awk_bin '{print $2}'
+      $grep_bin "export" $cdable_file | $awk_bin '{print $2}'
    else
       echo "File '$cdable_file' doesn't exist."
    fi
+}
+
+# Find java classes by name
+function fj {
+  local find_bin=$(which find)
+  $find_bin . -iname "$1*.java"
 }
 

@@ -19,3 +19,5 @@ fi
 alias lsl="ls -lhFi"
 alias lsa="ls -lahFi"
 
+alias ff='find . -iname $*'
+
