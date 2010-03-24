@@ -58,6 +58,7 @@ function reload() {
 }
 
 load_file ~/.bash_prompt
+load_file ~/.bash_bindings
 load_file ~/.bash_cdable
 load_file ~/.bash_aliases
 load_file ~/.bash_functions

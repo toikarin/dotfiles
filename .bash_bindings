@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Search backward starting at the current line and moving `up' through the history as necessary.
+bind '"\C-r": reverse-search-history'
+# Search forward starting at the current line and moving `down' through the history as necessary.
+# Default keybinding (\C-s) is used by xterm.
+bind '"\C-f": forward-search-history'
+
