@@ -364,4 +364,5 @@ endif
 "
 
 command! -nargs=? Vhelp vert help <args> 
+command! Wsu w !sudo tee %
 
