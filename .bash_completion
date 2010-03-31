@@ -12,3 +12,12 @@ _cdd() {
 } &&
 complete -F _cdd cdd
 
+_e() {
+   local cur
+   cur="${COMP_WORDS[COMP_CWORD]}"
+
+   if [ ${#COMP_WORDS[*]} -lt 3 ]; then
+      COMPREPLY=( $(compgen -f -X "!*.?([ejw]ar|zip|[tr]ar|bz|gz)" -- ${cur}) )
+   fi
+} &&
+complete -F _e e

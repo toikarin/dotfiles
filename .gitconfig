@@ -16,3 +16,4 @@
 # Longer log with patches
    lg = log --pretty=format:'---%n%Cred%H%Creset %C(yellow)%d%Creset%n%C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset%n' -p --stat --abbrev-commit --date=relative
    co = checkout
+   dh = diff HEAD^1 HEAD

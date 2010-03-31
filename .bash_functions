@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Backup directory
 function budir {
 	date_bin="/bin/date"
 	cp_bin="/bin/cp"
@@ -39,6 +40,7 @@ function budir {
 	fi
 }
 
+# Call bc with arguments
 function bcc {
    bc_bin=$(which bc)
 
@@ -56,6 +58,7 @@ function sudo {
    $sudo_bin $@
 }
 
+# Show cdable directories
 function cdable {
    local cdable_file="$HOME/.bash_cdable"
    local grep_bin=$(which grep)
@@ -68,9 +71,49 @@ function cdable {
    fi
 }
 
+# Open browser
+function ob {
+   local browser=$(which firefox)
+   $browser "$(pwd)/$@"
+}
+
 # Find java classes by name
 function fj {
   local find_bin=$(which find)
   $find_bin . -iname "$1*.java"
+}
+
+# Compare file to stdout with vimdiff.
+function vimdifff() {
+   local vim_bin=$(which vim)
+
+   $vim_bin - -c ":vnew $1 | windo diffthis"
+}
+
+# Extract file
+function e()
+{
+   local file=$1
+
+   if [ -z $1 ]; then
+      return 1
+   fi
+
+   if [ -f $file ] ; then
+      case $file in
+         *.tar.bz2 | *.tbz2)    tar xvjf $file     ;;
+         *.tar.gz | *.tgz)      tar xvzf $file     ;;
+         *.tar)                 tar xvf $file      ;;
+         *.bz2)                 bunzip2 $file      ;;
+         *.gz)                  gunzip $file       ;;
+         *.rar | *.r00)         unrar x $file      ;;
+         *.zip)                 unzip $file        ;;
+         *.jar | *.ear | *.war) jar -vxf $file      ;;
+         *)           echo "Don't know how to extract file '$file'" ;;
+     esac
+  else
+     echo "'$file' is not a valid file."
+     return 1
+  fi
 }
 
