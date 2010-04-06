@@ -94,23 +94,48 @@ function vimdifff() {
 function e()
 {
    local file=$1
+   local list=0
 
    if [ -z $1 ]; then
       return 1
    fi
 
+   if [ "$1" == "-t" ]; then
+      if [ -z $2 ]; then
+         return 1
+      else
+         list=1
+         file=$2
+      fi
+   else
+      file=$1
+      list=0
+   fi
+
    if [ -f $file ] ; then
-      case $file in
-         *.tar.bz2 | *.tbz2)    tar xvjf $file     ;;
-         *.tar.gz | *.tgz)      tar xvzf $file     ;;
-         *.tar)                 tar xvf $file      ;;
-         *.bz2)                 bunzip2 $file      ;;
-         *.gz)                  gunzip $file       ;;
-         *.rar | *.r00)         unrar x $file      ;;
-         *.zip)                 unzip $file        ;;
-         *.jar | *.ear | *.war) jar -vxf $file      ;;
-         *)           echo "Don't know how to extract file '$file'" ;;
-     esac
+      if [ $list -eq 0 ]; then
+         case $file in
+            *.tar.bz2 | *.tbz2)    tar xvjf $file     ;;
+            *.tar.gz | *.tgz)      tar xvzf $file     ;;
+            *.tar)                 tar xvf $file      ;;
+            *.bz2)                 bunzip2 $file      ;;
+            *.gz)                  gunzip $file       ;;
+            *.rar | *.r00)         unrar x $file      ;;
+            *.zip)                 unzip $file        ;;
+            *.jar | *.ear | *.war) jar -vxf $file     ;;
+            *)           echo "Don't know how to extract file '$file'" ;;
+        esac
+     else
+         case $file in
+            *.tar.bz2 | *.tbz2)    tar tvjf $file     ;;
+            *.tar.gz | *.tgz)      tar tvzf $file     ;;
+            *.tar)                 tar tvf $file      ;;
+            *.rar | *.r00)         unrar l $file      ;;
+            *.zip)                 unzip -l $file     ;;
+            *.jar | *.ear | *.war) jar -vtf $file     ;;
+            *)           echo "Don't know how to list files from '$file'" ;;
+         esac
+     fi
   else
      echo "'$file' is not a valid file."
      return 1

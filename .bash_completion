@@ -2,6 +2,8 @@
 
 _cdd() {
    local dirnames cur
+   COMPREPLY=()
+
    cur="${COMP_WORDS[COMP_CWORD]}"
 
    if [ ${#COMP_WORDS[*]} -lt 3 ]; then
@@ -13,11 +15,16 @@ _cdd() {
 complete -F _cdd cdd
 
 _e() {
-   local cur
-   cur="${COMP_WORDS[COMP_CWORD]}"
+   local cur prev
 
-   if [ ${#COMP_WORDS[*]} -lt 3 ]; then
-      COMPREPLY=( $(compgen -f -X "!*.?([ejw]ar|zip|[tr]ar|bz|gz)" -- ${cur}) )
+   COMPREPLY=()
+   cur="${COMP_WORDS[COMP_CWORD]}"
+   prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+   if [[ "$prev" == "-t" || ${#COMP_WORDS[*]} -lt 3 ]]; then
+      # Use bash-completion package's functions
+      _filedir '?([ejw]ar|zip|[tr]ar|bz|gz)'
    fi
 } &&
-complete -F _e e
+complete -F _e $filenames e
+
