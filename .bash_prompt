@@ -26,30 +26,30 @@ function set_temp_color() {
    echo "$1$2$COLOR_DEFAULT"
 }
 
-function get_bg_jobs() {
-   job_count=$(get_job_count $(jobs -r | wc -l))
-
-   echo ${job_count:+" (bg: $job_count)"}
-}
-
-function get_stopped_jobs() {
-   job_count=$(get_job_count $(jobs -s | wc -l))
-
-   echo ${job_count:+" (stopped: $job_count)"}
-}
-
-function get_job_count {
-   job_count=$1
-   if [ $job_count -gt 0 ]; then
+function colorize_number {
+   num=$1
+   if [ $num -gt 0 ]; then
       color=""
-      if [ $job_count -gt 2 ]; then
+      if [ $num -gt 2 ]; then
          color=$COLOR_RED
       else
          color=$COLOR_YELLOW
       fi
 
-      echo "$(set_temp_color $color $job_count)"
+      echo "$(set_temp_color $color $num)"
    fi
+}
+
+function get_bg_jobs() {
+   job_count=$(colorize_number $(jobs -r | wc -l))
+
+   echo ${job_count:+" (bg: $job_count)"}
+}
+
+function get_stopped_jobs() {
+   job_count=$(colorize_number $(jobs -s | wc -l))
+
+   echo ${job_count:+" (stopped: $job_count)"}
 }
 
 function parse_git_branch {
@@ -65,15 +65,24 @@ function parse_git_branch {
    fi
 }
 
+function dirs_stack_size {
+   cur_count=$(dirs -p | wc -l)
+
+   if [ $cur_count -gt 1 ]; then
+      echo " (dirs: $(colorize_number $(($cur_count - 1))))"
+   fi
+}
+
 function prompt_command() {
    P_USER=$(set_temp_color $COLOR_GREEN "\u")
    P_HOST=$(set_temp_color $COLOR_GREEN"\h")
    P_DIR=$(set_temp_color $COLOR_LIGHTCYAN "\w")
+   P_DSTACK=$(dirs_stack_size)
    P_BG_JOBS=$(get_bg_jobs)
    P_STOPPED_JOBS=$(get_stopped_jobs)
    P_GIT_BRANCH=$(parse_git_branch)
 
-   PS1="${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_GIT_BRANCH}\$ "
+   PS1="${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_GIT_BRANCH}\$ "
 }
 
 #
