@@ -1,0 +1,2 @@
+visincr.vba: call delete('/home/toikarin/.vim/plugin/visincrPlugin.vim')|call delete('/home/toikarin/.vim/autoload/visincr.vim')|call delete('/home/toikarin/.vim/doc/visincr.txt')|call delete('/home/toikarin/.vim/autoload/calutil.vim')
+LargeFile.vba: call delete('/home/toikarin/.vim/plugin/LargeFile.vim')|call delete('/home/toikarin/.vim/doc/LargeFile.txt')
