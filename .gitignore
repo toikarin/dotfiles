@@ -1,0 +1,5 @@
+.vim/swap
+.vim/backups
+.vim/doc/tags
+# NerdTree history
+.vim/.netrwhist
