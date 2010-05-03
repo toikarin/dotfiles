@@ -142,3 +142,21 @@ function e()
   fi
 }
 
+# Change keyboard layout between us and finnish
+function change_layout() {
+   SETXKBMAP_BIN=$(which setxkbmap)
+   XMODMAP_BIN=$(which xmodmap)
+   GREP_BIN=$(which grep)
+   AWK_BIN=$(which awk)
+
+   cur_layout=$($SETXKBMAP_BIN -print | $GREP_BIN "xkb_symbols" | $AWK_BIN '{ print $4 }' | $AWK_BIN -F"+" '{print $2}')
+
+   if [ "$cur_layout" != "us" ]; then
+      $SETXKBMAP_BIN -layout us
+   else
+      $SETXKBMAP_BIN -layout fi
+   fi
+
+   $XMODMAP_BIN ~/.Xmodmap
+}
+
