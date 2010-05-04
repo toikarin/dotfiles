@@ -1,0 +1,35 @@
+
+"
+"" Settings
+"
+
+" List of directories searches for runtime files.
+set runtimepath=~/.vimperator
+" Ignore case in search patterns
+set ignorecase
+" Disable ignorecase is pattern contains uppercase characters.
+set smartcase
+" Highlight previous search pattern matches
+set hlsearch
+" Disable all guioptions
+set guioptions=
+" Automatically show completions while typing
+set wildoptions=auto
+
+"
+"" Keybindings
+"
+
+" Disable <C-w>
+map <C-w> <Nop>
+nmap <C-w> <Nop>
+vmap <C-w> <Nop>
+
+map <C-Tab> <Nop>
+nmap <C-Tab> <Nop>
+vmap <C-Tab> <Nop>
+
+
+source! ~/.vimperatorrc.local
+
+" vim: set ft=vimperator:
