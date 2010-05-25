@@ -75,7 +75,7 @@ function dirs_stack_size {
 
 function detached_screens {
    local screen_bin=$(which screen)
-   local detached_count=$($screen_bin -list | grep -c "\s[0-9]\+.*Detached")
+   local detached_count=$($screen_bin -list | grep -c "(Detached)")
    local color=""
 
    if [ $detached_count -gt 0 ]; then
