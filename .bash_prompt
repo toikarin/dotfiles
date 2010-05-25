@@ -73,6 +73,25 @@ function dirs_stack_size {
    fi
 }
 
+function detached_screens {
+   local screen_bin=$(which screen)
+   local detached_count=$($screen_bin -list | grep -c "\s[0-9]\+.*Detached")
+   local color=""
+
+   if [ $detached_count -gt 0 ]; then
+      if [ $detached_count -gt 1 ]; then
+         color=$COLOR_RED
+      else
+         color=$COLOR_YELLOW
+      fi
+
+   fi
+
+   if [ "$detached_count" != "0" ]; then
+      echo " (sd: $(set_temp_color $color $detached_count))"
+   fi
+}
+
 function prompt_command() {
    P_USER=$(set_temp_color $COLOR_GREEN "\u")
    P_HOST=$(set_temp_color $COLOR_GREEN"\h")
@@ -81,8 +100,9 @@ function prompt_command() {
    P_BG_JOBS=$(get_bg_jobs)
    P_STOPPED_JOBS=$(get_stopped_jobs)
    P_GIT_BRANCH=$(parse_git_branch)
+   P_DETACHED_SCREEN=$(detached_screens)
 
-   PS1="${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_GIT_BRANCH}\$ "
+   PS1="${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_GIT_BRANCH}\$ "
 }
 
 #

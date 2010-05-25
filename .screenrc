@@ -1,2 +1,3 @@
 startup_message off
 vbell off
+defutf8 on
