@@ -16,6 +16,8 @@
 # Longer log with patches
    lg = log --pretty=format:'---%n%Cred%H%Creset %C(yellow)%d%Creset%n%C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset%n' -p --stat --abbrev-commit --date=relative
    co = checkout
+   ci = commit -v
+   amend = commit -v --amend
    mt = mergetool
    dh = diff HEAD^1 HEAD
    dc = diff --cached

@@ -47,6 +47,9 @@ set fileformats=unix,dos,mac
 " Ignore changes in amount of white spaces.
 set diffopt+=iwhite
 
+" Allow backgrounding buffers without writing them.
+set hidden
+
 "
 " Indent
 "
