@@ -10,8 +10,8 @@ filetype plugin on
 " Load the indent file for specific file types
 filetype indent on
 
-" Force 256 colors if xterm is in use
-if &term == "xterm"
+" Force 256 colors if xterm is in use or builtin_gui (vimperator workaround)
+if &term == "xterm" || &term == "builtin_gui"
    set t_Co=256
 endif
 
