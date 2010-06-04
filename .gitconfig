@@ -19,3 +19,4 @@
    mt = mergetool
    dh = diff HEAD^1 HEAD
    dc = diff --cached
+   s  = status

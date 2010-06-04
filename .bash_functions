@@ -83,6 +83,14 @@ function fj {
   $find_bin . -iname "$1*.java"
 }
 
+# Find java classes by name and open them in vim
+function fjv {
+  local find_bin=$(which find)
+  local vim_bin=$(which vim)
+
+  $find_bin . -iname "$1*.java" -exec "${vim_bin}" {} +
+}
+
 # Compare file to stdout with vimdiff.
 function vimdifff() {
    local vim_bin=$(which vim)
@@ -158,5 +166,19 @@ function change_layout() {
    fi
 
    $XMODMAP_BIN ~/.Xmodmap
+}
+
+# Tar gz directory
+function tard {
+   local dir=$1
+   TAR_BIN=$(which tar)
+
+	if [ "${#1}" -eq 0 ];
+   then
+      echo "Usage: tard <directory>"
+      return 1
+   fi
+
+   $TAR_BIN -czf "$1.tar.gz" "$1"
 }
 

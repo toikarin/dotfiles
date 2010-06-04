@@ -128,7 +128,9 @@ set ttymouse=xterm2
 " Clear statusline
 set statusline=
 " Append buffer number
-set statusline+=%2*%-3.3n%0*
+set statusline+=%2*%-n
+" Append total number of buffers
+set statusline+=/%-3.3{CountBuffers()}%0* 
 " Append filename
 set statusline+=%f
 " Append help buffer ([help]), modified flag ([+]), readonly flag ([RO]), preview window flag ([Preview])
@@ -177,7 +179,7 @@ set t_vb=
 "" Spelling
 "
 set nospell
-set spelllang=en_us
+set spelllang=en_gb
 
 "
 " Functions
@@ -202,6 +204,10 @@ function! ChangeShellScriptMode()
    if getline(1) =~ "^#!/usr/bin/env [a-z]*sh$"
       silent !chmod u+x <afile>
    endif
+endfunction
+
+function! CountBuffers()
+   return len(filter(range(1,bufnr('$')),'buflisted(v:val)'))
 endfunction
 
 
@@ -245,6 +251,9 @@ map <leader>fd :filetype detect<cr>
 
 " Remove the Windows ^M
 noremap <leader>m mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
+
+" Spell toggle
+nmap <silent> <leader>s :set spell!<cr>
 
 " Paste toggle
 set pastetoggle=<f3>

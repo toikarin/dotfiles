@@ -20,6 +20,9 @@ set wildoptions=auto
 "" Keybindings
 "
 
+" Set mapleader
+let mapleader = ";"
+
 " Disable <C-w>
 map <C-w> <Nop>
 nmap <C-w> <Nop>
