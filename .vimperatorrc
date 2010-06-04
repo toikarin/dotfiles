@@ -15,6 +15,8 @@ set hlsearch
 set guioptions=
 " Automatically show completions while typing
 set wildoptions=auto
+" Focus the content after a page has loaded instead of textboxes.
+set focuscontent
 " Set external editor
 set editor="vim -f -g -c \":source ~/.vimrc\""
 
@@ -34,6 +36,13 @@ map <C-Tab> <Nop>
 nmap <C-Tab> <Nop>
 vmap <C-Tab> <Nop>
 
+"
+"" Abbreviations
+"
+
+cabbrev rd http://www.reddit.com
+cabbrev yt http://www.youtube.com
+cabbrev gh http://github.com/blakki
 
 source! ~/.vimperatorrc.local
 
