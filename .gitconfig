@@ -17,6 +17,7 @@
    lg = log --pretty=format:'---%n%Cred%H%Creset %C(yellow)%d%Creset%n%C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset%n' -p --stat --abbrev-commit --date=relative
    co = checkout
    ci = commit -v
+   sci = svn dcommit
    amend = commit -v --amend
    mt = mergetool
    dh = diff HEAD^1 HEAD
