@@ -18,6 +18,7 @@
    co = checkout
    ci = commit -v
    sci = svn dcommit
+   srb = svn rebase
    amend = commit -v --amend
    mt = mergetool
    dh = diff HEAD^1 HEAD
