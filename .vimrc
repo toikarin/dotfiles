@@ -284,6 +284,8 @@ if !exists("autocommands_loaded") && has("autocmd")
    autocmd BufWritePost ~/todo/todo.otl !git --git-dir=$HOME/todo/.git --work-tree=$HOME/todo commit -a --message="Updated todo list"
    " Automatically make shell scripts executable
    autocmd BufWritePost *.sh call ChangeShellScriptMode()
+   " Enable spelling for *.txt files
+   autocmd BufRead *.txt set spell
 
    let autocommands_loaded=1
 endif
