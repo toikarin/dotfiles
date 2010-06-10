@@ -21,6 +21,7 @@ alias lsa="ls -lahFi"
 
 alias ff='find . -iname $*'
 alias sd='screen -Udr'
+alias se='sudoedit'
 
 alias mkdirdate='mkdir $(date +%Y%m%d)'
 
