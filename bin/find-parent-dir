@@ -15,12 +15,12 @@ start_dir=$(pwd)
 cur_full_path=$start_dir
 wanted_dir=$1
 
-while [ $cur_full_path != "/" ] 
+while [ "$cur_full_path" != "/" ]
 do
-   cur_dir=$(basename $cur_full_path)
+   cur_dir=$(basename "$cur_full_path")
 
-   if [ $cur_dir == $wanted_dir ]; then
-      cd $cur_full_path
+   if [ "${cur_dir}" == "${wanted_dir}" ]; then
+      cd "$cur_full_path"
       return 0
    else
       cd ..
@@ -29,9 +29,9 @@ do
    cur_full_path=$(pwd)
 done
 
-if [ $cur_full_path != $wanted_dir ]; then
+if [ "$cur_full_path" != "$wanted_dir" ]; then
    echo "Parent directory '$wanted_dir' not found."
-   cd $start_dir
+   cd "$start_dir"
    return 1
 fi
 
