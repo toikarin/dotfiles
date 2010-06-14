@@ -219,3 +219,8 @@ function clean_directory {
    find "$dir" -mindepth 1 -type d -empty ${delete_param}
 }
 
+# Reload bash configuration
+function reload() {
+   load_file ~/.bashrc
+}
+
