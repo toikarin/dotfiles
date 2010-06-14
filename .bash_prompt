@@ -57,7 +57,7 @@ function parse_git_branch {
 
    if [ -n "$branch" ]; then
       local modified=$(git diff --quiet 2> /dev/null || echo " (mod)")
-      local staged=$(git diff --staged --quiet 2> /dev/null || echo " (staged)")
+      local staged=$(git diff --cached --quiet 2> /dev/null || echo " (staged)")
       local stash_size=$(git stash list 2> /dev/null | wc -l)
 
       local clr_branch=$(set_temp_color $COLOR_LIGHTGREEN "$branch")
