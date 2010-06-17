@@ -53,10 +53,6 @@ function load_file() {
    fi
 }
 
-function reload() {
-   load_file ~/.bashrc
-}
-
 load_file ~/.bash_prompt
 load_file ~/.bash_bindings
 load_file ~/.bash_cdable

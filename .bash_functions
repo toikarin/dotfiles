@@ -182,3 +182,45 @@ function tard {
    $TAR_BIN -czf "$1.tar.gz" "$1"
 }
 
+# Clear tmp directory
+function clean_tmp_dirs {
+   local delete=${1-:""}
+
+   local tmp_dir=$HOME/tmp
+   local download_dir=$HOME/downloads
+
+   clean_directory "$tmp_dir" "$1"
+   clean_directory "$download_dir" "$1"
+}
+
+# Clean directory from old files and empty directories
+function clean_directory {
+   local dir=$1
+   local delete=${2-:""}
+   local delete_param=""
+
+	if [ "${#1}" -eq 0 ];
+   then
+      echo "Usage: clean_directory <directory> [-delete]"
+      return 1
+   fi
+
+   if [ ! -d "$dir" ]; then
+      return 1
+   fi
+
+   if [ "$delete" == "-delete" ]; then
+      delete_param="-delete"
+   fi
+
+   # Remove files that has not been modified in last 30 days
+   find "$dir" -type f -mtime +30 ${delete_param}
+   # Remove all empty directories
+   find "$dir" -mindepth 1 -type d -empty ${delete_param}
+}
+
+# Reload bash configuration
+function reload() {
+   load_file ~/.bashrc
+}
+

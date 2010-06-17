@@ -7,9 +7,10 @@ _cdd() {
    cur="${COMP_WORDS[COMP_CWORD]}"
 
    if [ ${#COMP_WORDS[*]} -lt 3 ]; then
-      dirnames="$(pwd | xargs dirname | tr '/' ' ')"
+      cur_dir="$(pwd)"
+      dirnames="$(dirname "${cur_dir}" | tr '/' ' ')"
 
-      COMPREPLY=( $(compgen -W "${dirnames}" -- ${cur}) )
+      COMPREPLY=( $(compgen -W "${dirnames}" -- "${cur}") )
    fi
 } &&
 complete -F _cdd cdd
