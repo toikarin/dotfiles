@@ -37,9 +37,15 @@ export JAVA_HOME="/usr/lib/jvm/java-6-sun"
 #
 # Set path
 #
-export PATH=$PATH:/sbin:/usr/sbin
-export PATH=$PATH:~/bin
-export PATH=$PATH:$JAVA_HOME/bin
+
+if [ -z $PATH_MODIFIED ]; then
+
+   export PATH=$PATH:/sbin:/usr/sbin
+   export PATH=$PATH:~/bin
+   export PATH=$PATH:$JAVA_HOME/bin
+
+   export PATH_MODIFIED=1
+fi
 
 #
 # Load other files
