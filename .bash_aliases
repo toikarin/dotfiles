@@ -25,5 +25,7 @@ alias ff='find . -iname $*'
 alias sd='screen -Udr'
 alias se='sudoedit'
 
+alias du1='du -h --max-depth=1'
+
 alias mkdirdate='mkdir $(date +%Y%m%d)'
 
