@@ -285,7 +285,9 @@ if !exists("autocommands_loaded") && has("autocmd")
    " Automatically make shell scripts executable
    autocmd BufWritePost *.sh call ChangeShellScriptMode()
    " Enable spelling for *.txt files
-   autocmd BufRead *.txt set spell
+   autocmd BufRead,BufNewFile *.txt set spell
+   " JSON
+   autocmd BufRead,BufNewFile *.json setfiletype json
 
    let autocommands_loaded=1
 endif
