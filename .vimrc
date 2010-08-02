@@ -89,6 +89,8 @@ set showcmd
 set background=dark
 " Minimal number of screen lines to keep above and below the cursor
 set scrolloff=5
+" Minimal number of columns to scroll horizontally.
+set sidescroll=1
 " Turn on folding
 set foldenable
 " Set colorscheme
@@ -269,6 +271,16 @@ map <f1> :set number!<cr>
 
 " Open current line in browser
 map <silent> <leader>w :call Browser()<cr>
+
+" Move line up
+nnoremap <A-k> :m-2<cr>
+" Move line down
+nnoremap <A-j> :m+<cr>
+" Move visual selection up
+vnoremap <A-k> :m-2<cr>gv
+" Move visual selection down
+vnoremap <A-j> :m'>+<cr>gv
+
 
 "
 "" Autocommands
