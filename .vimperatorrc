@@ -38,6 +38,8 @@ map <C-Tab> <Nop>
 nmap <C-Tab> <Nop>
 vmap <C-Tab> <Nop>
 
+map <leader>ns :noscript popup<cr>
+
 "
 "" Abbreviations
 "

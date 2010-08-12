@@ -3,3 +3,4 @@
 .vim/doc/tags
 # NerdTree history
 .vim/.netrwhist
+.vimperator/info
