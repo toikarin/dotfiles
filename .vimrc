@@ -215,7 +215,6 @@ function! CountBuffers()
    return len(filter(range(1,bufnr('$')),'buflisted(v:val)'))
 endfunction
 
-
 "
 "" Keyboard mappings
 " 
@@ -236,6 +235,9 @@ nmap <leader>l :set list!<cr>
 
 " Toggle NERDTree plugin
 map <silent> <c-b> :NERDTreeToggle<cr>
+
+" Toggle Tag list plugin
+map <silent> <c-n> :TlistToggle<cr>
 
 " Disable arrows
 map <down> <nop>
@@ -344,6 +346,15 @@ if exists("$VIM_SWAP_DIR") && !isdirectory($VIM_SWAP_DIR)
    call mkdir($VIM_SWAP_DIR)
 endif
 
+
+"
+"" NERDTree plugin
+"
+
+let NERDTreeQuitOnOpen = 1
+let NERDTreeShowHidden = 1
+let NERDTreeIgnore = ['\.o$', '\.obj$', '\.exe$', '\.class$', '\.pyc$', '\.jpg$', '\.png$', '\.gif$', '\.pdf$']
+
 "
 "" Git branch plugin
 "
@@ -400,4 +411,5 @@ endif
 
 command! -nargs=? Vhelp vert help <args> 
 command! Wsu w !sudo tee %
+command! Q confirm qall
 

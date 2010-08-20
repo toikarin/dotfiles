@@ -13,7 +13,7 @@ setxkbmap -layout us &
 xmodmap ~/.Xmodmap &
 
 # Load X resources
-xrdb ~/.Xresources &
+xrdb ~/.Xdefaults &
 
 # Set wallpaper
 display -window root wallpaper.png &

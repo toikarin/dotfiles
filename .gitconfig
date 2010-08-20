@@ -24,3 +24,4 @@
    dh = diff HEAD^1 HEAD
    dc = diff --cached
    s  = status
+   aliases = !git config --list | grep ^alias
