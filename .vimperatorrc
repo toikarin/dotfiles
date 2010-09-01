@@ -20,7 +20,7 @@ set wildoptions=auto
 " Focus the content after a page has loaded instead of textboxes.
 set focuscontent
 " Set external editor
-set editor="vim -f -g -c \":source ~/.vimrc\" -c \":spell\""
+set editor="vim -f -g -c \":source ~/.vimrc\" -c \":set spell\""
 
 "
 "" Keybindings
