@@ -389,6 +389,12 @@ if exists("s:ngclient") && filereadable(s:ngclient)
 endif
 
 "
+"" Haskell syntax
+"
+let hs_highlight_boolean=1
+let hs_highlight_types=1
+
+"
 "" vimdiff
 "
 
