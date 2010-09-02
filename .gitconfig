@@ -2,6 +2,8 @@
    name = Tomi Oikarinen
    email = tomi.oikarinen@iki.fi
    editor = vim
+[core]
+    excludesfile = ~/.git-excludes
 [color]
    diff = auto
    status = auto

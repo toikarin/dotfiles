@@ -170,7 +170,7 @@ set ignorecase
 set nosmartcase
 
 "
-" Bells 
+" Bells
 "
 
 " Don't ring the bell (beep or screen flash) for error messages.
@@ -410,6 +410,14 @@ if &diff
    " Update the diff highlighting and folds
    map <f5> :diffupdate<cr>
 endif
+
+"
+" Custom syntax
+"
+
+highlight WhiteSpaceEOL ctermbg=red guibg=red term=bold
+match WhiteSpaceEOL /\s\+$/
+
 
 "
 "" Commands
