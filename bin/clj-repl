@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+set -eu
+
+JAVA_BIN=java
+CLOJURE_CONF=${1:-~/.cljrc}
+CLJ_CLASSPATH=""
+
+function main() {
+   # Read config
+   if [ -f "${CLOJURE_CONF}" ]; then
+      source "$CLOJURE_CONF"
+   else
+      echo "Unable to open configuration file '${CLOJURE_CONF}'."
+      exit 1
+   fi
+
+   # Check mandatory configuration options.
+   if [ "${clj_jar:-""}" == "" ]; then
+      echo "clj_jar not set in ${CLOJURE_CONF}"
+      exit 1
+   fi
+
+   # Create classpath
+   add_jar_to_classpath "${clj_jar}"
+   add_jar_to_classpath "${clj_contrib_jar:-""}"
+   add_jar_to_classpath "${clj_wrapper_jar:-""}"
+   add_jars_from_dir_to_classpath "${clj_libs_dir:-""}"
+
+   # Add user defined classpath
+   CLJ_CLASSPATH=${CLJ_CLASSPATH}${clj_classpath:+":${clj_classpath}"}
+
+   # Optional configurations
+   clj_java_opts=${clj_java_opts:-""}
+   clj_wrapper=${clj_wrapper:-""}
+
+   # Run
+   echo "Running '${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main'"
+   ${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main
+}
+
+function add_jars_from_dir_to_classpath() {
+   local dir=$1
+
+   if [ "${dir}" == "" ]; then
+      return
+   fi
+
+   if [ -d "${dir}" ]; then
+      for jar in $(find "${dir}" -type f -name "*.jar");
+      do
+         add_jar_to_classpath "${jar}"
+      done
+   else
+      echo "Directory '${dir}' doesn't exist."
+      exit 1
+   fi
+
+}
+
+function add_jar_to_classpath() {
+   local jar=$1
+
+   if [ "${jar}" == "" ]; then
+      return
+   fi
+
+   if [ -f "${jar}" ]; then
+      if [ "${CLJ_CLASSPATH}" != "" ]; then
+         CLJ_CLASSPATH=${CLJ_CLASSPATH}:${jar}
+      else
+         CLJ_CLASSPATH=${jar}
+      fi
+   else
+      echo "File '${jar}' doesn't exist."
+      exit 1
+   fi
+}
+
+main
+
