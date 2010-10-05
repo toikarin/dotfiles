@@ -228,7 +228,7 @@ let mapleader = ";"
 let maplocalleader = ","
 
 " Update help
-map <leader>uh :helptags ~/.vim/doc<cr>
+map <leader>uh :call pathogen#helptags()<cr>
 
 " Run ctags
 map <silent> <leader>r :!ctags -R --exclude=.svn --exclude=.git --exclude=log *<cr>

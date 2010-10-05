@@ -1,6 +1,6 @@
 .vim/swap
 .vim/backups
-.vim/doc/tags
+.vim/bundle/*/doc/tags
 # NerdTree history
 .vim/.netrwhist
 .vimperator/info
