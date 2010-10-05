@@ -1,6 +1,9 @@
 " Make Vim behave in a more useful way (don't be compatible with Vi)
 set nocompatible
 
+" Run pathogen to add all plugins
+call pathogen#runtime_append_all_bundles()
+
 " Enable file type detection
 filetype on
 
