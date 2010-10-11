@@ -218,9 +218,40 @@ function! CountBuffers()
    return len(filter(range(1,bufnr('$')),'buflisted(v:val)'))
 endfunction
 
+function! CallMaven(type, clean, skip_tests)
+   set makeprg=mvn
+   set errorformat=\%-G[%\\(WARNING]%\\)%\\@!%.%#,
+    \%A%[%^[]%\\@=%f:[%l\\,%v]\ %m,
+    \%W[WARNING]\ %f:[%l\\,%v]\ %m,
+    \%-Z\ %#,
+    \%-Clocation\ %#:%.%#,
+    \%C%[%^:]%#%m,
+    \%-G%.%#
+
+   if a:clean == 1
+      let args="clean ".a:type
+   else
+      let args=a:type
+   endif
+
+   if a:skip_tests == 1
+      let args.=" -Dmaven.test.skip=true"
+   endif
+
+   if exists("g:maven_pom")
+      let args.=" -f ".g:maven_pom
+   endif
+
+   if exists("g:maven_params")
+      let args.=" ".g:maven_params
+   endif
+
+   exe ':make '.args
+endfunction
+
 "
 "" Keyboard mappings
-" 
+"
 
 " Set mapleader
 let mapleader = ";"
@@ -258,6 +289,11 @@ map <leader>cd :cd %:p:h<cr>
 
 " Detect filetype again
 map <leader>fd :filetype detect<cr>
+
+map <leader>m :call CallMaven("install", 0, 0)<cr>
+map <leader>mc :call CallMaven("install", 1, 0)<cr>
+map <leader>ms :call CallMaven("install", 0, 1)<cr>
+map <leader>mcs :call CallMaven("install", 1, 1)<cr>
 
 " Remove the Windows ^M
 noremap <leader>M mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
