@@ -260,7 +260,7 @@ map <leader>cd :cd %:p:h<cr>
 map <leader>fd :filetype detect<cr>
 
 " Remove the Windows ^M
-noremap <leader>m mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
+noremap <leader>M mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
 
 " Spell toggle
 nmap <silent> <leader>s :set spell!<cr>
@@ -398,6 +398,11 @@ let hs_highlight_boolean=1
 let hs_highlight_types=1
 
 "
+" TagList plugin
+"
+let Tlist_Exit_OnlyWindow = 1
+
+"
 "" vimdiff
 "
 
@@ -426,7 +431,7 @@ match WhiteSpaceEOL /\s\+$/
 "" Commands
 "
 
-command! -nargs=? Vhelp vert help <args> 
+command! -nargs=? Vhelp vert help <args>
 command! Wsu w !sudo tee %
 command! Q confirm qall
 
