@@ -169,8 +169,8 @@ set incsearch
 set hlsearch
 " Ignore the case of normal letters
 set ignorecase
-" Don't override the 'ignorecase' option if the search pattern contains upper case characters
-set nosmartcase
+" Override the 'ignorecase' option if the search pattern contains upper case characters
+set smartcase
 
 "
 " Bells
@@ -218,6 +218,12 @@ function! CountBuffers()
    return len(filter(range(1,bufnr('$')),'buflisted(v:val)'))
 endfunction
 
+function! ReplaceTextWithFile(filename)
+   normal ggVGd
+   execute ":read ".a:filename
+   normal ggdd
+endfunction
+
 function! CallMaven(type, clean, skip_tests)
    set makeprg=mvn
    set errorformat=\%-G[%\\(WARNING]%\\)%\\@!%.%#,
@@ -254,7 +260,7 @@ endfunction
 "
 
 " Set mapleader
-let mapleader = ";"
+let mapleader = "\\"
 " Set localleader (for plugins)
 let maplocalleader = ","
 
@@ -284,6 +290,9 @@ imap <left> <nop>
 imap <right> <nop>
 imap <up> <nop>
 
+map <c-up> :cprevious<cr>
+map <c-down> :cnext<cr>
+
 " Switch to current directory
 map <leader>cd :cd %:p:h<cr>
 
@@ -312,6 +321,9 @@ map <f1> :set number!<cr>
 
 " Open current line in browser
 map <silent> <leader>w :call Browser()<cr>
+
+" Calculate line with bc
+map <silent> <leader>c "pyy"pp!!bc<cr>kgJa=<esc>
 
 " Move line up
 nnoremap <A-k> :m-2<cr>
@@ -467,7 +479,8 @@ match WhiteSpaceEOL /\s\+$/
 "" Commands
 "
 
-command! -nargs=? Vhelp vert help <args>
+command! -complete=help -nargs=? Vhelp vert help <args>
 command! Wsu w !sudo tee %
 command! Q confirm qall
+command! -complete=file -nargs=1 R :call ReplaceTextWithFile('<args>')
 
