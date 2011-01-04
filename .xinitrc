@@ -1,24 +1,22 @@
 #!/usr/bin/env sh
 
 # Disable beep
-xset b off &
+xset b off
 
 # Start xscreensaver
 xscreensaver -no-splash &
 
 # Set default keyboard layout
-setxkbmap -layout us &
+setxkbmap -layout us
 
 # Load xmodmap
-xmodmap ~/.Xmodmap &
+xmodmap ~/.Xmodmap
 
 # Load X resources
-xrdb ~/.Xdefaults &
+xrdb ~/.Xdefaults
 
 # Set wallpaper
 display -window root wallpaper.png &
 DISPLAY=:0.1 display -window root wallpaper.png &
 
-# Start ion
-ion3
-
+i3
