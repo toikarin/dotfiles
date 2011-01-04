@@ -1,0 +1,18 @@
+" Never show tab bar
+set showtabline=0
+
+" Set external editor
+set editor="vim -f -g -c \":source ~/.vimrc\" -c \":set spell\""
+
+" Disable <C-w>
+map <C-w> <Nop>
+nmap <C-w> <Nop>
+vmap <C-w> <Nop>
+
+map <C-Tab> <Nop>
+nmap <C-Tab> <Nop>
+vmap <C-Tab> <Nop>
+
+map <leader>ns :noscript popup<cr>
+
+" vim: set ft=vimperator:
