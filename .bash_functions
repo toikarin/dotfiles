@@ -168,6 +168,21 @@ function change_layout() {
    $XMODMAP_BIN ~/.Xmodmap
 }
 
+function toggle_touchpad() {
+   local synclient_bin=$(which synclient)
+   local qstr="TouchpadOff"
+   local cur_state=$("${synclient_bin}" -l | grep "${qstr}" | awk '{ print $3 }')
+   local new_state=""
+
+   if [ "${cur_state}" == "1" ]; then
+      new_state="0"
+   else
+      new_state="1"
+   fi
+
+   "${synclient_bin}" "${qstr}"=${new_state}
+}
+
 # Tar gz directory
 function tard {
    local dir=$1
