@@ -1,0 +1,41 @@
+# Set editor
+set editor="vim +':set textwidth=72' +':set wrap'"
+
+# Set realname
+set realname="Tomi Oikarinen"
+
+# MIME autoview
+auto_view text/html
+
+# Disable beep on errors
+set nobeep
+
+# internal-pager will not move to the next message
+set pager_stop
+
+# Forwarded message is attached as a seperate MIME part instead of inline message.
+set mime_forward=yes
+# When forwarding multiple attachments of a MIME message, attachments which cannot be decoded
+# will be attached to the newly composed message.
+set mime_forward_rest=yes
+
+# Set default sort to reverse-date
+set sort=reverse-threads
+
+# Ask before quitting mutt, (default answer: no)
+set quit=ask-no
+
+# number of seconds after a keypress in the main menu before checking for new mail
+set timeout=30
+
+# Set header cache
+set header_cache=~/.mutt_cache
+# Set signature file
+set signature=~/.mail_signature
+# Set alias file
+set alias_file=~/.mutt_aliases
+
+# Load other files
+source ~/.mutt_aliases
+source ~/.mutt_mailboxes
+
