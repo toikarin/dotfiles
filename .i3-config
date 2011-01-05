@@ -106,12 +106,12 @@ bind Mod4+Shift+19 m10
 # Mod4+Enter starts a new terminal
 bind Mod4+36 exec /usr/bin/x-terminal-emulator
 
-# Mod4+Shift+q kills the current client
-bind Mod4+Shift+24 kill
+# Mod4+q kills the current client
+bind Mod4+24 kill
 
-# Mod4+v starts dmenu and launches the selected application
+# Mod4+TAB starts dmenu and launches the selected application
 # for now, we don’t have a launcher of our own.
-bind Mod4+55 exec /usr/bin/dmenu_run
+bind Mod4+23 exec /usr/bin/dmenu_run
 
 # Mod4+Shift+w reloads i3
 bind Mod4+Shift+25 reload
