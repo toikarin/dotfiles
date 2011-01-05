@@ -1,5 +1,5 @@
 " Never show tab bar
-set showtabline=0
+set showtabline=never
 
 " Set external editor
 set editor="vim -f -g -c \":source ~/.vimrc\" -c \":set spell\""
