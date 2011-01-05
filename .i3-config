@@ -134,3 +134,4 @@ ipc-socket ~/.i3/ipc.sock
 # Mod4+F11 locks xscreensaver
 bind Mod4+95 exec xscreensaver-command -lock
 
+exec i3status | dzen2
