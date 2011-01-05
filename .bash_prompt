@@ -111,6 +111,35 @@ function detached_screens {
    fi
 }
 
+function battery_status {
+   if [ "$BS_BATTERY_FILE" == "" ]; then
+      return
+   fi
+
+   local rem_cap=$(cat "${BS_BATTERY_FILE}/state" 2> /dev/null | grep "^remaining capacity" | awk '{ print $3 }')
+   local full_cap=$(cat "${BS_BATTERY_FILE}/info" 2> /dev/null | grep "^last full capacity" | awk '{ print $4 }')
+
+   if [[ "${rem_cap}" == "" || "${full_cap}" == "" ]]; then
+      return
+   fi
+
+   local charge=$(( ${rem_cap} * 100 / ${full_cap} ))
+   local color=""
+   local clr_charge=${charge}
+
+   if [ ${charge} -lt 50 ]; then
+      if [ ${charge} -lt 15 ]; then
+         color=$COLOR_RED
+      else
+         color=$COLOR_YELLOW
+      fi
+
+      clr_charge=$(set_temp_color ${color} ${charge})
+   fi
+
+   echo "(Ϟ: ${clr_charge}) "
+}
+
 function prompt_command() {
    P_USER=$(set_temp_color $COLOR_GREEN "\u")
    P_HOST=$(set_temp_color $COLOR_GREEN"\h")
@@ -120,8 +149,9 @@ function prompt_command() {
    P_STOPPED_JOBS=$(get_stopped_jobs)
    P_GIT_BRANCH=$(parse_git_branch)
    P_DETACHED_SCREEN=$(detached_screens)
+   P_BATTERY=$(battery_status)
 
-   PS1="${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_GIT_BRANCH}\$ "
+   PS1="${P_BATTERY}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_GIT_BRANCH}\$ "
 }
 
 #
