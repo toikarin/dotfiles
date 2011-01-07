@@ -118,6 +118,7 @@ function battery_status {
 
    local rem_cap=$(cat "${BS_BATTERY_FILE}/state" 2> /dev/null | grep "^remaining capacity" | awk '{ print $3 }')
    local full_cap=$(cat "${BS_BATTERY_FILE}/info" 2> /dev/null | grep "^last full capacity" | awk '{ print $4 }')
+   local state=$(cat "${BS_BATTERY_FILE}/state" 2> /dev/null | grep "^charging state" | awk '{print $3}')
 
    if [[ "${rem_cap}" == "" || "${full_cap}" == "" ]]; then
       return
@@ -126,6 +127,7 @@ function battery_status {
    local charge=$(( ${rem_cap} * 100 / ${full_cap} ))
    local color=""
    local clr_charge=${charge}
+   local clr_logo="Ϟ"
 
    if [ ${charge} -lt 50 ]; then
       if [ ${charge} -lt 15 ]; then
@@ -137,7 +139,11 @@ function battery_status {
       clr_charge=$(set_temp_color ${color} ${charge})
    fi
 
-   echo "(Ϟ: ${clr_charge}) "
+   if [[ "${state}" == "charging" || ""${state} == "charged" ]]; then
+      clr_logo=$(set_temp_color ${COLOR_LIGHTGREEN} ${clr_logo})
+   fi
+
+   echo "(${clr_logo}: ${clr_charge}) "
 }
 
 function prompt_command() {
