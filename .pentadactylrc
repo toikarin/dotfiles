@@ -13,6 +13,21 @@ map <C-Tab> <Nop>
 nmap <C-Tab> <Nop>
 vmap <C-Tab> <Nop>
 
-map <leader>ns :noscript popup<cr>
+set! browser.tabs.closeWindowWithLastTab=false
+set! general.warnOnAboutConfig=false
+set! network.cookie.cookieBehavior=1
+set! browser.startup.homepage="http://www.google.com"
+
+silent qmark r http://www.reddit.com
+silent qmark p http://www.reddit.com/r/programming
+silent qmark y http://www.youtube.com
+silent qmark g http://github.com/blakki
+silent qmark f http://www.facebook.com
+silent qmark i http://ilmatieteenlaitos.fi/saa/Oulu
+silent qmark l http://www.linjakas.fi/lang/fi
+
+source! ~/.pentadactylrc-sensitive
+
+echo "Configuration (re)loaded."
 
 " vim: set ft=vimperator:
