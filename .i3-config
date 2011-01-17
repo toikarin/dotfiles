@@ -10,8 +10,8 @@ floating_modifier Mod4
 # Resize mode
 bindsym Mod1+r mode resize
 
-# Fullscreen (Mod4+f)
-bind Mod4+41 f
+# Fullscreen (Mod4+Enter)
+bind Mod4+36 f
 
 # Stacking (Mod4+h)
 bind Mod4+43 s
@@ -103,8 +103,8 @@ bind Mod4+Shift+17 m8
 bind Mod4+Shift+18 m9
 bind Mod4+Shift+19 m10
 
-# Mod4+Enter starts a new terminal
-bind Mod4+36 exec /usr/bin/x-terminal-emulator
+# Mod4+Tab starts a new terminal
+bind Mod4+66 exec /usr/bin/x-terminal-emulator
 
 # Mod4+q kills the current client
 bind Mod4+24 kill
@@ -122,10 +122,29 @@ bind Mod4+Shift+26 exit
 # Mod4+Shift+r restarts i3 inplace
 bind Mod4+Shift+27 restart
 
+# Enter resize mode
+bindsym Mod4+r mode resize
+
+mode "resize" {
+   bindsym n resize left -10
+   bindsym Shift+n resize left +10
+
+   bindsym r resize bottom +10
+   bindsym Shift+r resize bottom -10
+
+   bindsym t resize top -10
+   bindsym Shift+t resize top +10
+
+   bindsym d resize right +10
+   bindsym Shift+d resize right -10
+
+   # Enter goes back to normal mode
+   bind 36 mode default
+}
+
 # The IPC interface allows programs like an external workspace bar
 # (i3-wsbar) or i3-msg (can be used to "remote-control" i3) to work.
 ipc-socket ~/.i3/ipc.sock
-
 
 ##########
 # Custom #
@@ -135,3 +154,4 @@ ipc-socket ~/.i3/ipc.sock
 bind Mod4+95 exec xscreensaver-command -lock
 
 exec i3status | dzen2
+
