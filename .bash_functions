@@ -168,10 +168,12 @@ function change_layout() {
    $XMODMAP_BIN ~/.Xmodmap
 }
 
-function toggle_touchpad() {
-   local synclient_bin=$(which synclient)
-   local qstr="TouchpadOff"
-   local cur_state=$("${synclient_bin}" -l | grep "${qstr}" | awk '{ print $3 }')
+function touchpad_disable() {
+   synclient TouchpadOff=1
+}
+
+function touchpad_toggle() {
+   local cur_state=$(synclient -l | grep "TouchpadOff" | awk '{ print $3 }')
    local new_state=""
 
    if [ "${cur_state}" == "1" ]; then
@@ -180,7 +182,7 @@ function toggle_touchpad() {
       new_state="1"
    fi
 
-   "${synclient_bin}" "${qstr}"=${new_state}
+   synclient TouchpadOff=${new_state}
 }
 
 function set_resolutions() {
