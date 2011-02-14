@@ -146,6 +146,12 @@ function prompt_battery_status {
    echo "(${clr_logo}: ${clr_charge}) "
 }
 
+function prompt_virtualenv() {
+   if [ "$VIRTUAL_ENV" != "" ]; then
+      echo " (env: $(prompt_set_temp_color ${COLOR_RED} $(basename ${VIRTUAL_ENV})))"
+   fi
+}
+
 function prompt_command() {
    P_USER=$(prompt_set_temp_color $COLOR_GREEN "\u")
    P_HOST=$(prompt_set_temp_color $COLOR_GREEN"\h")
@@ -156,8 +162,9 @@ function prompt_command() {
    P_GIT_BRANCH=$(prompt_parse_git_branch)
    P_DETACHED_SCREEN=$(prompt_detached_screens)
    P_BATTERY=$(prompt_battery_status)
+   P_VIRTUALENV=$(prompt_virtualenv)
 
-   PS1="${P_BATTERY}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_GIT_BRANCH}\$ "
+   PS1="${P_BATTERY}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_VIRTUALENV}${P_GIT_BRANCH}\$ "
 }
 
 #
