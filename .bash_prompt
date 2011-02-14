@@ -22,11 +22,11 @@ COLOR_CYAN="\[\033[0;36m\]"
 COLOR_LIGHTCYAN="\[\033[1;36m\]"
 COLOR_DEFAULT="\[\033[0m\]"
 
-function set_temp_color() {
+function prompt_set_temp_color() {
    echo "$1$2$COLOR_DEFAULT"
 }
 
-function colorize_number {
+function prompt_colorize_number {
    num=$1
    if [ $num -gt 0 ]; then
       color=""
@@ -36,23 +36,23 @@ function colorize_number {
          color=$COLOR_YELLOW
       fi
 
-      echo "$(set_temp_color $color $num)"
+      echo "$(prompt_set_temp_color $color $num)"
    fi
 }
 
-function get_bg_jobs() {
-   job_count=$(colorize_number $(jobs -r | wc -l))
+function prompt_get_bg_jobs() {
+   job_count=$(prompt_colorize_number $(jobs -r | wc -l))
 
    echo ${job_count:+" (bg: $job_count)"}
 }
 
-function get_stopped_jobs() {
-   job_count=$(colorize_number $(jobs -s | wc -l))
+function prompt_get_stopped_jobs() {
+   job_count=$(prompt_colorize_number $(jobs -s | wc -l))
 
    echo ${job_count:+" (stopped: $job_count)"}
 }
 
-function parse_git_branch {
+function prompt_parse_git_branch {
    local branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
 
    if [ -n "$branch" ]; then
@@ -62,38 +62,38 @@ function parse_git_branch {
       local untracked_files_count=$(git status --porcelain 2> /dev/null | grep -c "^??")
       local branches=$(git branch 2> /dev/null | grep -cv "^[*| ] master$")
 
-      local clr_branch=$(set_temp_color $COLOR_LIGHTGREEN "$branch")
-      local clr_modified=$(set_temp_color $COLOR_RED "$modified")
-      local clr_staged=$(set_temp_color $COLOR_BLUE "$staged")
+      local clr_branch=$(prompt_set_temp_color $COLOR_LIGHTGREEN "$branch")
+      local clr_modified=$(prompt_set_temp_color $COLOR_RED "$modified")
+      local clr_staged=$(prompt_set_temp_color $COLOR_BLUE "$staged")
       local clr_stash=""
       local clr_untracked=""
       local clr_branches=""
 
       if [ $stash_size -gt 0 ]; then
-         clr_stash=" (stash: $(colorize_number $stash_size))"
+         clr_stash=" (stash: $(prompt_colorize_number $stash_size))"
       fi
 
       if [ $untracked_files_count -gt 0 ]; then
-         clr_untracked=" (untracked: $(colorize_number $untracked_files_count))"
+         clr_untracked=" (untracked: $(prompt_colorize_number $untracked_files_count))"
       fi
 
       if [ $branches -gt 0 ]; then
-         clr_branches=" ($(colorize_number $branches))"
+         clr_branches=" ($(prompt_colorize_number $branches))"
       fi
 
       echo " (git: ${clr_branch}${clr_branches}${clr_modified}${clr_staged}${clr_stash}${clr_untracked})"
    fi
 }
 
-function dirs_stack_size {
+function prompt_dirs_stack_size {
    cur_count=$(dirs -p | wc -l)
 
    if [ $cur_count -gt 1 ]; then
-      echo " (dirs: $(colorize_number $(($cur_count - 1))))"
+      echo " (dirs: $(prompt_colorize_number $(($cur_count - 1))))"
    fi
 }
 
-function detached_screens {
+function prompt_detached_screens {
    local detached_count=$(screen -list 2> /dev/null | grep -c "(Detached)")
    local color=""
 
@@ -107,11 +107,11 @@ function detached_screens {
    fi
 
    if [ "$detached_count" != "0" ]; then
-      echo " (sd: $(set_temp_color $color $detached_count))"
+      echo " (sd: $(prompt_set_temp_color $color $detached_count))"
    fi
 }
 
-function battery_status {
+function prompt_battery_status {
    if [ "$BS_BATTERY_FILE" == "" ]; then
       return
    fi
@@ -136,26 +136,26 @@ function battery_status {
          color=$COLOR_YELLOW
       fi
 
-      clr_charge=$(set_temp_color ${color} ${charge})
+      clr_charge=$(prompt_set_temp_color ${color} ${charge})
    fi
 
    if [[ "${state}" == "charging" || ""${state} == "charged" ]]; then
-      clr_logo=$(set_temp_color ${COLOR_LIGHTGREEN} ${clr_logo})
+      clr_logo=$(prompt_set_temp_color ${COLOR_LIGHTGREEN} ${clr_logo})
    fi
 
    echo "(${clr_logo}: ${clr_charge}) "
 }
 
 function prompt_command() {
-   P_USER=$(set_temp_color $COLOR_GREEN "\u")
-   P_HOST=$(set_temp_color $COLOR_GREEN"\h")
-   P_DIR=$(set_temp_color $COLOR_LIGHTCYAN "\w")
-   P_DSTACK=$(dirs_stack_size)
-   P_BG_JOBS=$(get_bg_jobs)
-   P_STOPPED_JOBS=$(get_stopped_jobs)
-   P_GIT_BRANCH=$(parse_git_branch)
-   P_DETACHED_SCREEN=$(detached_screens)
-   P_BATTERY=$(battery_status)
+   P_USER=$(prompt_set_temp_color $COLOR_GREEN "\u")
+   P_HOST=$(prompt_set_temp_color $COLOR_GREEN"\h")
+   P_DIR=$(prompt_set_temp_color $COLOR_LIGHTCYAN "\w")
+   P_DSTACK=$(prompt_dirs_stack_size)
+   P_BG_JOBS=$(prompt_get_bg_jobs)
+   P_STOPPED_JOBS=$(prompt_get_stopped_jobs)
+   P_GIT_BRANCH=$(prompt_parse_git_branch)
+   P_DETACHED_SCREEN=$(prompt_detached_screens)
+   P_BATTERY=$(prompt_battery_status)
 
    PS1="${P_BATTERY}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_GIT_BRANCH}\$ "
 }
