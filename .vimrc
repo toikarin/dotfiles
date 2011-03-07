@@ -314,7 +314,7 @@ nmap <silent> <leader>s :set spell!<cr>
 set pastetoggle=<f3>
 
 " Remove indenting on empty lines
-map <f2> :%s/\s*$//g<cr> :nohlsearch <cr>''
+map <f2> :%s/\s*$//g<cr>:set nohlsearch <cr>''
 
 " Toggle line numbers
 map <f1> :set number!<cr>
