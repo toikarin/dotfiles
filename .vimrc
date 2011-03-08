@@ -4,6 +4,10 @@ set nocompatible
 " Run pathogen to add all plugins
 call pathogen#runtime_append_all_bundles()
 
+" Force reloading file type detection. On Debian the system vimrc enables
+" file type detection before pathogen has run so reloading is necessary.
+filetype off
+
 " Enable file type detection
 filetype on
 
