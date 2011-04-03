@@ -26,6 +26,7 @@ alias sd='screen -Udr'
 alias se='sudoedit'
 
 alias du1='du -h --max-depth=1'
-
+alias tf='tail -f -n 100'
 alias mkdirdate='mkdir $(date +%Y%m%d)'
 
+alias vrecord='ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq'
