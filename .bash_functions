@@ -152,20 +152,23 @@ function e()
 
 # Change keyboard layout between us and finnish
 function change_layout() {
-   SETXKBMAP_BIN=$(which setxkbmap)
-   XMODMAP_BIN=$(which xmodmap)
-   GREP_BIN=$(which grep)
-   AWK_BIN=$(which awk)
+   local SETXKBMAP_BIN=$(which setxkbmap)
+   local XMODMAP_BIN=$(which xmodmap)
+   local GREP_BIN=$(which grep)
+   local AWK_BIN=$(which awk)
 
-   cur_layout=$($SETXKBMAP_BIN -print | $GREP_BIN "xkb_symbols" | $AWK_BIN '{ print $4 }' | $AWK_BIN -F"+" '{print $2}')
+   local cur_layout=$($SETXKBMAP_BIN -print | $GREP_BIN "xkb_symbols" | $AWK_BIN '{ print $4 }' | $AWK_BIN -F"+" '{print $2}')
+   local new_layout=""
 
    if [ "$cur_layout" != "us" ]; then
-      $SETXKBMAP_BIN -layout us
+      new_layout="us"
    else
-      $SETXKBMAP_BIN -layout fi
+      new_layout="fi"
    fi
 
+   $SETXKBMAP_BIN -layout $new_layout
    $XMODMAP_BIN ~/.Xmodmap
+   echo "Current layout: ${new_layout}"
 }
 
 function touchpad_disable() {
