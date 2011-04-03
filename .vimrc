@@ -454,6 +454,7 @@ let hs_highlight_types=1
 "
 let Tlist_Exit_OnlyWindow = 1
 
+
 "
 "" vimdiff
 "

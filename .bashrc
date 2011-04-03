@@ -44,7 +44,9 @@ export PYTHONSTARTUP=~/.pystartup
 
 if [ -z $PATH_MODIFIED ]; then
 
-   export PATH=$PATH:/sbin:/usr/sbin
+   export PATH=$PATH:/sbin
+   export PATH=$PATH:/usr/sbin
+   export PATH=$PATH:/opt/bin
    export PATH=$PATH:~/bin
    export PATH=$PATH:$JAVA_HOME/bin
 

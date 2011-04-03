@@ -44,7 +44,7 @@ function budir {
 function bcc {
    bc_bin=$(which bc)
 
-   echo "scale=5; $1" | $bc_bin 
+   echo "scale=5; $1" | $bc_bin
 }
 
 # Reminder to use sudoedit instead of sudo vim
@@ -219,7 +219,7 @@ function set_resolutions() {
 # Tar gz directory
 function tard {
    local dir=$1
-   TAR_BIN=$(which tar)
+   local TAR_BIN=$(which tar)
 
 	if [ "${#1}" -eq 0 ];
    then
