@@ -201,6 +201,7 @@ function set_resolutions() {
 
    local other_mon_str=""
    local off_str=""
+   local sec_mon_pos=${BS_SECOND_MONITOR_POS-:"right"}
 
    for port in ${disconnected_ports[@]}
    do
@@ -210,7 +211,7 @@ function set_resolutions() {
    if [ "${other_connected_mon}" != "" ]; then
       local other_res="$(xrandr | grep -A1 """${other_connected_mon} connected""" | tail -1 | cut -f4 -d' ')"
 
-      other_mon_str="--output ${other_connected_mon} --mode ${other_res} --right-of ${def_mon}"
+      other_mon_str="--output ${other_connected_mon} --mode ${other_res} --${sec_mon_pos}-of ${def_mon}"
    fi
 
    xrandr --output ${def_mon} --mode ${def_res} --primary ${other_mon_str} ${off_str}
