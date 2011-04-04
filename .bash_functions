@@ -2,21 +2,21 @@
 
 # Backup directory
 function budir {
-	date_bin="/bin/date"
-	cp_bin="/bin/cp"
-	basename_bin="/usr/bin/basename"
+   date_bin="/bin/date"
+   cp_bin="/bin/cp"
+   basename_bin="/usr/bin/basename"
 
-	date=`$date_bin +%d%m%y-%H%M%S`
+   date=`$date_bin +%d%m%y-%H%M%S`
    dest_suffix=""
    suffix_counter=0
 
-	len="${#1}"
+   len="${#1}"
 
-	if [ "$len" -eq "0" ];
-	then
-		echo "Usage: budir DIRECTORY"
-	else
-		basename=`$basename_bin $1`
+   if [ "$len" -eq "0" ];
+   then
+      echo "Usage: budir DIRECTORY"
+   else
+      basename=`$basename_bin $1`
       dest_prefix="$basename.$date"
       dest_found=0
 
@@ -34,10 +34,10 @@ function budir {
          fi
       done
 
-		echo "Copying $1 to $dest"
+      echo "Copying $1 to $dest"
 
-		$cp_bin -r $1 $dest
-	fi
+      $cp_bin -r $1 $dest
+   fi
 }
 
 # Call bc with arguments
@@ -79,16 +79,16 @@ function ob {
 
 # Find java classes by name
 function fj {
-  local find_bin=$(which find)
-  $find_bin . -iname "$1*.java"
+   local find_bin=$(which find)
+   $find_bin . -iname "$1*.java"
 }
 
 # Find java classes by name and open them in vim
 function fjv {
-  local find_bin=$(which find)
-  local vim_bin=$(which vim)
+   local find_bin=$(which find)
+   local vim_bin=$(which vim)
 
-  $find_bin . -iname "$1*.java" -exec "${vim_bin}" {} +
+   $find_bin . -iname "$1*.java" -exec "${vim_bin}" {} +
 }
 
 # Compare file to stdout with vimdiff.
@@ -132,8 +132,8 @@ function e()
             *.zip)                 unzip "${file}"        ;;
             *.jar | *.ear | *.war) jar -vxf "${file}"     ;;
             *)           echo "Don't know how to extract file '${file}'" ;;
-        esac
-     else
+         esac
+      else
          case "${file}" in
             *.tar.bz2 | *.tbz2)    tar tvjf "${file}"     ;;
             *.tar.gz | *.tgz)      tar tvzf "${file}"     ;;
@@ -143,11 +143,11 @@ function e()
             *.jar | *.ear | *.war) jar -vtf "${file}"     ;;
             *)           echo "Don't know how to list files from '${file}'" ;;
          esac
-     fi
-  else
-     echo "'${file}' is not a valid file."
-     return 1
-  fi
+      fi
+   else
+      echo "'${file}' is not a valid file."
+      return 1
+   fi
 }
 
 # Change keyboard layout between us and finnish
@@ -227,7 +227,7 @@ function tard {
    local dir=$1
    local TAR_BIN=$(which tar)
 
-	if [ "${#1}" -eq 0 ];
+   if [ "${#1}" -eq 0 ];
    then
       echo "Usage: tard <directory>"
       return 1
@@ -253,7 +253,7 @@ function clean_directory {
    local delete=${2-:""}
    local delete_param=""
 
-	if [ "${#1}" -eq 0 ];
+   if [ "${#1}" -eq 0 ];
    then
       echo "Usage: clean_directory <directory> [-delete]"
       return 1
@@ -274,21 +274,21 @@ function clean_directory {
 }
 
 function rm_empty_svn_dirs {
-	for directory in $(find . -type d ! -path "*.svn*")
-	do
-		filecount=$(find "${directory}" -type f ! -path "*.svn*" | wc -l)
+   for directory in $(find . -type d ! -path "*.svn*")
+   do
+      filecount=$(find "${directory}" -type f ! -path "*.svn*" | wc -l)
 
-		if [ "$filecount" -eq 0 ];
-		then
-			svn rm "${directory}"
-		fi
-	done
+      if [ "$filecount" -eq 0 ];
+      then
+         svn rm "${directory}"
+      fi
+   done
 }
 
 function dclean {
    sudo apt-get -y autoremove
-	dpkg -l | grep "^rc" | awk '{ print $2 }' | xargs sudo apt-get -y purge
-	sudo apt-get -y clean
+   dpkg -l | grep "^rc" | awk '{ print $2 }' | xargs sudo apt-get -y purge
+   sudo apt-get -y clean
 }
 
 # Reload bash configuration
