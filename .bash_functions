@@ -201,7 +201,7 @@ function set_resolutions() {
 
    local other_mon_str=""
    local off_str=""
-   local sec_mon_pos=${BS_SECOND_MONITOR_POS-:"right"}
+   local sec_mon_pos=${BS_SECOND_MONITOR_POS:-"right"}
 
    for port in ${disconnected_ports[@]}
    do
@@ -238,7 +238,7 @@ function tard {
 
 # Clear tmp directory
 function clean_tmp_dirs {
-   local delete=${1-:""}
+   local delete=${1:-""}
 
    local tmp_dir=$HOME/tmp
    local download_dir=$HOME/downloads
@@ -250,7 +250,7 @@ function clean_tmp_dirs {
 # Clean directory from old files and empty directories
 function clean_directory {
    local dir=$1
-   local delete=${2-:""}
+   local delete=${2:-""}
    local delete_param=""
 
    if [ "${#1}" -eq 0 ];
