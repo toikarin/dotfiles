@@ -25,6 +25,7 @@ silent qmark g http://github.com/blakki
 silent qmark f http://www.facebook.com
 silent qmark i http://ilmatieteenlaitos.fi/saa/Oulu
 silent qmark l http://www.linjakas.fi/lang/fi
+silent qmark o http://yle.fi/ohjelmaopas/classic.php?&co[]=tv1&co[]=tv2&co[]=mtv&co[]=nel&co[]=sub&co[]=nep
 
 source! ~/.pentadactylrc-sensitive
 
