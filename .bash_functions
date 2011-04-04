@@ -280,6 +280,12 @@ function rm_empty_svn_dirs {
 	done
 }
 
+function dclean {
+   sudo apt-get -y autoremove
+	dpkg -l | grep "^rc" | awk '{ print $2 }' | xargs sudo apt-get -y purge
+	sudo apt-get -y clean
+}
+
 # Reload bash configuration
 function reload() {
    load_file ~/.bashrc
