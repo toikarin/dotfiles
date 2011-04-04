@@ -268,6 +268,18 @@ function clean_directory {
    find "$dir" -mindepth 1 -type d -empty ${delete_param}
 }
 
+function rm_empty_svn_dirs {
+	for directory in $(find . -type d ! -path "*.svn*")
+	do
+		filecount=$(find "${directory}" -type f ! -path "*.svn*" | wc -l)
+
+		if [ "$filecount" -eq 0 ];
+		then
+			svn rm "${directory}"
+		fi
+	done
+}
+
 # Reload bash configuration
 function reload() {
    load_file ~/.bashrc
