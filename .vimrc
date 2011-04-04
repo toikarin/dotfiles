@@ -347,6 +347,10 @@ vnoremap <A-j> :m'>+<cr>gv
 if !exists("autocommands_loaded") && has("autocmd")
    " Set noexpandtab automatically when editing makefiles
    autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+   autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+   autocmd FileType html setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+   autocmd FileType htmldjango setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
    " Reload vimrc after editing
    autocmd BufWritePost ~/.vimrc source ~/.vimrc
    " Commit todo-list after write
