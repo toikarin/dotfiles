@@ -36,7 +36,6 @@ export HISTFILESIZE=$HISTSIZE
 
 export JAVA_HOME="/usr/lib/jvm/java-6-sun"
 
-export PYTHONSTARTUP=~/.pystartup
 
 #
 # Set path
