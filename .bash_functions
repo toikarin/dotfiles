@@ -214,6 +214,11 @@ function set_resolutions() {
       other_mon_str="--output ${other_connected_mon} --mode ${other_res} --${sec_mon_pos}-of ${def_mon}"
    fi
 
+   echo "Primary monitor (${def_mon}): ${def_res}"
+   if [ "${other_connected_mon}" != "" ]; then
+      echo "Secondary monitor (${other_connected_mon}): ${other_res} pos: ${sec_mon_pos}"
+   fi
+
    xrandr --output ${def_mon} --mode ${def_res} --primary ${other_mon_str} ${off_str}
 }
 
