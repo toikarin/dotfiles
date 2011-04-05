@@ -156,14 +156,16 @@ function change_layout() {
    local XMODMAP_BIN=$(which xmodmap)
    local GREP_BIN=$(which grep)
    local AWK_BIN=$(which awk)
+   local new_layout=${1:-""}
 
-   local cur_layout=$($SETXKBMAP_BIN -print | $GREP_BIN "xkb_symbols" | $AWK_BIN '{ print $4 }' | $AWK_BIN -F"+" '{print $2}')
-   local new_layout=""
+   if [ "$new_layout" == "" ]; then
+      local cur_layout=$($SETXKBMAP_BIN -print | $GREP_BIN "xkb_symbols" | $AWK_BIN '{ print $4 }' | $AWK_BIN -F"+" '{print $2}')
 
-   if [ "$cur_layout" != "us" ]; then
-      new_layout="us"
-   else
-      new_layout="fi"
+      if [ "$cur_layout" != "us" ]; then
+         new_layout="us"
+      else
+         new_layout="fi"
+      fi
    fi
 
    $SETXKBMAP_BIN -layout $new_layout
