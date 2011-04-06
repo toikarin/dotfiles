@@ -73,5 +73,6 @@ load_file ~/.bash_aliases
 load_file ~/.bash_exports
 load_file ~/.bash_functions
 load_file ~/.bash_completion
+load_file ~/.bash_sensitive
 load_file /etc/bash_completion
 
