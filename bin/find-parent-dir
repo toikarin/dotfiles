@@ -22,16 +22,13 @@ do
    if [ $fpd_count == 0 ]; then
       cd "$fpd_cur_full_path"
       return 0
-   else
-      cd ..
    fi
 
-   fpd_cur_full_path=$(pwd)
+   fpd_cur_full_path=$(dirname "$fpd_cur_full_path")
 done
 
 if [ "$fpd_cur_full_path" != "$fpd_wanted_dir" ]; then
    echo "Parent directory '$fpd_wanted_dir' not found."
-   cd "$start_dir"
    return 1
 fi
 
