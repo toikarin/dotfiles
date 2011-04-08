@@ -11,26 +11,26 @@ if [ $# != 1 ]; then
    return 1
 fi
 
-start_dir=$(pwd)
-cur_full_path=$start_dir
-wanted_dir=$1
+fpd_start_dir=$(pwd)
+fpd_cur_full_path=$fpd_start_dir
+fpd_wanted_dir=$1
 
-while [ "$cur_full_path" != "/" ]
+while [ "$fpd_cur_full_path" != "/" ]
 do
-   cur_dir=$(basename "$cur_full_path")
+   fpd_cur_dir=$(basename "$fpd_cur_full_path")
 
-   if [ "${cur_dir}" == "${wanted_dir}" ]; then
-      cd "$cur_full_path"
+   if [ $fpd_count == 0 ]; then
+      cd "$fpd_cur_full_path"
       return 0
    else
       cd ..
    fi
 
-   cur_full_path=$(pwd)
+   fpd_cur_full_path=$(pwd)
 done
 
-if [ "$cur_full_path" != "$wanted_dir" ]; then
-   echo "Parent directory '$wanted_dir' not found."
+if [ "$fpd_cur_full_path" != "$fpd_wanted_dir" ]; then
+   echo "Parent directory '$fpd_wanted_dir' not found."
    cd "$start_dir"
    return 1
 fi
