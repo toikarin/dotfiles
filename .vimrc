@@ -317,6 +317,9 @@ nmap <silent> <leader>s :set spell!<cr>
 " Paste toggle
 set pastetoggle=<f3>
 
+map <f7> :py set_breakpoint()<cr>
+map <s-f7> :py remove_breakpoints()<cr>
+
 " Remove indenting on empty lines
 map <f2> :%s/\s*$//g<cr>:set nohlsearch <cr>''
 
