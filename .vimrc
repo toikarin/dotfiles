@@ -361,6 +361,13 @@ if !exists("autocommands_loaded") && has("autocmd")
    autocmd BufRead,BufNewFile *.txt set spell
    " JSON
    autocmd BufRead,BufNewFile *.json setfiletype json
+   " highlight whitespaces at the end of the line
+   autocmd BufWinEnter * match WhiteSpaceEOL /\s\+$/
+   " highlight whitespaces before tabs
+   autocmd BufWinEnter * match WhiteSpaceEOL / \+\ze\t/
+   " Since BufWinEnter commands are executed every time a buffer is displayed, the match command is executed
+   " many times during a vim session. This seems to lead to a memory leak which slowly impacts performance.
+   autocmd BufWinLeave * call clearmatches()
 
    let autocommands_loaded=1
 endif
@@ -481,7 +488,6 @@ endif
 "
 
 highlight WhiteSpaceEOL ctermbg=red guibg=red term=bold
-match WhiteSpaceEOL /\s\+$/
 
 
 "
