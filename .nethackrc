@@ -1,0 +1,10 @@
+OPTIONS=color,hilite_pet,menucolors,!autopickup
+OPTIONS=showexp,showscore,time,!legacy,pettype:none
+OPTIONS=!cmdassist,boulder:0
+OPTIONS=disclose:+i +a +v +g +c
+OPTIONS=name=player
+
+MENUCOLOR="[Cc]ursed"=orange&bold&underline
+MENUCOLOR="[Uu]ncursed"=yellow
+MENUCOLOR="[Bb]lessed"=lightgreen
+MENUCOLOR="-[0-9]"=orange
