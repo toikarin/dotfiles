@@ -27,3 +27,4 @@
    dc = diff --cached
    s  = status
    aliases = !git config --list | grep ^alias
+   b = checkout -b
