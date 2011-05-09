@@ -1,3 +1,7 @@
+if !has("python")
+   finish
+endif
+
 python << EOF
 import vim
 
