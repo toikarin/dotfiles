@@ -6,22 +6,32 @@ if [ $BASH_SOURCE == $0 ]; then
    exit 1
 fi
 
-if [ $# != 1 ]; then
-   echo "Usage: . find-parent-dir <parent-dir-name>"
+if [ $# == 0 ]; then
+   echo "Usage: . find-parent-dir <parent-dir-name> [count]"
    return 1
 fi
 
+fpd_count=${2:-"1"}
 fpd_start_dir=$(pwd)
 fpd_cur_full_path=$fpd_start_dir
 fpd_wanted_dir=$1
+
+echo "$fpd_count" | grep -q "^[0-9]\+$" || {
+   echo "Usage: . find-parent-dir <parent-dir-name> [count]"
+   return 1
+}
 
 while [ "$fpd_cur_full_path" != "/" ]
 do
    fpd_cur_dir=$(basename "$fpd_cur_full_path")
 
-   if [ $fpd_count == 0 ]; then
-      cd "$fpd_cur_full_path"
-      return 0
+   if [ "${fpd_cur_dir}" == "${fpd_wanted_dir}" ]; then
+      fpd_count=$(($fpd_count - 1))
+
+      if [ $fpd_count == 0 ]; then
+         cd "$fpd_cur_full_path"
+         return 0
+      fi
    fi
 
    fpd_cur_full_path=$(dirname "$fpd_cur_full_path")
