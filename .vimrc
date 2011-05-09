@@ -266,7 +266,7 @@ endfunction
 " Set mapleader
 let mapleader = "\\"
 " Set localleader (for plugins)
-let maplocalleader = ","
+let maplocalleader = "_"
 
 " Update help
 map <leader>uh :call pathogen#helptags()<cr>
