@@ -12,6 +12,12 @@
    sslVerify = false
 [merge]
    tool = vimdiff
+[mergetool]
+   tool = vimdiff
+   prompt = false
+[difftool]
+   tool = vimdiff
+   prompt = false
 [alias]
 # Short log
    l = log --pretty=format:'%Cred%h%Creset - %C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset %C(yellow)%d%Creset' --abbrev-commit --date=relative
