@@ -42,6 +42,13 @@ set backupdir=~/.vim/backups
 let $VIM_SWAP_DIR=expand("~/.vim/swap")
 set directory=$VIM_SWAP_DIR
 
+if version >= 703
+   set undofile
+
+   let $VIM_UNDO_DIR=expand("~/.vim/undo")
+   set undodir=$VIM_UNDO_DIR
+endif
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
@@ -409,7 +416,7 @@ augroup JumpCursorOnEdit
 augroup END
 
 "
-"" Create backup and swap directories
+"" Create backup, swap and undo directories
 "
 if !isdirectory(&backupdir)
    call mkdir(&backupdir)
@@ -417,6 +424,10 @@ endif
 
 if exists("$VIM_SWAP_DIR") && !isdirectory($VIM_SWAP_DIR)
    call mkdir($VIM_SWAP_DIR)
+endif
+
+if exists("$VIM_UNDO_DIR") && !isdirectory($VIM_UNDO_DIR)
+   call mkdir($VIM_UNDO_DIR)
 endif
 
 
