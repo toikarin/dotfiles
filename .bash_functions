@@ -123,6 +123,7 @@ function e()
    if [ -f "${file}" ] ; then
       if [ ${list} -eq 0 ]; then
          case "${file}" in
+            *.7z)                  7zr e "${file}"        ;;
             *.tar.bz2 | *.tbz2)    tar xvjf "${file}"     ;;
             *.tar.gz | *.tgz)      tar xvzf "${file}"     ;;
             *.tar)                 tar xvf "${file}"      ;;
@@ -135,6 +136,7 @@ function e()
          esac
       else
          case "${file}" in
+            *.7z)                  7zr l "${file}"        ;;
             *.tar.bz2 | *.tbz2)    tar tvjf "${file}"     ;;
             *.tar.gz | *.tgz)      tar tvzf "${file}"     ;;
             *.tar)                 tar tvf "${file}"      ;;
