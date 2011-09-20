@@ -44,7 +44,7 @@ function budir {
 function bcc {
    bc_bin=$(which bc)
 
-   echo "scale=5; $1" | $bc_bin
+   echo "scale=5; $@" | $bc_bin -l
 }
 
 # Reminder to use sudoedit instead of sudo vim
