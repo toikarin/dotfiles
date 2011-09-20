@@ -5,9 +5,12 @@
 [core]
     excludesfile = ~/.git-excludes
 [color]
-   diff = auto
-   status = auto
    branch = auto
+   diff = auto
+   grep = auto
+   status = auto
+   interactive = auto
+   ui = auto
 [http]
    sslVerify = false
 [merge]
