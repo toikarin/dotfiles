@@ -181,8 +181,13 @@ function prompt_virtualenv() {
 }
 
 function prompt_command() {
-   P_USER=$(prompt_set_temp_color $COLOR_GREEN "\u")
-   P_HOST=$(prompt_set_temp_color $COLOR_GREEN"\h")
+   if [ $UID -ne 0 ]; then
+      P_USER=$(prompt_set_temp_color $COLOR_GREEN "\u")
+      P_HOST=$(prompt_set_temp_color $COLOR_GREEN"\h")
+   else
+      P_USER=$(prompt_set_temp_color $COLOR_RED "\u")
+      P_HOST=$(prompt_set_temp_color $COLOR_RED "\h")
+   fi
    P_DIR=$(prompt_set_temp_color $COLOR_LIGHTCYAN "\w")
    P_DSTACK=$(prompt_dirs_stack_size)
    P_BG_JOBS=$(prompt_get_bg_jobs)
