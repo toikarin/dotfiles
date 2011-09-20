@@ -152,6 +152,26 @@ function e()
    fi
 }
 
+
+function c() {
+   local file=$1
+   shift
+
+   case "${file}" in
+      *.jar | *.ear | *.war) jar -vcf "${file}" "$@"      ;;
+      *.7z)                  7zr a "${file}" "$@"         ;;
+      *.tar.bz2 | *.tbz2)    tar cvjf "${file}" "$@"      ;;
+      *.tar.gz | *.tgz)      tar cvzf "${file}" "$@"      ;;
+      *.bz2)                 cat "$@" | bzip2 > "${file}" ;;
+      *.gz)                  cat "$@" | gzip > "${file}"  ;;
+      *.tar)                 tar cvf "${file}" "$@"       ;;
+      *.rar)                 rar a "${file}" "$@"         ;;
+      *.zip)                 zip -r "${file}" "$@"        ;;
+      *)           echo "Don't know how to compress to file '${file}'" ;;
+   esac
+}
+
+
 # Change keyboard layout between us and finnish
 function change_layout() {
    local SETXKBMAP_BIN=$(which setxkbmap)
