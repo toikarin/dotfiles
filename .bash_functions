@@ -297,7 +297,7 @@ function clean_directory {
    find "$dir" -mindepth 1 -type d -empty ${delete_param}
 }
 
-function rm_empty_svn_dirs {
+function clean_empty_svn_dirs {
    for directory in $(find . -type d ! -path "*.svn*")
    do
       filecount=$(find "${directory}" -type f ! -path "*.svn*" | wc -l)
