@@ -309,6 +309,32 @@ function rm_empty_svn_dirs {
    done
 }
 
+function fileswap {
+   local file_1=$1
+   local file_2=$2
+
+   if [[ -z "${file_1}" || -z "${file_2}" ]]; then
+      echo "Usage: fileswap <file1> <file2>"
+      return 1
+   fi
+
+   if [ ! -e "${file_1}" ]; then
+      echo "File '${file_1}' doesn't exists."
+      return 1
+   fi
+
+   if [ ! -e "${file_2}" ]; then
+      echo "File '${file_2}' doesn't exists."
+      return 1
+   fi
+
+   tmp=$(mktemp)
+
+   mv "$file_1" "$tmp"
+   mv "$file_2" "$file_1"
+   mv "$tmp" "$file_2"
+}
+
 function dclean {
    sudo apt-get -y autoremove
    dpkg -l | grep "^rc" | awk '{ print $2 }' | xargs sudo apt-get -y purge
