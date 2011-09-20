@@ -37,7 +37,7 @@ export HISTFILESIZE=$HISTSIZE
 export JAVA_HOME="/usr/lib/jvm/java-6-sun"
 
 # Week starts on monday
-export GCAL="-s1"
+export GCAL="-s1 -K"
 
 #
 # Set path
