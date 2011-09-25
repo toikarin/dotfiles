@@ -356,6 +356,9 @@ vnoremap <A-k> :m-2<cr>gv
 " Move visual selection down
 vnoremap <A-j> :m'>+<cr>gv
 
+" Redraw the screen and remove any search highlighting
+nnoremap <silent> <C-l> :nohl<cr><C-l>
+
 
 "
 "" Autocommands
