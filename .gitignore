@@ -1,5 +1,6 @@
 .vim/swap
 .vim/backups
+.vim/undo
 .vim/bundle/*/doc/tags
 # NerdTree history
 .vim/.netrwhist

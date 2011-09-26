@@ -17,6 +17,10 @@ set! browser.tabs.closeWindowWithLastTab=false
 set! general.warnOnAboutConfig=false
 set! network.cookie.cookieBehavior=1
 set! browser.startup.homepage="http://www.google.com"
+set! dom.disable_window_move_resize=true
+set! dom.event.contextmenu.enabled=false
+set! signon.rememberSignons=false
+set! privacy.donottrackheader.enabled=true
 
 silent qmark r http://www.reddit.com
 silent qmark p http://www.reddit.com/r/programming

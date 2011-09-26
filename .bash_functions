@@ -44,7 +44,7 @@ function budir {
 function bcc {
    bc_bin=$(which bc)
 
-   echo "scale=5; $1" | $bc_bin
+   echo "scale=5; $@" | $bc_bin -l
 }
 
 # Reminder to use sudoedit instead of sudo vim
@@ -123,6 +123,7 @@ function e()
    if [ -f "${file}" ] ; then
       if [ ${list} -eq 0 ]; then
          case "${file}" in
+            *.7z)                  7zr e "${file}"        ;;
             *.tar.bz2 | *.tbz2)    tar xvjf "${file}"     ;;
             *.tar.gz | *.tgz)      tar xvzf "${file}"     ;;
             *.tar)                 tar xvf "${file}"      ;;
@@ -135,6 +136,7 @@ function e()
          esac
       else
          case "${file}" in
+            *.7z)                  7zr l "${file}"        ;;
             *.tar.bz2 | *.tbz2)    tar tvjf "${file}"     ;;
             *.tar.gz | *.tgz)      tar tvzf "${file}"     ;;
             *.tar)                 tar tvf "${file}"      ;;
@@ -149,6 +151,26 @@ function e()
       return 1
    fi
 }
+
+
+function c() {
+   local file=$1
+   shift
+
+   case "${file}" in
+      *.jar | *.ear | *.war) jar -vcf "${file}" "$@"      ;;
+      *.7z)                  7zr a "${file}" "$@"         ;;
+      *.tar.bz2 | *.tbz2)    tar cvjf "${file}" "$@"      ;;
+      *.tar.gz | *.tgz)      tar cvzf "${file}" "$@"      ;;
+      *.bz2)                 cat "$@" | bzip2 > "${file}" ;;
+      *.gz)                  cat "$@" | gzip > "${file}"  ;;
+      *.tar)                 tar cvf "${file}" "$@"       ;;
+      *.rar)                 rar a "${file}" "$@"         ;;
+      *.zip)                 zip -r "${file}" "$@"        ;;
+      *)           echo "Don't know how to compress to file '${file}'" ;;
+   esac
+}
+
 
 # Change keyboard layout between us and finnish
 function change_layout() {
@@ -275,7 +297,7 @@ function clean_directory {
    find "$dir" -mindepth 1 -type d -empty ${delete_param}
 }
 
-function rm_empty_svn_dirs {
+function clean_empty_svn_dirs {
    for directory in $(find . -type d ! -path "*.svn*")
    do
       filecount=$(find "${directory}" -type f ! -path "*.svn*" | wc -l)
@@ -285,6 +307,32 @@ function rm_empty_svn_dirs {
          svn rm "${directory}"
       fi
    done
+}
+
+function fileswap {
+   local file_1=$1
+   local file_2=$2
+
+   if [[ -z "${file_1}" || -z "${file_2}" ]]; then
+      echo "Usage: fileswap <file1> <file2>"
+      return 1
+   fi
+
+   if [ ! -e "${file_1}" ]; then
+      echo "File '${file_1}' doesn't exists."
+      return 1
+   fi
+
+   if [ ! -e "${file_2}" ]; then
+      echo "File '${file_2}' doesn't exists."
+      return 1
+   fi
+
+   tmp=$(mktemp)
+
+   mv "$file_1" "$tmp"
+   mv "$file_2" "$file_1"
+   mv "$tmp" "$file_2"
 }
 
 function dclean {

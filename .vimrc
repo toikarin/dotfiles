@@ -42,6 +42,13 @@ set backupdir=~/.vim/backups
 let $VIM_SWAP_DIR=expand("~/.vim/swap")
 set directory=$VIM_SWAP_DIR
 
+if version >= 703
+   set undofile
+
+   let $VIM_UNDO_DIR=expand("~/.vim/undo")
+   set undodir=$VIM_UNDO_DIR
+endif
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
@@ -123,6 +130,14 @@ if has("gui_running")
    " Remove left-hand scrollbar when there is a vertically split window
    set guioptions-=L
 endif
+
+"
+" Custom syntax
+"
+
+highlight WhiteSpaceEOL ctermbg=red guibg=red term=bold
+syntax match WhiteSpaceEOL /\s\+$\| \+\ze\t/
+
 
 "
 "" Mouse
@@ -364,16 +379,12 @@ if !exists("autocommands_loaded") && has("autocmd")
    autocmd BufRead,BufNewFile *.txt set spell
    " JSON
    autocmd BufRead,BufNewFile *.json setfiletype json
-   " highlight whitespaces at the end of the line
-   autocmd BufWinEnter * match WhiteSpaceEOL /\s\+$/
-   " highlight whitespaces before tabs
-   autocmd BufWinEnter * match WhiteSpaceEOL / \+\ze\t/
-   " Since BufWinEnter commands are executed every time a buffer is displayed, the match command is executed
-   " many times during a vim session. This seems to lead to a memory leak which slowly impacts performance.
-   autocmd BufWinLeave * call clearmatches()
+   " Prevent losing syntax after new syntax file is loaded
+   autocmd Syntax * syntax match WhiteSpaceEOL /\s\+$\| \+\ze\t/
 
    let autocommands_loaded=1
 endif
+
 
 "
 "" Tip 80
@@ -405,7 +416,7 @@ augroup JumpCursorOnEdit
 augroup END
 
 "
-"" Create backup and swap directories
+"" Create backup, swap and undo directories
 "
 if !isdirectory(&backupdir)
    call mkdir(&backupdir)
@@ -413,6 +424,10 @@ endif
 
 if exists("$VIM_SWAP_DIR") && !isdirectory($VIM_SWAP_DIR)
    call mkdir($VIM_SWAP_DIR)
+endif
+
+if exists("$VIM_UNDO_DIR") && !isdirectory($VIM_UNDO_DIR)
+   call mkdir($VIM_UNDO_DIR)
 endif
 
 
@@ -485,13 +500,6 @@ if &diff
    " Update the diff highlighting and folds
    map <f5> :diffupdate<cr>
 endif
-
-"
-" Custom syntax
-"
-
-highlight WhiteSpaceEOL ctermbg=red guibg=red term=bold
-
 
 "
 "" Commands

@@ -5,13 +5,22 @@
 [core]
     excludesfile = ~/.git-excludes
 [color]
-   diff = auto
-   status = auto
    branch = auto
+   diff = auto
+   grep = auto
+   status = auto
+   interactive = auto
+   ui = auto
 [http]
    sslVerify = false
 [merge]
    tool = vimdiff
+[mergetool]
+   tool = vimdiff
+   prompt = false
+[difftool]
+   tool = vimdiff
+   prompt = false
 [alias]
 # Short log
    l = log --pretty=format:'%Cred%h%Creset - %C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset %C(yellow)%d%Creset' --abbrev-commit --date=relative
@@ -28,3 +37,5 @@
    s  = status
    aliases = !git config --list | grep ^alias
    b = checkout -b
+   ad = !git stash show -p | git apply && git stash drop
+   rc = rebase --continue
