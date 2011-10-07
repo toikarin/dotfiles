@@ -28,6 +28,7 @@ i.create_symlink(".bash_exports.tmpl")
 
 i.create_directory("bin")
 i.create_symlink("bin/find-parent-dir")
+i.create_symlink("bin/wminit.sh")
 
 i.create_directory(".i3")
 i.create_symlink(".i3-config", ".i3/config")
