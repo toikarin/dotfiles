@@ -22,16 +22,16 @@ bindsym $mod+Tab exec /usr/bin/dmenu_run
 bindsym Mod4+F11 exec xscreensaver-command -lock
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+h focus left
 
 # move focused window
-bindsym $mod+Shift+J move left
-bindsym $mod+Shift+K move down
-bindsym $mod+Shift+L move up
-bindsym $mod+Shift+colon move right
+bindsym $mod+Shift+H move left
+bindsym $mod+Shift+J move down
+bindsym $mod+Shift+K move up
+bindsym $mod+Shift+L move right
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -112,7 +112,7 @@ exec i3status | i3bar -d
 
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+f split h
 
 # split in vertical orientation
 bindsym $mod+v split v
