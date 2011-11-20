@@ -32,3 +32,4 @@ i.create_symlink("bin/wminit.sh")
 
 i.create_directory(".i3")
 i.create_symlink(".i3-config", ".i3/config")
+i.create_symlink(".i3status.conf")
