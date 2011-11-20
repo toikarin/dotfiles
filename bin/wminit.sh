@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+source ~/.bash_exports
 source ~/.bash_functions
 
 change_layout us
