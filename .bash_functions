@@ -338,11 +338,18 @@ function fileswap {
 function dclean {
    sudo apt-get -y autoremove
    dpkg -l | grep "^rc" | awk '{ print $2 }' | xargs sudo apt-get -y purge
+   dpkg -l | grep "^rc" | awk '{ print $2 }' | xargs --no-run-if-empty sudo dpkg --purge
    sudo apt-get -y clean
+}
+
+function smv {
+   local local_file=$1
+   shift
+
+   scp "${local_file}" $@ && rm "${local_file}"
 }
 
 # Reload bash configuration
 function reload() {
    load_file ~/.bashrc
 }
-

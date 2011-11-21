@@ -356,6 +356,9 @@ vnoremap <A-k> :m-2<cr>gv
 " Move visual selection down
 vnoremap <A-j> :m'>+<cr>gv
 
+" Redraw the screen and remove any search highlighting
+nnoremap <silent> <C-l> :nohl<cr><C-l>
+
 
 "
 "" Autocommands
@@ -369,6 +372,8 @@ if !exists("autocommands_loaded") && has("autocmd")
    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
    autocmd FileType html setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
    autocmd FileType htmldjango setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+   autocmd FileType xhtml setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+   autocmd FileType javascript setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
    " Reload vimrc after editing
    autocmd BufWritePost ~/.vimrc source ~/.vimrc
    " Commit todo-list after write

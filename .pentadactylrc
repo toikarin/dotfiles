@@ -21,6 +21,9 @@ set! dom.disable_window_move_resize=true
 set! dom.event.contextmenu.enabled=false
 set! signon.rememberSignons=false
 set! privacy.donottrackheader.enabled=true
+set! browser.download.dir="~/downloads"
+set! browser.download.lastDir="~/downloads"
+set! browser.download.folderList=2
 
 silent qmark r http://www.reddit.com
 silent qmark p http://www.reddit.com/r/programming

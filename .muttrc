@@ -35,7 +35,8 @@ set signature=~/.mail_signature
 # Set alias file
 set alias_file=~/.mutt_aliases
 
+macro index M "T.*\n;WN" "Mark all messages as read"
+
 # Load other files
 source ~/.mutt_aliases
 source ~/.mutt_mailboxes
-
