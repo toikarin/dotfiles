@@ -76,14 +76,17 @@ class Installer(object):
         if not self.dry_run:
             shutil.copyfile(src, dst)
 
-    def touch(self, target):
+    def create_file(self, target):
         dst = self._d(target)
 
-        print "Touching '%s'." % dst
+        if os.path.exists(dst):
+            return
+
+        print "Creating empty file '%s'." % dst
 
         if not self.dry_run:
             with open(dst, 'a'):
-                os.utime(dst, None)
+                pass
 
     def _s(self, f):
         return os.path.abspath(os.path.join(self.data_root, f))
