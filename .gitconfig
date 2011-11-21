@@ -39,3 +39,5 @@
    b = checkout -b
    ad = !git stash show -p | git apply && git stash drop
    rc = rebase --continue
+[apply]
+   whitespace = fix
