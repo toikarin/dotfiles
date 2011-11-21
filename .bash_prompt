@@ -180,6 +180,12 @@ function prompt_virtualenv() {
    fi
 }
 
+function prompt_ssh() {
+   if [ "$SSH_TTY" != "" ]; then
+      echo $(prompt_set_temp_color ${COLOR_RED} "[ssh] ")
+   fi
+}
+
 function prompt_command() {
    if [ $UID -ne 0 ]; then
       P_USER=$(prompt_set_temp_color $COLOR_GREEN "\u")
@@ -196,8 +202,9 @@ function prompt_command() {
    P_DETACHED_SCREEN=$(prompt_detached_screens)
    P_BATTERY=$(prompt_battery_status)
    P_VIRTUALENV=$(prompt_virtualenv)
+   P_SSH=$(prompt_ssh)
 
-   PS1="${P_BATTERY}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_VIRTUALENV}${P_GIT_BRANCH}\$ "
+   PS1="${P_BATTERY}${P_SSH}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_VIRTUALENV}${P_GIT_BRANCH}\$ "
 }
 
 #

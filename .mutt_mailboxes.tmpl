@@ -1,0 +1,24 @@
+## Maildir
+
+#set mbox_type=Maildir
+#set mask="!^\\.[^.]"
+#set folder="~/Maildir"
+#set mbox="~/Maildir"
+#set spoolfile="~/Maildir"
+#set postponed="+.POSTPONED"
+#set record="+.SENT"
+
+#mailboxes +
+#mailboxes `find ~/Maildir/ -maxdepth 1 -type d -name ".INBOX*" -printf "+'%f'\n" | sort | xargs`
+#mailboxes `find ~/Maildir/ -maxdepth 1 -type d -name ".SENT*" -printf "+'%f'\n" | sort | xargs`
+#mailboxes `find ~/Maildir/ -maxdepth 1 -type d -name ".ARCHIVE*" -printf "+'%f'\n" | sort | xargs`
+
+## IMAP
+
+#set folder=imaps://<user>@<host>
+#set spoolfile=imaps://<user>@<host>
+#set record=+Sent
+#set postponed=+Drafts
+
+
+# vim: set ft=muttrc:

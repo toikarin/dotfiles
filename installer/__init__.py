@@ -76,6 +76,18 @@ class Installer(object):
         if not self.dry_run:
             shutil.copyfile(src, dst)
 
+    def create_file(self, target):
+        dst = self._d(target)
+
+        if os.path.exists(dst):
+            return
+
+        print "Creating empty file '%s'." % dst
+
+        if not self.dry_run:
+            with open(dst, 'a'):
+                pass
+
     def _s(self, f):
         return os.path.abspath(os.path.join(self.data_root, f))
 

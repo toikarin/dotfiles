@@ -4,39 +4,43 @@ set -eu
 
 JAVA_BIN=java
 CLOJURE_CONF=${1:-~/.cljrc}
-CLJ_CLASSPATH=""
+_CLJ_CLASSPATH=""
 
 function main() {
    # Read config
-   if [ -f "${CLOJURE_CONF}" ]; then
+   if [[ ${CLJ_READ_CONF:-1} -eq 1 && -f "${CLOJURE_CONF}" ]]; then
       source "$CLOJURE_CONF"
-   else
-      echo "Unable to open configuration file '${CLOJURE_CONF}'."
-      exit 1
    fi
+
+   clj_jar=${CLJ_CLOJURE_JAR:-${clj_jar:-""}}
+   clj_contrib_jar=${CLJ_CONTRIB_JAR:-${clj_contrib_jar:-""}}
+   clj_wrapper=${CLJ_WRAPPER:-${clj_wrapper:-""}}
+   clj_wrapper_jar=${CLJ_WRAPPER_JAR:-${clj_wrapper_jar:-""}}
+   clj_libs_dir=${CLJ_LIBS_DIR:-${clj_libs_dir:-""}}
+   clj_classpath=${CLJ_CLASSPATH:-${clj_classpath:-""}}
+   clj_java_wrapper=${CLJ_JAVA_WRAPPER:-${clj_java_wrapper:-""}}
+   clj_java_opts=${CLJ_JAVA_OPTS:-${clj_java_opts:-""}}
+   clj_repl_script=${CLJ_REPL_SCRIPT:-${clj_repl_script:-""}}
+   clj_repl_script=${clj_repl_script:+"-i ${clj_repl_script}"}
 
    # Check mandatory configuration options.
    if [ "${clj_jar:-""}" == "" ]; then
-      echo "clj_jar not set in ${CLOJURE_CONF}"
+      echo "clj_jar not set in ${CLOJURE_CONF} and \$CLJ_CLOJURE_JAR is unset."
       exit 1
    fi
 
    # Create classpath
    add_jar_to_classpath "${clj_jar}"
-   add_jar_to_classpath "${clj_contrib_jar:-""}"
-   add_jar_to_classpath "${clj_wrapper_jar:-""}"
-   add_jars_from_dir_to_classpath "${clj_libs_dir:-""}"
+   add_jar_to_classpath "${clj_contrib_jar}"
+   add_jar_to_classpath "${clj_wrapper_jar}"
+   add_jars_from_dir_to_classpath "${clj_libs_dir}"
 
    # Add user defined classpath
-   CLJ_CLASSPATH=${CLJ_CLASSPATH}${clj_classpath:+":${clj_classpath}"}
-
-   # Optional configurations
-   clj_java_opts=${clj_java_opts:-""}
-   clj_wrapper=${clj_wrapper:-""}
+   CLJ_CLASSPATH=${_CLJ_CLASSPATH}${clj_classpath:+":${clj_classpath}"}
 
    # Run
-   echo "Running '${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main'"
-   ${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main
+   echo ${clj_java_wrapper} ${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main ${clj_repl_script} --repl
+   ${clj_java_wrapper} ${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main ${clj_repl_script} --repl
 }
 
 function add_jars_from_dir_to_classpath() {
@@ -66,10 +70,10 @@ function add_jar_to_classpath() {
    fi
 
    if [ -f "${jar}" ]; then
-      if [ "${CLJ_CLASSPATH}" != "" ]; then
-         CLJ_CLASSPATH=${CLJ_CLASSPATH}:${jar}
+      if [ "${_CLJ_CLASSPATH}" != "" ]; then
+         _CLJ_CLASSPATH=${_CLJ_CLASSPATH}:${jar}
       else
-         CLJ_CLASSPATH=${jar}
+         _CLJ_CLASSPATH=${jar}
       fi
    else
       echo "File '${jar}' doesn't exist."
