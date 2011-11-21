@@ -195,8 +195,41 @@ function change_layout() {
    echo "Current layout: ${new_layout}"
 }
 
+function touchpad_initial_state() {
+   if [ "${BS_TOUCHPAD_INIT_STATE}" == "off" ]; then
+      touchpad_disable
+   elif [ "${BS_TOUCHPAD_INIT_STATE}" == "on" ]; then
+      touchpad_enable
+   fi
+}
+
+function touchpad_check_usb_mouse() {
+   if [ "${BS_USB_MOUSES}" == "" ]; then
+      return
+   fi
+
+   OLD_IFS=$IFS
+   IFS=',' read -ra MOUSES <<< "$BS_USB_MOUSES"
+   IFS=$OLD_IFS
+
+   for mouse in "${MOUSES[@]}"
+   do
+      lsusb -d "${mouse}" > /dev/null
+      if [ $? -eq 0 ]; then
+         touchpad_disable
+         return
+      fi
+   done
+
+   touchpad_enable
+}
+
 function touchpad_disable() {
    synclient TouchpadOff=1
+}
+
+function touchpad_enable() {
+   synclient TouchpadOff=0
 }
 
 function touchpad_toggle() {
