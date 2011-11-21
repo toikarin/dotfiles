@@ -338,6 +338,7 @@ function fileswap {
 function dclean {
    sudo apt-get -y autoremove
    dpkg -l | grep "^rc" | awk '{ print $2 }' | xargs sudo apt-get -y purge
+   dpkg -l | grep "^rc" | awk '{ print $2 }' | xargs --no-run-if-empty sudo dpkg --purge
    sudo apt-get -y clean
 }
 
