@@ -30,5 +30,12 @@ i.create_directory("bin")
 i.create_symlink("bin/find-parent-dir")
 i.create_symlink("bin/wminit.sh")
 
+i.create_symlink(".muttrc")
+i.create_symlink(".mutt_sidebar.tmpl")
+i.touch(".mutt_aliases")
+i.touch(".mutt_mailboxes")
+i.touch(".mutt_sidebar")
+i.touch(".mutt_signature")
+
 i.create_directory(".i3")
 i.create_symlink(".i3-config", ".i3/config")

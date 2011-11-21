@@ -76,6 +76,15 @@ class Installer(object):
         if not self.dry_run:
             shutil.copyfile(src, dst)
 
+    def touch(self, target):
+        dst = self._d(target)
+
+        print "Touching '%s'." % dst
+
+        if not self.dry_run:
+            with open(dst, 'w'):
+                os.utime(dst, None)
+
     def _s(self, f):
         return os.path.abspath(os.path.join(self.data_root, f))
 
