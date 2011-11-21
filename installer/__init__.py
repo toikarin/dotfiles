@@ -82,7 +82,7 @@ class Installer(object):
         print "Touching '%s'." % dst
 
         if not self.dry_run:
-            with open(dst, 'w'):
+            with open(dst, 'a'):
                 os.utime(dst, None)
 
     def _s(self, f):
