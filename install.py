@@ -36,7 +36,6 @@ i.create_symlink(".mutt_mailboxes.tmpl")
 i.create_file(".mutt_aliases")
 i.create_file(".mutt_mailboxes")
 i.create_file(".mutt_sidebar")
-i.create_file(".mail_signature")
 
 i.create_directory(".i3")
 i.create_symlink(".i3-config", ".i3/config")
