@@ -342,8 +342,14 @@ function dclean {
    sudo apt-get -y clean
 }
 
+function smv {
+   local local_file=$1
+   shift
+
+   scp "${local_file}" $@ && rm "${local_file}"
+}
+
 # Reload bash configuration
 function reload() {
    load_file ~/.bashrc
 }
-
