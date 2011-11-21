@@ -39,5 +39,7 @@
    b = checkout -b
    ad = !git stash show -p | git apply && git stash drop
    rc = rebase --continue
+[sendemail]
+	smtpserver = /usr/bin/msmtp
 [apply]
    whitespace = fix
