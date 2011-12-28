@@ -28,6 +28,8 @@ set quit=ask-no
 # number of seconds after a keypress in the main menu before checking for new mail
 set timeout=30
 
+set sendmail="/usr/bin/msmtp"
+
 # Set header cache
 set header_cache=~/.mutt_cache
 # Set signature file

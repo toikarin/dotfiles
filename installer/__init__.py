@@ -27,7 +27,7 @@ class Installer(object):
         dst = self._d(target)
 
         if not os.path.exists(dst):
-            print "Making directories for %s" % dst
+            print("Making directories for {}.".format(dst))
 
             if not self.dry_run:
                 os.makedirs(dst)
@@ -45,15 +45,15 @@ class Installer(object):
                 abs_link = link if os.path.isabs(link) else self._d(link)
 
                 if abs_link == src:
-                    print "Not installing file '%s' because identical symlink already exists." % src
+                    print("Not installing file '{}' because identical symlink already exists.".format(dst))
                     return
 
             bu_dst = self._find_free_fn(dst)
-            print "Renaming '%s' to '%s'." % (dst, bu_dst)
+            print("Renaming '{}' to '{}'.".format(dst, bu_dst))
             if not self.dry_run:
                 os.rename(dst, bu_dst)
 
-        print "Creating symlink from '%s' to '%s'." % (src, dst)
+        print("Creating symlink from '{}' to '{}'.".format(src, dst))
 
         if not self.dry_run:
             os.symlink(src, dst)
@@ -67,11 +67,11 @@ class Installer(object):
 
         if os.path.exists(dst):
             bu_dst = self._find_free_fn(dst)
-            print "Renaming '%s' to '%s'." % (dst, bu_dst)
+            print("Renaming '{}' to '{}'.".format(dst, bu_dst))
             if not self.dry_run:
                 os.rename(dst, bu_dst)
 
-        print "Copying '%s' to '%s'." % (src, dst)
+        print("Copying '{}' to '{}'.".format(src, dst))
 
         if not self.dry_run:
             shutil.copyfile(src, dst)
@@ -82,7 +82,7 @@ class Installer(object):
         if os.path.exists(dst):
             return
 
-        print "Creating empty file '%s'." % dst
+        print("Creating empty file '{}'.".format(dst))
 
         if not self.dry_run:
             with open(dst, 'a'):
@@ -102,7 +102,7 @@ class Installer(object):
 
         i = 1
         while True:
-            fn = "%s-%s" % (target, i)
+            fn = "{}-{}".format(target, i)
             if os.path.exists(fn):
                 i += 1
             else:
