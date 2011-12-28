@@ -30,3 +30,8 @@ alias tf='tail -f -n 100'
 alias mkdirdate='mkdir $(date +%Y%m%d)'
 
 alias vrecord='ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq'
+
+alias tarsnap-list-archives='sudo tarsnap --configfile /etc/tarsnap.conf --list-archives -vv | sort'
+alias tarsnap-list-files='sudo tarsnap --configfile /etc/tarsnap.conf -tv -f'
+alias tarsnap-restore-archive='sudo tarsnap --configfile /etc/tarsnap.conf -x -f'
+alias tarsnap-delete-archive='sudo tarsnap --configfile /etc/tarsnap.conf -d -f'
