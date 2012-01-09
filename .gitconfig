@@ -42,4 +42,4 @@
 [sendemail]
 	smtpserver = /usr/bin/msmtp
 [apply]
-   whitespace = fix
+   whitespace = warn
