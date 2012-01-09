@@ -106,10 +106,10 @@ bindsym $mod+Shift+E exit
 
 # Startup
 exec ~/bin/wminit.sh
-exec i3status | i3bar -d
 
-
-
+bar {
+   status_command i3status
+}
 
 # split in horizontal orientation
 bindsym $mod+f split h
