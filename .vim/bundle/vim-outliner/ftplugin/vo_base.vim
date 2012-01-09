@@ -1,6 +1,6 @@
 "#########################################################################
 "# ftplugin/vo_base.vim: VimOutliner functions, commands and settings
-"# version 0.3.0
+"# version 0.3.6
 "#   Copyright (C) 2001,2003 by Steve Litt (slitt@troubleshooters.com)
 "#   Copyright (C) 2004 by Noel Henson (noel@noels-lab.com)
 "#
@@ -49,14 +49,14 @@
 "# Noel Henson, 11/24/2002
 "# End of version 0.2.0
 "# 
-"# All other history in the CHANGES file.
+"# All other history in the CHANGELOG file.
 "# END OF HISTORY
 "# 
 "#########################################################################
 
 
 " Load the plugin {{{1
-" Prevenet the plugin from being loaded twice
+" Prevent the plugin from being loaded twice
 "if exists("b:did_ftplugin")
 "  finish
 "endif
@@ -84,7 +84,7 @@ setlocal noexpandtab
 setlocal nosmarttab
 setlocal softtabstop=0 
 setlocal foldlevel=20
-setlocal foldcolumn=1		" turns on "+" at the begining of close folds
+setlocal foldcolumn=1		" turns on "+" at the beginning of close folds
 setlocal tabstop=4			" tabstop and shiftwidth must match
 setlocal shiftwidth=4		" values from 2 to 8 work well
 setlocal foldmethod=expr
@@ -169,7 +169,7 @@ function! PutHead(line)
 endfunction
 "}}}3
 " NextHead(line) {{{3
-" Return line of next heanding
+" Return line of next heading
 " Used for sorts and reordering of headings
 function! NextHead(line)
 	let l:fend = foldclosedend(a:line)
@@ -184,9 +184,12 @@ endfunction
 " Compare this heading and the next
 " Return 1: next is greater, 0 next is same, -1 next is less
 function! CompHead(line)
+	let nexthead = NextHead(a:line)
 	let l:thisline=getline(a:line)
-	let l:nextline=getline(NextHead(a:line))
-	if l:thisline <# l:nextline
+	let l:nextline=getline(nexthead)
+	if indent(a:line) != indent(nexthead)
+		return 0
+	elseif l:thisline <# l:nextline
 		return 1
 	elseif l:thisline ># l:nextline
 		return -1
@@ -194,6 +197,7 @@ function! CompHead(line)
 		return 0
 	endif
 endfunction
+
 "}}}3
 " Sort1Line(line) {{{3
 " Compare this heading and the next and swap if out of order
@@ -239,7 +243,7 @@ endfunction
 "}}}3
 " SortChildren(dir) {{{3
 " Sort the children of a parent 
-" dir: 0 = ascending, 1 = decending 
+" dir: 0 = ascending, 1 = descending 
 function! SortChildren(dir)
 	let l:oldcursor = line(".")
 	let l:fstart = FindParent(line("."))
@@ -539,7 +543,7 @@ endfunction
 endif
 "}}}2
 " This should be a setlocal but that doesn't work when switching to a new .otl file
-" within the same buffer. Using :e has demonstrates this.
+" within the same buffer. Using :e has demonstrated this.
 set foldtext=MyFoldText()
 
 setlocal fillchars=|, 
@@ -549,66 +553,66 @@ endif " if !exists("loaded_vimoutliner_functions")
 
 " Vim Outliner Key Mappings {{{1
 " insert the date
-nmap <buffer> <localleader>d $:call InsertSpaceDate()<cr>
-imap <buffer> <localleader>d ~<esc>x:call InsertDate(0)<cr>a
-nmap <buffer> <localleader>D ^:call InsertDate(1)<cr>a <esc>
+nmap <silent><buffer> <localleader>d $:call InsertSpaceDate()<cr>
+imap <silent><buffer> <localleader>d ~<esc>x:call InsertDate(0)<cr>a
+nmap <silent><buffer> <localleader>D ^:call InsertDate(1)<cr>a <esc>
 
 
 " insert the time
-nmap <buffer> <localleader>t $:call InsertSpaceTime()<cr>
-imap <buffer> <localleader>t ~<esc>x:call InsertTime(0)<cr>a
-nmap <buffer> <localleader>T ^:call InsertTime(1)<cr>a <esc>
+nmap <silent><buffer> <localleader>t $:call InsertSpaceTime()<cr>
+imap <silent><buffer> <localleader>t ~<esc>x:call InsertTime(0)<cr>a
+nmap <silent><buffer> <localleader>T ^:call InsertTime(1)<cr>a <esc>
 
 " sort a list naturally
-map <buffer> <localleader>s :call SortChildren(0)<cr>
+map <silent> <buffer> <localleader>s :silent call SortChildren(0)<cr>
 " sort a list, but you supply the options
-map <buffer> <localleader>S :call SortChildren(1)<cr>
+map <silent> <buffer> <localleader>S :silent call SortChildren(1)<cr>
 
 " invoke the file explorer
-map <buffer> <localleader>f :e .<cr>
-imap <buffer> <localleader>f :e .<cr>
+map <silent><buffer> <localleader>f :e .<cr>
+imap <silent><buffer> <localleader>f :e .<cr>
 
-" Insert a fence for segemented lists.
+" Insert a fence for segmented lists.
 " I also use this divider to create a <hr> when converting to html
-map <buffer> <localleader>- o----------------------------------------0
-imap <buffer> <localleader>- ----------------------------------------<cr>
+map <silent><buffer> <localleader>- o----------------------------------------0
+imap <silent><buffer> <localleader>- ----------------------------------------<cr>
 
 " switch document between the two types of bodytext styles
 if use_space_colon == 1
   "   First, convert document to the marker style
-  map <localleader>b :%s/\(^\t*\) :/\1/e<cr>:%s/\(^\t*\) /\1 : /e<cr>:let @/=""<cr>
+  map <silent><buffer><localleader>b :%s/\(^\t*\) :/\1/e<cr>:%s/\(^\t*\) /\1 : /e<cr>:let @/=""<cr>
   "   Now, convert document to the space style
-  map <localleader>B :%s/\(^\t*\) :/\1/e<cr>:let @/=""<cr>
+  map <silent><buffer><localleader>B :%s/\(^\t*\) :/\1/e<cr>:let @/=""<cr>
 else
   "   First, convert document to the marker style
-  map <localleader>b :%s/\(^\t*\):/\1/e<cr>:%s/\(^\t*\) /\1: /e<cr>:let @/=""<cr>
+  map <silent><buffer><localleader>b :%s/\(^\t*\):/\1/e<cr>:%s/\(^\t*\) /\1: /e<cr>:let @/=""<cr>
   "   Now, convert document to the space style
-  map <localleader>B :%s/\(^\t*\):/\1/e<cr>:let @/=""<cr>
+  map <silent><buffer><localleader>B :%s/\(^\t*\):/\1/e<cr>:let @/=""<cr>
 endif
 
 " Steve's additional mappings start here
-map <buffer>   <C-K>         <C-]>
-map <buffer>   <C-N>         <C-T>
-map <buffer>   <localleader>0           :set foldlevel=99999<CR>
-map <buffer>   <localleader>9           :set foldlevel=8<CR>
-map <buffer>   <localleader>8           :set foldlevel=7<CR>
-map <buffer>   <localleader>7           :set foldlevel=6<CR>
-map <buffer>   <localleader>6           :set foldlevel=5<CR>
-map <buffer>   <localleader>5           :set foldlevel=4<CR>
-map <buffer>   <localleader>4           :set foldlevel=3<CR>
-map <buffer>   <localleader>3           :set foldlevel=2<CR>
-map <buffer>   <localleader>2           :set foldlevel=1<CR>
-map <buffer>   <localleader>1           :set foldlevel=0<CR>
-map <buffer>   <localleader>,,          :source $HOME/.vimoutliner/outliner.vim<CR>
-map! <buffer>  <localleader>w           <Esc>:w<CR>a
-nmap <buffer>   <localleader>e		:call Spawn()<cr>
+map <silent><buffer>   <C-K>         <C-]>
+map <silent><buffer>   <C-N>         <C-T>
+map <silent><buffer>   <localleader>0           :set foldlevel=99999<CR>
+map <silent><buffer>   <localleader>9           :set foldlevel=8<CR>
+map <silent><buffer>   <localleader>8           :set foldlevel=7<CR>
+map <silent><buffer>   <localleader>7           :set foldlevel=6<CR>
+map <silent><buffer>   <localleader>6           :set foldlevel=5<CR>
+map <silent><buffer>   <localleader>5           :set foldlevel=4<CR>
+map <silent><buffer>   <localleader>4           :set foldlevel=3<CR>
+map <silent><buffer>   <localleader>3           :set foldlevel=2<CR>
+map <silent><buffer>   <localleader>2           :set foldlevel=1<CR>
+map <silent><buffer>   <localleader>1           :set foldlevel=0<CR>
+map <silent><buffer>   <localleader>,,          :runtime vimoutliner/vimoutlinerrc<CR>
+map! <silent><buffer>  <localleader>w           <Esc>:w<CR>a
+nmap <silent><buffer>  <localleader>e           :call Spawn()<cr>
 " Steve's additional mappings end here
 
 " Placeholders for already assigned but non-functional commands
-map <buffer> <localleader>h :echo "VimOutliner reserved command: ,,h"<cr>
-imap <buffer> <localleader>h :echo "VimOutliner reserved command: ,,h"<cr>
-map <buffer> <localleader>H :echo "VimOutliner reserved command: ,,H"<cr>
-imap <buffer> <localleader>H :echo "VimOutliner reserved command: ,,H"<cr>
+map <silent><buffer> <localleader>h :echo "VimOutliner reserved command: ,,h"<cr>
+imap <silent><buffer> <localleader>h :echo "VimOutliner reserved command: ,,h"<cr>
+map <silent><buffer> <localleader>H :echo "VimOutliner reserved command: ,,H"<cr>
+imap <silent><buffer> <localleader>H :echo "VimOutliner reserved command: ,,H"<cr>
 
 " End of Vim Outliner Key Mappings }}}1
 " Menu Entries {{{1
@@ -624,8 +628,19 @@ amenu &VO.Expand\ Level\ &8 :set foldlevel=7<cr>
 amenu &VO.Expand\ Level\ &9 :set foldlevel=8<cr>
 amenu &VO.Expand\ Level\ &All :set foldlevel=99999<cr>
 amenu &VO.-Sep1- :
-amenu &VO.&Tools.&otl2thml\.py\	(otl2html\.py\ thisfile\ -S\ nnnnnn\.css\ >\ thisfile\.html) :!otl2html.py -S nnnnnn.css % > %.html<cr>
-amenu &VO.&Tools.&myotl2thml\.sh\	(myotl2html\.sh\ thisfile) :!myotl2html.sh %<cr>
+"Tools sub-menu
+let s:path2scripts = expand('<sfile>:p:h:h').'/vimoutliner/scripts'
+" otl2html
+exec 'amenu &VO.&Tools.otl2&html\.py\	(otl2html\.py\ thisfile\ -S\ html2otl_nnnnnn\.css\ >\ thisfile\.html) :!'.s:path2scripts.'/otl2html.py -S html2otl_nnnnnn.css % > %.html<CR>'
+" otl2docbook
+exec 'amenu &VO.&Tools.otl2&docbook\.pl\	(otl2docbook\.pl\ thisfile\ >\ thisfile\.dbk) :!'.s:path2scripts.'/otl2docbook.pl % > %.dbk<CR>'
+" otl2table
+exec 'amenu &VO.&Tools.otl2&table\.py\	(otl2table\.py\ thisfile\ >\ thisfile\.txt) :!'.s:path2scripts.'/otl2table.py % > %.txt<CR>'
+" otl2tags => FreeMind
+exec 'amenu &VO.&Tools.otl2tags\.py\ =>\ &FreeMind\	(otl2tags\.py\ \-c\ otl2tags_freemind\.conf\ thisfile\ >\ thisfile\.mm) :!'.s:path2scripts.'/otl2tags.py -c '.s:path2scripts.'/otl2tags_freemind.conf % > %.mm<CR>'
+" otl2tags => Graphviz
+exec 'amenu &VO.&Tools.otl2tags\.py\ =>\ &Graphviz\	(otl2tags\.py\ \-c\ otl2tags_graphviz\.conf\ thisfile\ >\ thisfile\.gv) :!'.s:path2scripts.'/otl2tags.py -c '.s:path2scripts.'/otl2tags_graphviz.conf % > %.gv<CR>'
+amenu &VO.&Tools.&myotl2thml\.sh\	(myotl2html\.sh\ thisfile) :!myotl2html.sh %<CR>
 amenu &VO.-Sep2- :
 amenu &VO.&Color\ Scheme :popup Edit.Color\ Scheme<cr>
 amenu &VO.-Sep3- :
@@ -650,27 +665,25 @@ endif
 "}}}1
 
 " this command needs to be run every time so Vim doesn't forget where to look
-setlocal tags^=$HOME/.vimoutliner/vo_tags.tag
+setlocal tags^=$HOME/.vim/vimoutliner/vo_tags.tag
 
 " Added an indication of current syntax as per Dillon Jones' request
 let b:current_syntax = "outliner"
- 
-" Personal configuration options files as per Matej Cepl
-setlocal runtimepath+=$HOME/.vimoutliner,$HOME
-ru! .vimoutlinerrc vimoutlinerrc
-" More sophisticated version of the modules loading; thanks to Preben 'Peppe'
-" Guldberg for telling me how to split string and make semi-lists with vim.
-" - Matej Cepl
-let s:tmp = g:vo_modules_load . ':'
-let s:idx = stridx(s:tmp, ':')
 
-while (s:idx != -1)
-    let s:part = strpart(s:tmp, 0, s:idx)
-    let s:tmp = strpart(s:tmp, s:idx + 1)
-    let s:idx = stridx(s:tmp, ':')
-    "exec 'ru! ftplugin/vo_' . part . '.vim'
-    exec "runtime! plugins/vo_" . s:part . ".vim"
-endwhile
+" Load rc file, only the first found.
+let rcs = split(globpath('$HOME,$HOME/.vimoutliner','.vimoutlinerrc'), "\n") + split(globpath('$HOME,$HOME/.vimouliner', 'vimoutlinerrc'), "\n")
+if len(rcs) > 0
+	exec 'source '.rcs[0]
+else
+	runtime vimoutliner/vimoutlinerrc
+endif
+" Load modules
+if exists('g:vo_modules_load')
+	for vo_module in split(g:vo_modules_load, '\s*:\s*')
+		exec "runtime vimoutliner/plugin/vo_" . vo_module . ".vim"
+	endfor
+unlet! vo_module
+endif
 
 " The End
 " vim600: set foldmethod=marker foldlevel=0:
