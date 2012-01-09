@@ -27,7 +27,7 @@ class Installer(object):
         dst = self._d(target)
 
         if not os.path.exists(dst):
-            print("Making directories for {}.".format(dst))
+            print("Making directories for {dest}.".format(dest=dst))
 
             if not self.dry_run:
                 os.makedirs(dst)
@@ -45,15 +45,15 @@ class Installer(object):
                 abs_link = link if os.path.isabs(link) else self._d(link)
 
                 if abs_link == src:
-                    print("Not installing file '{}' because identical symlink already exists.".format(dst))
+                    print("Not installing file '{dest}' because identical symlink already exists.".format(dest=dst))
                     return
 
             bu_dst = self._find_free_fn(dst)
-            print("Renaming '{}' to '{}'.".format(dst, bu_dst))
+            print("Renaming '{src}' to '{dest}'.".format(src=dst, dest=bu_dst))
             if not self.dry_run:
                 os.rename(dst, bu_dst)
 
-        print("Creating symlink from '{}' to '{}'.".format(src, dst))
+        print("Creating symlink from '{src}' to '{dest}'.".format(src=src, dest=dst))
 
         if not self.dry_run:
             os.symlink(src, dst)
@@ -67,11 +67,11 @@ class Installer(object):
 
         if os.path.exists(dst):
             bu_dst = self._find_free_fn(dst)
-            print("Renaming '{}' to '{}'.".format(dst, bu_dst))
+            print("Renaming '{src}' to '{dest}'.".format(src=dst, dest=bu_dst))
             if not self.dry_run:
                 os.rename(dst, bu_dst)
 
-        print("Copying '{}' to '{}'.".format(src, dst))
+        print("Copying '{src}' to '{dest}'.".format(src=src, dest=dst))
 
         if not self.dry_run:
             shutil.copyfile(src, dst)
@@ -82,7 +82,7 @@ class Installer(object):
         if os.path.exists(dst):
             return
 
-        print("Creating empty file '{}'.".format(dst))
+        print("Creating empty file '{dest}'.".format(dest=dst))
 
         if not self.dry_run:
             with open(dst, 'a'):
@@ -102,7 +102,7 @@ class Installer(object):
 
         i = 1
         while True:
-            fn = "{}-{}".format(target, i)
+            fn = "{filename}-{num}".format(filename=target, num=i)
             if os.path.exists(fn):
                 i += 1
             else:
