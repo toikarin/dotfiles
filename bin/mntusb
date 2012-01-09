@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+device=${1:-"sdb1"}
+
+sudo mount -o uid=${UID},gid=${GROUPS},fmask=113,dmask=022 "/dev/${device}" /mnt/usb
