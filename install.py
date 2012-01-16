@@ -9,9 +9,9 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 i = installer.create_installer_from_parser_opts(script_dir)
 
 if i.dry_run:
-    print()
+    print("")
     print("Doing dry-run. Nothing is installed. Use -n flag to do real installation if everything looks ok.")
-    print()
+    print("")
 
 i.create_symlink(".gitconfig")
 i.create_symlink(".git-excludes")
