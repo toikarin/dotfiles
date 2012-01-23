@@ -382,6 +382,34 @@ function smv {
    scp "${local_file}" $@ && rm "${local_file}"
 }
 
+showimage() {
+   local file=$1
+   local w3mimgdisplay="/usr/lib/w3m/w3mimgdisplay"
+   local thumbnail="/tmp/shell-thumb"
+
+   if [ -z "${file}" ]; then
+      echo "Usage: showimage <file>"
+      return 1
+   fi
+
+   type -P "${w3mimgdisplay}" &> /dev/null || {
+      echo "w3mimgdisplay not installed."
+      echo ""
+      echo "Use 'apt-get install w3m-img' to install."
+      return 1
+   }
+
+   type -P convert &> /dev/null || {
+      echo "imagemagick not installed."
+      echo ""
+      echo "Use 'apt-get install imagemagick' to install."
+      return 1
+   }
+
+   convert -thumbnail x200 "${file}" "${thumbnail}"
+   echo -e "2;3;\n0;1;0;0;0;0;0;0;0;0;${thumbnail}\n4;\n3;" | "${w3mimgdisplay}"
+}
+
 # Reload bash configuration
 function reload() {
    load_file ~/.bashrc
