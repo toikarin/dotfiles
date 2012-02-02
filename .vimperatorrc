@@ -1,0 +1,41 @@
+" Never show tab bar
+set toolbars=none
+
+" Set external editor
+set editor="vim -f -g -c \":source ~/.vimrc\" -c \":set spell\""
+
+" Disable <C-w>
+map <C-w> <Nop>
+nmap <C-w> <Nop>
+vmap <C-w> <Nop>
+
+map <C-Tab> <Nop>
+nmap <C-Tab> <Nop>
+vmap <C-Tab> <Nop>
+
+set! browser.tabs.closeWindowWithLastTab=false
+set! general.warnOnAboutConfig=false
+set! network.cookie.cookieBehavior=1
+set! browser.startup.homepage="http://www.google.com"
+set! dom.disable_window_move_resize=true
+set! dom.event.contextmenu.enabled=false
+set! signon.rememberSignons=false
+set! privacy.donottrackheader.enabled=true
+set! browser.download.dir="~/downloads"
+set! browser.download.lastDir="~/downloads"
+set! browser.download.folderList=2
+
+silent qmark r http://www.reddit.com
+silent qmark p http://www.reddit.com/r/programming
+silent qmark y http://www.youtube.com
+silent qmark g http://github.com/blakki
+silent qmark f http://www.facebook.com
+silent qmark i http://ilmatieteenlaitos.fi/saa/Oulu
+silent qmark l http://www.linjakas.fi/lang/fi
+silent qmark o http://yle.fi/ohjelmaopas/classic.php?&co[]=tv1&co[]=tv2&co[]=mtv&co[]=nel&co[]=sub&co[]=nep
+
+source! ~/.vimperatorrc-sensitive
+
+echo "Configuration (re)loaded."
+
+" vim: set ft=vimperator:

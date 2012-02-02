@@ -16,6 +16,7 @@ if i.dry_run:
 i.create_symlink(".gitconfig")
 i.create_symlink(".git-excludes")
 i.create_symlink(".pentadactylrc")
+i.create_symlink(".vimperatorrc")
 i.create_symlink(".screenrc")
 i.create_symlink(".vim")
 i.create_symlink(".vimrc")
