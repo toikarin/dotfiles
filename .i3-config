@@ -20,6 +20,7 @@ bindsym $mod+Tab exec /usr/bin/dmenu_run
 
 # Mod4+F11 locks xscreensaver
 bindsym Mod4+F11 exec xscreensaver-command -lock
+bindsym F11 exec ~/bin/i3-change-layout.sh
 
 # change focus
 bindsym $mod+j focus down
