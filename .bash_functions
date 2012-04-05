@@ -73,8 +73,11 @@ function cdable {
 
 # Open browser
 function ob {
-   local browser=$(which firefox)
-   $browser "$(pwd)/$@"
+   if [ "${1:0:1}" == "/" ]; then
+      x-www-browser "$@"
+   else
+      x-www-browser "$(pwd)/$@"
+   fi
 }
 
 # Find java classes by name
