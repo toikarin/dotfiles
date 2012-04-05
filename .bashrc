@@ -28,7 +28,7 @@ export EDITOR=vim
 # Don't save lines matching the previous history entry
 export HISTCONTROL=ignoreboth
 # History ignore
-export HISTIGNORE="lsl:lsa:cd:cd ..:git status:git add -i:git ci:git diff:[bf]g:exit:dmesg:sd"
+export HISTIGNORE="lsl:lsa:cd:cd ..:[bf]g:exit:sd"
 # The number of commands to remember in the command history
 export HISTSIZE=50000
 # The maximum number of lines contained in the history file.
