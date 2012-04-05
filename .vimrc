@@ -345,7 +345,7 @@ map <f1> :set number!<cr>
 map <silent> <leader>w :call Browser()<cr>
 
 " Calculate line with bc
-map <silent> <leader>c "pyy"pp!!bc<cr>kgJa=<esc>
+map <silent> <leader>c "pyy"pp!!bc -l<cr>kgJi=<esc>
 
 " Move line up
 nnoremap <A-k> :m-2<cr>
