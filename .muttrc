@@ -43,3 +43,4 @@ macro index M "T.*\n;WN" "Mark all messages as read"
 source ~/.mutt_aliases
 source ~/.mutt_mailboxes
 source ~/.mutt_sidebar
+source ~/.mutt_sensitive
