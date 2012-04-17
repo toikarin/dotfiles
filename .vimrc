@@ -227,6 +227,16 @@ function! Browser()
    endif
 endfunction
 
+function! g:ToggleNumberMode()
+   if &rnu == 1
+      set number
+   else
+      set relativenumber
+   endif
+endfunction
+
+nnoremap <C-k> :call g:ToggleNumberMode()<cr>
+
 function! ChangeShellScriptMode()
    if getline(1) =~ "^#!/usr/bin/env [a-z]*sh$"
       silent !chmod u+x <afile>
