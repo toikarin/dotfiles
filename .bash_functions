@@ -249,14 +249,14 @@ function touchpad_toggle() {
 }
 
 function set_resolutions() {
-   if [ "$BS_DEFAULT_MONITOR" == "" ]; then
-      echo "export BS_DEFAULT_MONITOR missing."
+   if [ "$BS_MAIN_MONITOR" == "" ]; then
+      echo "export BS_MAIN_MONITOR missing."
       return
    fi
 
-   local def_mon="${BS_DEFAULT_MONITOR}"
-   local def_res="$(xrandr | grep -A1 """${def_mon} connected""" | tail -1 | cut -f4 -d' ')"
-   local other_connected_mon="$(xrandr | grep ' connected' | grep -v "${def_mon}" | cut -f1 -d' ')"
+   local main_mon="${BS_MAIN_MONITOR}"
+   local def_res="$(xrandr | grep -A1 """${main_mon} connected""" | tail -1 | cut -f4 -d' ')"
+   local other_connected_mon="$(xrandr | grep ' connected' | grep -v "${main_mon}" | cut -f1 -d' ')"
    local disconnected_ports=( $(xrandr | grep ' disconnected' | cut -f1 -d' ') )
 
    local other_mon_str=""
@@ -271,15 +271,15 @@ function set_resolutions() {
    if [ "${other_connected_mon}" != "" ]; then
       local other_res="$(xrandr | grep -A1 """${other_connected_mon} connected""" | tail -1 | cut -f4 -d' ')"
 
-      other_mon_str="--output ${other_connected_mon} --mode ${other_res} --${sec_mon_pos}-of ${def_mon}"
+      other_mon_str="--output ${other_connected_mon} --mode ${other_res} --${sec_mon_pos}-of ${main_mon}"
    fi
 
-   echo "Primary monitor (${def_mon}): ${def_res}"
+   echo "Primary monitor (${main_mon}): ${def_res}"
    if [ "${other_connected_mon}" != "" ]; then
       echo "Secondary monitor (${other_connected_mon}): ${other_res} pos: ${sec_mon_pos}"
    fi
 
-   xrandr --output ${def_mon} --mode ${def_res} --primary ${other_mon_str} ${off_str}
+   xrandr --output ${main_mon} --mode ${def_res} --primary ${other_mon_str} ${off_str}
 }
 
 # Tar gz directory
