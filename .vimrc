@@ -235,7 +235,7 @@ function! g:ToggleNumberMode()
    endif
 endfunction
 
-nnoremap <C-k> :call g:ToggleNumberMode()<cr>
+nnoremap <silent> <C-k> :call g:ToggleNumberMode()<cr>
 
 function! ChangeShellScriptMode()
    if getline(1) =~ "^#!/usr/bin/env [a-z]*sh$"
