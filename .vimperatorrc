@@ -25,15 +25,15 @@ set! browser.download.dir="~/downloads"
 set! browser.download.lastDir="~/downloads"
 set! browser.download.folderList=2
 
-silent qmark r http://www.reddit.com
-silent qmark p http://www.reddit.com/r/programming
-silent qmark h https://news.ycombinator.com/
-silent qmark y http://www.youtube.com
-silent qmark g http://github.com/blakki
 silent qmark f https://www.facebook.com
+silent qmark g http://github.com/blakki
+silent qmark h https://news.ycombinator.com/
 silent qmark i http://ilmatieteenlaitos.fi/saa/Oulu
 silent qmark l https://www.linkedin.com
 silent qmark o http://www.iltapulu.fi/
+silent qmark p http://www.reddit.com/r/programming
+silent qmark r http://www.reddit.com
+silent qmark y http://www.youtube.com
 
 source! ~/.vimperatorrc-sensitive
 
