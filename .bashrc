@@ -34,25 +34,26 @@ export HISTSIZE=50000
 # The maximum number of lines contained in the history file.
 export HISTFILESIZE=$HISTSIZE
 
-export JAVA_HOME="/usr/lib/jvm/java-6-sun"
-
 # Week starts on monday
 export GCAL="-s1 -K"
 
 #
 # Set path
 #
+function set_path() {
+    if [ -z $PATH_MODIFIED ]; then
+       export PATH=$PATH:/sbin
+       export PATH=$PATH:/usr/sbin
+       export PATH=$PATH:/opt/bin
+       export PATH=$PATH:~/bin
 
-if [ -z $PATH_MODIFIED ]; then
+       if [ -n $JAVA_HOME ]; then
+           export PATH=$PATH:$JAVA_HOME/bin
+        fi
 
-   export PATH=$PATH:/sbin
-   export PATH=$PATH:/usr/sbin
-   export PATH=$PATH:/opt/bin
-   export PATH=$PATH:~/bin
-   export PATH=$PATH:$JAVA_HOME/bin
-
-   export PATH_MODIFIED=1
-fi
+       export PATH_MODIFIED=1
+    fi
+}
 
 #
 # Load other files
@@ -76,3 +77,5 @@ load_file ~/.bash_completion
 load_file ~/.bash_sensitive
 load_file /etc/bash_completion
 
+# Set path after loading everything (mainly exports)
+set_path
