@@ -71,11 +71,11 @@ set hidden
 " Use spaces instead of tabs
 set expandtab
 " Number of spaces that a <Tab> counts for while performing editing operations
-set softtabstop=3
+set softtabstop=4
 " Number of spaces to use for each step of (auto)indent.
-set shiftwidth=3
+set shiftwidth=4
 " Number of spaces that a <Tab> in the file counts for.
-set tabstop=3
+set tabstop=4
 " Copy indent from current line when starting a new line
 set autoindent
 " Do smart autoindenting when starting a new line.
