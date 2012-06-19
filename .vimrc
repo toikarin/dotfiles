@@ -298,6 +298,8 @@ map <silent> <c-b> :NERDTreeToggle<cr>
 " Toggle Tag list plugin
 map <silent> <c-n> :TlistToggle<cr>
 
+map <leader>f :FufFile<cr>
+
 " Disable arrows
 map <down> <nop>
 map <left> <nop>
