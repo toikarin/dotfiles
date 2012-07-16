@@ -44,6 +44,9 @@ i.create_file(".mutt_mailboxes")
 i.create_file(".mutt_sidebar")
 i.create_file(".mutt_sensitive")
 
+i.create_symlink(".Xmodmap")
+i.create_symlink(".Xdefaults")
+
 i.create_directory(".i3")
 i.create_symlink(".i3-config", ".i3/config")
 i.create_symlink(".i3status.conf")
