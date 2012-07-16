@@ -1,10 +1,4 @@
 !
-!! Allows ion3 to send events
-!
-XTerm*allowSendEvents: true
-UXTerm*allowSendEvents: true
-
-!
 !! Colors
 !
 XTerm.VT100.Background: black
@@ -19,7 +13,6 @@ UXTerm*highlightSelection: true
 !
 !! Scroll bar
 !
-
 XTerm.VT100.scrollBar: true
 UXTerm.VT100.scrollBar: true
 
