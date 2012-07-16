@@ -1,0 +1,3 @@
+#!/bin/sh
+PATH=$PATH:$HOME/bin
+exe=`dmenu_path | dmenu ${1+"$@"}` && exec $exe
