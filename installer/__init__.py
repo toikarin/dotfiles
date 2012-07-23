@@ -20,8 +20,6 @@ class Installer(object):
         if not os.path.exists(self.destination_root):
             self.create_directory("")
 
-    def set_real_run(self):
-        self.dy_run = False
 
     def create_directory(self, target):
         dst = self._d(target)
