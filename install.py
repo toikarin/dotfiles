@@ -8,7 +8,7 @@ import os
 script_dir = os.path.dirname(os.path.realpath(__file__))
 i = installer.create_installer_from_parser_opts(script_dir)
 
-if i.dry_run:
+if i.dry_run and i.verbosity >= 2:
     print("")
     print("Doing dry-run. Nothing is installed. Use -n flag to do real installation if everything looks ok.")
     print("")
