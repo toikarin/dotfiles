@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo '===== Running install.py and checking for new files ====='
+python "$(pwd)/install.py" -v 1
+echo '===== Finished running install.py ====='
+

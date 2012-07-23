@@ -13,6 +13,8 @@ if i.dry_run and i.verbosity >= 2:
     print("Doing dry-run. Nothing is installed. Use -n flag to do real installation if everything looks ok.")
     print("")
 
+i.create_symlink(".git-hook-post-receive", os.path.join(script_dir, ".git", "hooks", "post-receive"))
+
 i.create_symlink(".gitconfig")
 i.create_symlink(".git-excludes")
 i.create_symlink(".pentadactylrc")
