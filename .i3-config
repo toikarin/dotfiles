@@ -124,6 +124,14 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+d focus child
+# Mute/unmute audio
+bindsym XF86AudioMute exec amixer sset Master toggle
+# Lower volume
+bindsym XF86AudioLowerVolume exec amixer -c 0 set PCM 2dB-
+# Raise volume
+bindsym XF86AudioRaiseVolume exec amixer -c 0 set PCM 2dB+
+# Play/pause
+bindsym XF86AudioPlay exec cmus-remote -u
 
 # Startup
 exec ~/bin/wminit.sh
