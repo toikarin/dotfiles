@@ -96,6 +96,10 @@ mode "resize" {
    bindsym Caps_Lock mode "default"
 }
 
+bar {
+   status_command i3status
+}
+
 bindsym $mod+r mode "resize"
 
 # reload the configuration file
@@ -104,33 +108,22 @@ bindsym $mod+Shift+C reload
 bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+E exit
-
-# Startup
-exec ~/bin/wminit.sh
-
-bar {
-   status_command i3status
-}
-
 # split in horizontal orientation
 bindsym $mod+f split h
-
 # split in vertical orientation
 bindsym $mod+v split v
-
 # change container layout (stacked, tabbed, default)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout default
-
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-
 # focus the parent container
 bindsym $mod+a focus parent
-
 # focus the child container
 bindsym $mod+d focus child
+
+# Startup
+exec ~/bin/wminit.sh
