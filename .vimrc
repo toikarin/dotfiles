@@ -209,6 +209,19 @@ set nospell
 set spelllang=en_gb
 
 "
+"" Printing
+"
+
+set printoptions=paper:A4
+" set printoptions+=header:0 " Disable header
+" set printoptions+=number:y " Enable line numbers
+
+set printheader=%<        " Truncate from beginning if line is too long
+set printheader+=%f       " Filename
+set printheader+=%=       " Separation point between left and right aligned items
+set printheader+=Page\ %N " Page number
+
+"
 " Functions
 "
 
