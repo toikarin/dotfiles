@@ -34,8 +34,8 @@ export HISTSIZE=50000
 # The maximum number of lines contained in the history file.
 export HISTFILESIZE=$HISTSIZE
 
-# Week starts on monday
-export GCAL="-s1 -K"
+# Week starts on monday, show week number, show finnish holidays
+export GCAL="-s1 -K --cc-holidays=FI"
 
 #
 # Set path
