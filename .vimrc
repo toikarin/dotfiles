@@ -434,29 +434,16 @@ augroup END
 "" Tip 80
 "
 " When we reload, tell vim to restore the cursor to the saved position
-augroup JumpCursorOnEdit
- autocmd!
- autocmd BufReadPost *
- \ if expand("<afile>:p:h") !=? $TEMP |
- \ if line("'\"") > 1 && line("'\"") <= line("$") |
- \ let JumpCursorOnEdit_foo = line("'\"") |
- \ let b:doopenfold = 1 |
- \ if (foldlevel(JumpCursorOnEdit_foo) > foldlevel(JumpCursorOnEdit_foo - 1)) |
- \ let JumpCursorOnEdit_foo = JumpCursorOnEdit_foo - 1 |
- \ let b:doopenfold = 2 |
- \ endif |
- \ exe JumpCursorOnEdit_foo |
- \ endif |
- \ endif
- " Need to postpone using "zv" until after reading the modelines.
- autocmd BufWinEnter *
- \ if exists("b:doopenfold") |
- \ exe "normal zv" |
- \ if(b:doopenfold > 1) |
- \ exe "+".1 |
- \ endif |
- \ unlet b:doopenfold |
- \ endif
+function! ResCur()
+    if line("'\"") <= line("$")
+        normal! g`"
+        return 1
+    endif
+endfunction
+
+augroup resCur
+    autocmd!
+    autocmd BufWinEnter * call ResCur()
 augroup END
 
 "
