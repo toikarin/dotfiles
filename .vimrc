@@ -390,6 +390,11 @@ nnoremap <silent> <C-l> :nohl<cr><C-l>
 " Toggle relative line numbers
 nnoremap <silent> <C-k> :call g:ToggleNumberMode()<cr>
 
+" When typing '#' as the first character in a new line, the indent for that line is removed, the '#' is
+" put in the first column. The indent is restored for the next line. If you don't want this, use this
+" mapping:
+inoremap # X#
+
 
 "
 "" Autocommands
