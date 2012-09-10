@@ -20,6 +20,7 @@ alias lsl="ls -lhFi"
 alias lsa="ls -lahFi"
 alias lsll="lsl --color=always | less -R"
 alias lsal="lsa --color=always | less -R"
+alias treel="tree -C | less -R"
 
 alias ff='find . -iname $*'
 alias sd='screen -Udr'
