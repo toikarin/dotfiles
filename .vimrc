@@ -400,8 +400,8 @@ inoremap # X#
 "" Autocommands
 "
 
-" Make sure autocommands are loaded only once
-if !exists("autocommands_loaded") && has("autocmd")
+augroup OwnAutoCommands
+   autocmd!
    " Set noexpandtab automatically when editing makefiles
    autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
    autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
@@ -422,12 +422,9 @@ if !exists("autocommands_loaded") && has("autocmd")
    autocmd BufRead,BufNewFile *.json setfiletype json
    " Prevent losing syntax after new syntax file is loaded
    autocmd Syntax * syntax match WhiteSpaceEOL /\s\+$\| \+\ze\t/
-
    " Resize splits when the window is resized
    autocmd VimResized * exe "normal! \<c-w>="
-
-   let autocommands_loaded=1
-endif
+augroup END
 
 
 "
