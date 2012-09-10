@@ -241,14 +241,17 @@ function! Browser()
 endfunction
 
 function! g:ToggleNumberMode()
+   if version < 703
+       echomsg "Relative numbers not supported in version < 7.03"
+       return
+    endif
+
    if &rnu == 1
       set number
    else
       set relativenumber
    endif
 endfunction
-
-nnoremap <silent> <C-k> :call g:ToggleNumberMode()<cr>
 
 function! ChangeShellScriptMode()
    if getline(1) =~ "^#!/usr/bin/env [a-z]*sh$"
@@ -383,6 +386,9 @@ vnoremap <A-j> :m'>+<cr>gv
 
 " Redraw the screen and remove any search highlighting
 nnoremap <silent> <C-l> :nohl<cr><C-l>
+
+" Toggle relative line numbers
+nnoremap <silent> <C-k> :call g:ToggleNumberMode()<cr>
 
 
 "
