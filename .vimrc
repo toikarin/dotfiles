@@ -542,3 +542,7 @@ command! Q confirm qall
 command! -complete=file -nargs=1 R :call ReplaceTextWithFile('<args>')
 
 let g:syntastic_python_checker_args='--ignore=E501'
+
+if filereadable($HOME . "/.vimrc-personal")
+    source ~/.vimrc-personal
+endif
