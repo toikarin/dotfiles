@@ -211,5 +211,6 @@ function prompt_command() {
 # Set prompt
 #
 
+export PROMPT_DIRTRIM=6
 export PROMPT_COMMAND=prompt_command
 
