@@ -385,7 +385,7 @@ function smv {
    scp "${local_file}" $@ && rm "${local_file}"
 }
 
-showimage() {
+function showimage {
    local file=$1
    local w3mimgdisplay="/usr/lib/w3m/w3mimgdisplay"
    local thumbnail="/tmp/shell-thumb"
@@ -414,6 +414,6 @@ showimage() {
 }
 
 # Reload bash configuration
-function reload() {
+function reload {
    load_file ~/.bashrc
 }
