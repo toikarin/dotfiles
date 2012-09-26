@@ -413,6 +413,14 @@ function showimage {
    echo -e "2;3;\n0;1;0;0;0;0;0;0;0;0;${thumbnail}\n4;\n3;" | "${w3mimgdisplay}"
 }
 
+function ssh() {
+    if [ -z "${SSH_AGENT_PID}" ]; then
+        ssh-add
+    fi
+    ssh_bin=$(which ssh)
+    $ssh_bin $@
+}
+
 # Reload bash configuration
 function reload {
    load_file ~/.bashrc
