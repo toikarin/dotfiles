@@ -415,7 +415,7 @@ function showimage {
 
 function ssh() {
     if [ -z "${SSH_AGENT_PID}" ]; then
-        ssh-add
+        ssh-add 2> /dev/null
     fi
     ssh_bin=$(which ssh)
     $ssh_bin $@
