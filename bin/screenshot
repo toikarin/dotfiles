@@ -1,0 +1,18 @@
+#!/bin/bash
+
+DATE="$(date +%Y%m%d@%H%M%S)"
+NAME=${2:-"screenshot-${DATE}.png"}
+
+# Screenshot a selected window
+if [ "$1" = "win" ]; then import +repage "${NAME}"; fi
+
+# Screenshot the entire screen
+if [ "$1" = "scr" ]; then import -window root "${NAME}"; fi
+
+# Screenshot a selected area
+if [ "$1" = "area" ]; then import +repage "${NAME}"; fi
+
+if [[ $# = 0 ]]; then
+    echo "Usage: $0 (win|scr|area) [filename]"
+    exit 1
+fi

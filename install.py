@@ -38,6 +38,7 @@ i.create_symlink("bin/mntusb")
 i.create_symlink("bin/umntusb")
 i.create_symlink("bin/i3-change-layout.sh")
 i.create_symlink("bin/my_dmenu_run")
+i.create_symlink("bin/screenshot")
 
 i.create_symlink(".muttrc")
 i.create_symlink(".mutt_sidebar.tmpl")
