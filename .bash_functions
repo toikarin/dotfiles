@@ -414,11 +414,13 @@ function showimage {
 }
 
 function ssh() {
-    if [ -z "${SSH_AGENT_PID}" ]; then
-        ssh-add 2> /dev/null
+    $(ssh-add -l > /dev/null)
+
+    if [ $? == 1 ]; then
+        ssh-add
     fi
-    ssh_bin=$(which ssh)
-    $ssh_bin $@
+
+    command ssh $@
 }
 
 # Reload bash configuration
