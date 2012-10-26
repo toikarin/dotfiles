@@ -18,7 +18,7 @@ filetype plugin on
 filetype indent on
 
 " Force 256 colors if xterm is in use or builtin_gui (vimperator workaround)
-if &term == "xterm" || &term == "builtin_gui"
+if &term == "xterm" || &term == ""
    set t_Co=256
 endif
 

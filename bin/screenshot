@@ -16,3 +16,5 @@ if [[ $# = 0 ]]; then
     echo "Usage: $0 (win|scr|area) [filename]"
     exit 1
 fi
+
+echo "Screenshot written to file '${NAME}'"
