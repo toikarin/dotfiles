@@ -60,14 +60,12 @@ function prompt_parse_git_branch {
       local staged=$(git diff --cached --quiet 2> /dev/null || echo " (staged)")
       local stash_size=$(git stash list 2> /dev/null | wc -l)
       local untracked_files_count=$(git status --porcelain 2> /dev/null | grep -c "^??")
-      local branches=$(git branch 2> /dev/null | grep -cv "^[*| ] master$")
 
       local clr_branch=$(prompt_set_temp_color $COLOR_LIGHTGREEN "$branch")
       local clr_modified=$(prompt_set_temp_color $COLOR_RED "$modified")
       local clr_staged=$(prompt_set_temp_color $COLOR_BLUE "$staged")
       local clr_stash=""
       local clr_untracked=""
-      local clr_branches=""
 
       if [ $stash_size -gt 0 ]; then
          clr_stash=" (stash: $(prompt_colorize_number $stash_size))"
@@ -77,11 +75,7 @@ function prompt_parse_git_branch {
          clr_untracked=" (untracked: $(prompt_colorize_number $untracked_files_count))"
       fi
 
-      if [ $branches -gt 0 ]; then
-         clr_branches=" ($(prompt_colorize_number $branches))"
-      fi
-
-      echo " (git: ${clr_branch}${clr_branches}${clr_modified}${clr_staged}${clr_stash}${clr_untracked})"
+      echo " (git: ${clr_branch}${clr_modified}${clr_staged}${clr_stash}${clr_untracked})"
    fi
 }
 
