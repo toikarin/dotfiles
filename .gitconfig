@@ -22,10 +22,11 @@
    tool = vimdiff
    prompt = false
 [alias]
-# Short log
-   l = log --pretty=format:'%Cred%h%Creset - %C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset %C(yellow)%d%Creset' --abbrev-commit --date=relative
-# Longer log with patches
-   lg = log --pretty=format:'---%n%Cred%H%Creset %C(yellow)%d%Creset%n%C(yellow)%an%Creset: %s %Cgreen(%cr)%Creset%n' -p --stat --abbrev-commit --date=relative
+   l = log --pretty=format:'%C(yellow)%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset'
+   ll = log --stat --decorate
+   lf = log --pretty=format:'%Cred%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset' --stat
+   lg = log --pretty=format:'%Cred%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset' --graph
+   lp = log -p -1
    co = checkout
    ci = commit -v
    sci = svn dcommit
