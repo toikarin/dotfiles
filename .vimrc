@@ -19,7 +19,7 @@ filetype indent on
 
 " Force 256 colors if xterm is in use or builtin_gui (vimperator workaround)
 if &term == "xterm" || &term == ""
-   set t_Co=256
+    set t_Co=256
 endif
 
 " Allow backspacing over autoindent and over the start of insert
@@ -43,10 +43,10 @@ let $VIM_SWAP_DIR=expand("~/.vim/swap")
 set directory=$VIM_SWAP_DIR
 
 if version >= 703
-   set undofile
+    set undofile
 
-   let $VIM_UNDO_DIR=expand("~/.vim/undo")
-   set undodir=$VIM_UNDO_DIR
+    let $VIM_UNDO_DIR=expand("~/.vim/undo")
+    set undodir=$VIM_UNDO_DIR
 endif
 
 " Sets how many lines of history VIM has to remember
@@ -109,7 +109,7 @@ set sidescroll=1
 set foldenable
 " Set colorscheme
 if &t_Co == 256 && filereadable(expand("$HOME/.vim/colors/xoria256.vim"))
-   colorscheme xoria256
+    colorscheme xoria256
 endif
 " Set the strings to use in 'list' mode.
 set listchars=tab:▸\ ,eol:¬
@@ -121,14 +121,14 @@ set splitright
 "
 
 if has("gui_running")
-   " Remove toolbar
-   set guioptions-=T
-   " Remove menubar
-   set guioptions-=m
-   " Remove right-hand scrollbar
-   set guioptions-=r
-   " Remove left-hand scrollbar when there is a vertically split window
-   set guioptions-=L
+    " Remove toolbar
+    set guioptions-=T
+    " Remove menubar
+    set guioptions-=m
+    " Remove right-hand scrollbar
+    set guioptions-=r
+    " Remove left-hand scrollbar when there is a vertically split window
+    set guioptions-=L
 endif
 
 "
@@ -231,73 +231,73 @@ set printheader+=Page\ %N " Page number
 let s:browser="firefox"
 
 function! Browser()
-   if exists("s:browser")
-      let line = getline(".")
-      let line = matchstr(line, "http[^ ]*")
-      if strlen(line) > 0
-         execute "!".s:browser." ".line
-      endif
-   endif
+    if exists("s:browser")
+        let line = getline(".")
+        let line = matchstr(line, "http[^ ]*")
+        if strlen(line) > 0
+            execute "!".s:browser." ".line
+        endif
+    endif
 endfunction
 
 function! g:ToggleNumberMode()
-   if version < 703
-       echomsg "Relative numbers not supported in version < 7.03"
-       return
+    if version < 703
+        echomsg "Relative numbers not supported in version < 7.03"
+        return
     endif
 
-   if &rnu == 1
-      set number
-   else
-      set relativenumber
-   endif
+    if &rnu == 1
+        set number
+    else
+        set relativenumber
+    endif
 endfunction
 
 function! ChangeShellScriptMode()
-   if getline(1) =~ "^#!/usr/bin/env [a-z]*sh$"
-      silent !chmod u+x <afile>
-   endif
+    if getline(1) =~ "^#!/usr/bin/env [a-z]*sh$"
+        silent !chmod u+x <afile>
+    endif
 endfunction
 
 function! CountBuffers()
-   return len(filter(range(1,bufnr('$')),'buflisted(v:val)'))
+    return len(filter(range(1,bufnr('$')),'buflisted(v:val)'))
 endfunction
 
 function! ReplaceTextWithFile(filename)
-   normal ggVGd
-   execute ":read ".a:filename
-   normal ggdd
+    normal ggVGd
+    execute ":read ".a:filename
+    normal ggdd
 endfunction
 
 function! CallMaven(type, clean, skip_tests)
-   set makeprg=mvn
-   set errorformat=\%-G[%\\(WARNING]%\\)%\\@!%.%#,
-    \%A%[%^[]%\\@=%f:[%l\\,%v]\ %m,
-    \%W[WARNING]\ %f:[%l\\,%v]\ %m,
-    \%-Z\ %#,
-    \%-Clocation\ %#:%.%#,
-    \%C%[%^:]%#%m,
-    \%-G%.%#
+    set makeprg=mvn
+    set errorformat=\%-G[%\\(WARNING]%\\)%\\@!%.%#,
+                \%A%[%^[]%\\@=%f:[%l\\,%v]\ %m,
+                \%W[WARNING]\ %f:[%l\\,%v]\ %m,
+                \%-Z\ %#,
+                \%-Clocation\ %#:%.%#,
+                \%C%[%^:]%#%m,
+                \%-G%.%#
 
-   if a:clean == 1
-      let args="clean ".a:type
-   else
-      let args=a:type
-   endif
+    if a:clean == 1
+        let args="clean ".a:type
+    else
+        let args=a:type
+    endif
 
-   if a:skip_tests == 1
-      let args.=" -Dmaven.test.skip=true"
-   endif
+    if a:skip_tests == 1
+        let args.=" -Dmaven.test.skip=true"
+    endif
 
-   if exists("g:maven_pom")
-      let args.=" -f ".g:maven_pom
-   endif
+    if exists("g:maven_pom")
+        let args.=" -f ".g:maven_pom
+    endif
 
-   if exists("g:maven_params")
-      let args.=" ".g:maven_params
-   endif
+    if exists("g:maven_params")
+        let args.=" ".g:maven_params
+    endif
 
-   exe ':make '.args
+    exe ':make '.args
 endfunction
 
 "
@@ -401,32 +401,32 @@ inoremap # X#
 "
 
 augroup OwnAutoCommands
-   autocmd!
-   " Set noexpandtab automatically when editing makefiles
-   autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-   autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-   autocmd FileType html setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-   autocmd FileType htmldjango setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-   autocmd FileType xhtml setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-   autocmd FileType javascript setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-   " Reload vimrc after editing
-   autocmd BufWritePost ~/.vimrc source ~/.vimrc
-   " Commit todo-list after write
-   autocmd BufWinEnter ~/notes/notes.otl loadview
-   autocmd BufWinLeave ~/notes/notes.otl mkview
-   autocmd BufRead,BufNewFile ~/notes/notes.otl set viewoptions=folds,options
-   autocmd BufWritePost ~/notes/notes.otl !git --git-dir=$HOME/notes/.git --work-tree=$HOME/notes commit -a --message="Updated todo list"
-   " Automatically make shell scripts executable
-   autocmd BufWritePost *.sh call ChangeShellScriptMode()
-   " Enable spelling for *.txt files
-   autocmd BufRead,BufNewFile *.txt set spell
-   " JSON
-   autocmd BufRead,BufNewFile *.json setfiletype json
-   " Prevent losing syntax after new syntax file is loaded
-   autocmd Syntax * syntax match WhiteSpaceEOL /\s\+$\| \+\ze\t/
-   " Resize splits when the window is resized
-   autocmd VimResized * exe "normal! \<c-w>="
+    autocmd!
+    " Set noexpandtab automatically when editing makefiles
+    autocmd FileType make setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+    autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType html setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+    autocmd FileType htmldjango setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+    autocmd FileType xhtml setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+    autocmd FileType javascript setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+    " Reload vimrc after editing
+    autocmd BufWritePost ~/.vimrc source ~/.vimrc
+    " Commit todo-list after write
+    autocmd BufWinEnter ~/notes/notes.otl loadview
+    autocmd BufWinLeave ~/notes/notes.otl mkview
+    autocmd BufRead,BufNewFile ~/notes/notes.otl set viewoptions=folds,options
+    autocmd BufWritePost ~/notes/notes.otl !git --git-dir=$HOME/notes/.git --work-tree=$HOME/notes commit -a --message="Updated todo list"
+    " Automatically make shell scripts executable
+    autocmd BufWritePost *.sh call ChangeShellScriptMode()
+    " Enable spelling for *.txt files
+    autocmd BufRead,BufNewFile *.txt set spell
+    " JSON
+    autocmd BufRead,BufNewFile *.json setfiletype json
+    " Prevent losing syntax after new syntax file is loaded
+    autocmd Syntax * syntax match WhiteSpaceEOL /\s\+$\| \+\ze\t/
+    " Resize splits when the window is resized
+    autocmd VimResized * exe "normal! \<c-w>="
 augroup END
 
 
@@ -450,15 +450,15 @@ augroup END
 "" Create backup, swap and undo directories
 "
 if !isdirectory(&backupdir)
-   call mkdir(&backupdir)
+    call mkdir(&backupdir)
 endif
 
 if exists("$VIM_SWAP_DIR") && !isdirectory($VIM_SWAP_DIR)
-   call mkdir($VIM_SWAP_DIR)
+    call mkdir($VIM_SWAP_DIR)
 endif
 
 if exists("$VIM_UNDO_DIR") && !isdirectory($VIM_UNDO_DIR)
-   call mkdir($VIM_UNDO_DIR)
+    call mkdir($VIM_UNDO_DIR)
 endif
 
 
@@ -497,10 +497,10 @@ let g:clj_paren_rainbow=1
 let s:ngclient=expand("$HOME/bin/ng")
 
 if exists("s:ngclient") && filereadable(s:ngclient)
-   " Activate the interactive interface
-   let clj_want_gorilla=1
-   " Set path to nailgun client
-   let vimclojure#NailgunClient=s:ngclient
+    " Activate the interactive interface
+    let clj_want_gorilla=1
+    " Set path to nailgun client
+    let vimclojure#NailgunClient=s:ngclient
 endif
 
 "
@@ -520,16 +520,16 @@ let Tlist_Exit_OnlyWindow = 1
 "
 
 if &diff
-   " Jump backwards to the previous start of a change.
-   map <up> [c
-   " Jump forwards to the next start of a change.
-   map <down> ]c
-   " Modify the current buffer to undo difference with another buffer.
-   map <left> :diffget<cr>
-   " Modify another buffer to undo difference with the current buffer.
-   map <right> :diffput<cr>
-   " Update the diff highlighting and folds
-   map <f5> :diffupdate<cr>
+    " Jump backwards to the previous start of a change.
+    map <up> [c
+    " Jump forwards to the next start of a change.
+    map <down> ]c
+    " Modify the current buffer to undo difference with another buffer.
+    map <left> :diffget<cr>
+    " Modify another buffer to undo difference with the current buffer.
+    map <right> :diffput<cr>
+    " Update the diff highlighting and folds
+    map <f5> :diffupdate<cr>
 endif
 
 "

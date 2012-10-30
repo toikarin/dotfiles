@@ -7,78 +7,77 @@ CLOJURE_CONF=${1:-~/.cljrc}
 _CLJ_CLASSPATH=""
 
 function main() {
-   # Read config
-   if [[ ${CLJ_READ_CONF:-1} -eq 1 && -f "${CLOJURE_CONF}" ]]; then
-      source "$CLOJURE_CONF"
-   fi
+    # Read config
+    if [[ ${CLJ_READ_CONF:-1} -eq 1 && -f "${CLOJURE_CONF}" ]]; then
+        source "$CLOJURE_CONF"
+    fi
 
-   clj_jar=${CLJ_CLOJURE_JAR:-${clj_jar:-""}}
-   clj_contrib_jar=${CLJ_CONTRIB_JAR:-${clj_contrib_jar:-""}}
-   clj_wrapper=${CLJ_WRAPPER:-${clj_wrapper:-""}}
-   clj_wrapper_jar=${CLJ_WRAPPER_JAR:-${clj_wrapper_jar:-""}}
-   clj_libs_dir=${CLJ_LIBS_DIR:-${clj_libs_dir:-""}}
-   clj_classpath=${CLJ_CLASSPATH:-${clj_classpath:-""}}
-   clj_java_wrapper=${CLJ_JAVA_WRAPPER:-${clj_java_wrapper:-""}}
-   clj_java_opts=${CLJ_JAVA_OPTS:-${clj_java_opts:-""}}
-   clj_repl_script=${CLJ_REPL_SCRIPT:-${clj_repl_script:-""}}
-   clj_repl_script=${clj_repl_script:+"-i ${clj_repl_script}"}
+    clj_jar=${CLJ_CLOJURE_JAR:-${clj_jar:-""}}
+    clj_contrib_jar=${CLJ_CONTRIB_JAR:-${clj_contrib_jar:-""}}
+    clj_wrapper=${CLJ_WRAPPER:-${clj_wrapper:-""}}
+    clj_wrapper_jar=${CLJ_WRAPPER_JAR:-${clj_wrapper_jar:-""}}
+    clj_libs_dir=${CLJ_LIBS_DIR:-${clj_libs_dir:-""}}
+    clj_classpath=${CLJ_CLASSPATH:-${clj_classpath:-""}}
+    clj_java_wrapper=${CLJ_JAVA_WRAPPER:-${clj_java_wrapper:-""}}
+    clj_java_opts=${CLJ_JAVA_OPTS:-${clj_java_opts:-""}}
+    clj_repl_script=${CLJ_REPL_SCRIPT:-${clj_repl_script:-""}}
+    clj_repl_script=${clj_repl_script:+"-i ${clj_repl_script}"}
 
-   # Check mandatory configuration options.
-   if [ "${clj_jar:-""}" == "" ]; then
-      echo "clj_jar not set in ${CLOJURE_CONF} and \$CLJ_CLOJURE_JAR is unset."
-      exit 1
-   fi
+    # Check mandatory configuration options.
+    if [ "${clj_jar:-""}" == "" ]; then
+        echo "clj_jar not set in ${CLOJURE_CONF} and \$CLJ_CLOJURE_JAR is unset."
+        exit 1
+    fi
 
-   # Create classpath
-   add_jar_to_classpath "${clj_jar}"
-   add_jar_to_classpath "${clj_contrib_jar}"
-   add_jar_to_classpath "${clj_wrapper_jar}"
-   add_jars_from_dir_to_classpath "${clj_libs_dir}"
+    # Create classpath
+    add_jar_to_classpath "${clj_jar}"
+    add_jar_to_classpath "${clj_contrib_jar}"
+    add_jar_to_classpath "${clj_wrapper_jar}"
+    add_jars_from_dir_to_classpath "${clj_libs_dir}"
 
-   # Add user defined classpath
-   CLJ_CLASSPATH=${_CLJ_CLASSPATH}${clj_classpath:+":${clj_classpath}"}
+    # Add user defined classpath
+    CLJ_CLASSPATH=${_CLJ_CLASSPATH}${clj_classpath:+":${clj_classpath}"}
 
-   # Run
-   echo ${clj_java_wrapper} ${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main ${clj_repl_script} --repl
-   ${clj_java_wrapper} ${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main ${clj_repl_script} --repl
+    # Run
+    echo ${clj_java_wrapper} ${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main ${clj_repl_script} --repl
+    ${clj_java_wrapper} ${JAVA_BIN} ${clj_java_opts} -cp ${CLJ_CLASSPATH} ${clj_wrapper} clojure.main ${clj_repl_script} --repl
 }
 
 function add_jars_from_dir_to_classpath() {
-   local dir=$1
+    local dir=$1
 
-   if [ "${dir}" == "" ]; then
-      return
-   fi
+    if [ "${dir}" == "" ]; then
+        return
+    fi
 
-   if [ -d "${dir}" ]; then
-      for jar in $(find "${dir}" -type f -name "*.jar");
-      do
-         add_jar_to_classpath "${jar}"
-      done
-   else
-      echo "Directory '${dir}' doesn't exist."
-      exit 1
-   fi
-
+    if [ -d "${dir}" ]; then
+        for jar in $(find "${dir}" -type f -name "*.jar");
+        do
+            add_jar_to_classpath "${jar}"
+        done
+    else
+        echo "Directory '${dir}' doesn't exist."
+        exit 1
+    fi
 }
 
 function add_jar_to_classpath() {
-   local jar=$1
+    local jar=$1
 
-   if [ "${jar}" == "" ]; then
-      return
-   fi
+    if [ "${jar}" == "" ]; then
+        return
+    fi
 
-   if [ -f "${jar}" ]; then
-      if [ "${_CLJ_CLASSPATH}" != "" ]; then
-         _CLJ_CLASSPATH=${_CLJ_CLASSPATH}:${jar}
-      else
-         _CLJ_CLASSPATH=${jar}
-      fi
-   else
-      echo "File '${jar}' doesn't exist."
-      exit 1
-   fi
+    if [ -f "${jar}" ]; then
+        if [ "${_CLJ_CLASSPATH}" != "" ]; then
+            _CLJ_CLASSPATH=${_CLJ_CLASSPATH}:${jar}
+        else
+            _CLJ_CLASSPATH=${jar}
+        fi
+    else
+        echo "File '${jar}' doesn't exist."
+        exit 1
+    fi
 }
 
 main

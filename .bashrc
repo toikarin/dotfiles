@@ -42,16 +42,16 @@ export GCAL="-s1 -K --cc-holidays=FI"
 #
 function set_path() {
     if [ -z $PATH_MODIFIED ]; then
-       export PATH=$PATH:/sbin
-       export PATH=$PATH:/usr/sbin
-       export PATH=$PATH:/opt/bin
-       export PATH=$PATH:~/bin
+        export PATH=$PATH:/sbin
+        export PATH=$PATH:/usr/sbin
+        export PATH=$PATH:/opt/bin
+        export PATH=$PATH:~/bin
 
-       if [ -n $JAVA_HOME ]; then
-           export PATH=$PATH:$JAVA_HOME/bin
+        if [ -n $JAVA_HOME ]; then
+            export PATH=$PATH:$JAVA_HOME/bin
         fi
 
-       export PATH_MODIFIED=1
+        export PATH_MODIFIED=1
     fi
 }
 
@@ -60,11 +60,11 @@ function set_path() {
 #
 
 function load_file() {
-   local file=$1
+    local file=$1
 
-   if [ -f "$file" ]; then
-      source $file
-   fi
+    if [ -f "$file" ]; then
+        source $file
+    fi
 }
 
 load_file ~/.bash_prompt

@@ -1,48 +1,48 @@
 [user]
-   name = Tomi Oikarinen
-   email = tomi.oikarinen@iki.fi
-   editor = vim
+    name = Tomi Oikarinen
+    email = tomi.oikarinen@iki.fi
+    editor = vim
 [core]
     excludesfile = ~/.git-excludes
 [color]
-   branch = auto
-   diff = auto
-   grep = auto
-   status = auto
-   interactive = auto
-   ui = auto
+    branch = auto
+    diff = auto
+    grep = auto
+    status = auto
+    interactive = auto
+    ui = auto
 [http]
-   sslVerify = false
+    sslVerify = false
 [merge]
-   tool = vimdiff
+    tool = vimdiff
 [mergetool]
-   tool = vimdiff
-   prompt = false
+    tool = vimdiff
+    prompt = false
 [difftool]
-   tool = vimdiff
-   prompt = false
+    tool = vimdiff
+    prompt = false
 [alias]
-   l = log --pretty=format:'%C(yellow)%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset'
-   ll = log --stat --decorate
-   lf = log --pretty=format:'%Cred%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset' --stat
-   lg = log --pretty=format:'%Cred%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset' --graph
-   lp = log -p -1
-   co = checkout
-   ci = commit -v
-   sci = svn dcommit
-   srb = svn rebase
-   amend = commit -v --amend
-   mt = mergetool
-   dh = diff HEAD^1 HEAD
-   dc = diff --cached
-   s  = status
-   aliases = !git config --list | grep ^alias
-   b = checkout -b
-   ad = !git stash show -p | git apply && git stash drop
-   rc = rebase --continue
+    l = log --pretty=format:'%C(yellow)%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset'
+    ll = log --stat --decorate
+    lf = log --pretty=format:'%Cred%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset' --stat
+    lg = log --pretty=format:'%Cred%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset' --graph
+    lp = log -p -1
+    co = checkout
+    ci = commit -v
+    sci = svn dcommit
+    srb = svn rebase
+    amend = commit -v --amend
+    mt = mergetool
+    dh = diff HEAD^1 HEAD
+    dc = diff --cached
+    s  = status
+    aliases = !git config --list | grep ^alias
+    b = checkout -b
+    ad = !git stash show -p | git apply && git stash drop
+    rc = rebase --continue
 [sendemail]
-	smtpserver = /usr/bin/msmtp
+    smtpserver = /usr/bin/msmtp
 [apply]
-   whitespace = warn
+    whitespace = warn
 [push]
     default = upstream

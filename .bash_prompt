@@ -23,182 +23,182 @@ COLOR_LIGHTCYAN="\[\033[1;36m\]"
 COLOR_DEFAULT="\[\033[0m\]"
 
 function prompt_set_temp_color() {
-   echo "$1$2$COLOR_DEFAULT"
+    echo "$1$2$COLOR_DEFAULT"
 }
 
 function prompt_colorize_number {
-   num=$1
-   if [ $num -gt 0 ]; then
-      color=""
-      if [ $num -gt 2 ]; then
-         color=$COLOR_RED
-      else
-         color=$COLOR_YELLOW
-      fi
+    num=$1
+    if [ $num -gt 0 ]; then
+        color=""
+        if [ $num -gt 2 ]; then
+            color=$COLOR_RED
+        else
+            color=$COLOR_YELLOW
+        fi
 
-      echo "$(prompt_set_temp_color $color $num)"
-   fi
+        echo "$(prompt_set_temp_color $color $num)"
+    fi
 }
 
 function prompt_get_bg_jobs() {
-   job_count=$(prompt_colorize_number $(jobs -r | wc -l))
+    job_count=$(prompt_colorize_number $(jobs -r | wc -l))
 
-   echo ${job_count:+" (bg: $job_count)"}
+    echo ${job_count:+" (bg: $job_count)"}
 }
 
 function prompt_get_stopped_jobs() {
-   job_count=$(prompt_colorize_number $(jobs -s | wc -l))
+    job_count=$(prompt_colorize_number $(jobs -s | wc -l))
 
-   echo ${job_count:+" (stopped: $job_count)"}
+    echo ${job_count:+" (stopped: $job_count)"}
 }
 
 function prompt_parse_git_branch {
-   local branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+    local branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
 
-   if [ -n "$branch" ]; then
-      local modified=$(git diff --quiet 2> /dev/null || echo " (mod)")
-      local staged=$(git diff --cached --quiet 2> /dev/null || echo " (staged)")
-      local stash_size=$(git stash list 2> /dev/null | wc -l)
-      local untracked_files_count=$(git status --porcelain 2> /dev/null | grep -c "^??")
+    if [ -n "$branch" ]; then
+        local modified=$(git diff --quiet 2> /dev/null || echo " (mod)")
+        local staged=$(git diff --cached --quiet 2> /dev/null || echo " (staged)")
+        local stash_size=$(git stash list 2> /dev/null | wc -l)
+        local untracked_files_count=$(git status --porcelain 2> /dev/null | grep -c "^??")
 
-      local clr_branch=$(prompt_set_temp_color $COLOR_LIGHTGREEN "$branch")
-      local clr_modified=$(prompt_set_temp_color $COLOR_RED "$modified")
-      local clr_staged=$(prompt_set_temp_color $COLOR_BLUE "$staged")
-      local clr_stash=""
-      local clr_untracked=""
+        local clr_branch=$(prompt_set_temp_color $COLOR_LIGHTGREEN "$branch")
+        local clr_modified=$(prompt_set_temp_color $COLOR_RED "$modified")
+        local clr_staged=$(prompt_set_temp_color $COLOR_BLUE "$staged")
+        local clr_stash=""
+        local clr_untracked=""
 
-      if [ $stash_size -gt 0 ]; then
-         clr_stash=" (stash: $(prompt_colorize_number $stash_size))"
-      fi
+        if [ $stash_size -gt 0 ]; then
+            clr_stash=" (stash: $(prompt_colorize_number $stash_size))"
+        fi
 
-      if [ $untracked_files_count -gt 0 ]; then
-         clr_untracked=" (untracked: $(prompt_colorize_number $untracked_files_count))"
-      fi
+        if [ $untracked_files_count -gt 0 ]; then
+            clr_untracked=" (untracked: $(prompt_colorize_number $untracked_files_count))"
+        fi
 
-      echo " (git: ${clr_branch}${clr_modified}${clr_staged}${clr_stash}${clr_untracked})"
-   fi
+        echo " (git: ${clr_branch}${clr_modified}${clr_staged}${clr_stash}${clr_untracked})"
+    fi
 }
 
 function prompt_dirs_stack_size {
-   cur_count=$(dirs -p | wc -l)
+    cur_count=$(dirs -p | wc -l)
 
-   if [ $cur_count -gt 1 ]; then
-      echo " (dirs: $(prompt_colorize_number $(($cur_count - 1))))"
-   fi
+    if [ $cur_count -gt 1 ]; then
+        echo " (dirs: $(prompt_colorize_number $(($cur_count - 1))))"
+    fi
 }
 
 function prompt_detached_screens {
-   local detached_count=$(screen -list 2> /dev/null | grep -c "(Detached)")
-   local color=""
+    local detached_count=$(screen -list 2> /dev/null | grep -c "(Detached)")
+    local color=""
 
-   if [ $detached_count -gt 0 ]; then
-      if [ $detached_count -gt 1 ]; then
-         color=$COLOR_RED
-      else
-         color=$COLOR_YELLOW
-      fi
+    if [ $detached_count -gt 0 ]; then
+        if [ $detached_count -gt 1 ]; then
+            color=$COLOR_RED
+        else
+            color=$COLOR_YELLOW
+        fi
 
-   fi
+    fi
 
-   if [ "$detached_count" != "0" ]; then
-      echo " (sd: $(prompt_set_temp_color $color $detached_count))"
-   fi
+    if [ "$detached_count" != "0" ]; then
+        echo " (sd: $(prompt_set_temp_color $color $detached_count))"
+    fi
 }
 
 function prompt_format_secs() {
-   local seconds=$1
+    local seconds=$1
 
-   local hours=$(( ${seconds} / 3600))
-   seconds=$(( ${seconds} - ${hours} * 3600 ))
-   local minutes=$(( ${seconds} / 60))
+    local hours=$(( ${seconds} / 3600))
+    seconds=$(( ${seconds} - ${hours} * 3600 ))
+    local minutes=$(( ${seconds} / 60))
 
-   if [[ $minutes -gt 1 || $hours -gt 1 ]]; then
-      echo "${hours}h${minutes}m"
-   fi
+    if [[ $minutes -gt 1 || $hours -gt 1 ]]; then
+        echo "${hours}h${minutes}m"
+    fi
 }
 
 function prompt_battery_status {
-   local bat=${BS_BATTERY_FILE:-"/sys/class/power_supply/BAT0"}
+    local bat=${BS_BATTERY_FILE:-"/sys/class/power_supply/BAT0"}
 
-   if [ ! -e "${bat}" ]; then
-      return
-   fi
+    if [ ! -e "${bat}" ]; then
+        return
+    fi
 
-   local rem_cap=$(cat "${bat}/charge_now" 2> /dev/null)
-   local full_cap=$(cat "${bat}/charge_full" 2> /dev/null)
-   local state=$(cat "${bat}/status" 2> /dev/null)
-   local rate=$(cat "${bat}/current_now" 2> /dev/null)
+    local rem_cap=$(cat "${bat}/charge_now" 2> /dev/null)
+    local full_cap=$(cat "${bat}/charge_full" 2> /dev/null)
+    local state=$(cat "${bat}/status" 2> /dev/null)
+    local rate=$(cat "${bat}/current_now" 2> /dev/null)
 
-   if [[ "${rem_cap}" == "" || "${full_cap}" == "" ]]; then
-      return
-   fi
+    if [[ "${rem_cap}" == "" || "${full_cap}" == "" ]]; then
+        return
+    fi
 
-   local charge=$(( ${rem_cap} * 100 / ${full_cap} ))
-   local color=""
-   local clr_charge=${charge}
-   local clr_logo="Ϟ"
-   local clr_time=""
+    local charge=$(( ${rem_cap} * 100 / ${full_cap} ))
+    local color=""
+    local clr_charge=${charge}
+    local clr_logo="Ϟ"
+    local clr_time=""
 
-   if [ ${charge} -lt 50 ]; then
-      if [ ${charge} -lt 15 ]; then
-         color=$COLOR_RED
-      else
-         color=$COLOR_YELLOW
-      fi
+    if [ ${charge} -lt 50 ]; then
+        if [ ${charge} -lt 15 ]; then
+            color=$COLOR_RED
+        else
+            color=$COLOR_YELLOW
+        fi
 
-      clr_charge=$(prompt_set_temp_color ${color} ${charge})
-   fi
+        clr_charge=$(prompt_set_temp_color ${color} ${charge})
+    fi
 
-   if [ "${state}" == "Charging" ]; then
-      if [ $rate -gt 0 ]; then
-         local seconds=$(( 3600 * ( ${full_cap} - ${rem_cap} ) / ${rate} ))
-         clr_time=$(prompt_format_secs ${seconds})
-      fi
+    if [ "${state}" == "Charging" ]; then
+        if [ $rate -gt 0 ]; then
+            local seconds=$(( 3600 * ( ${full_cap} - ${rem_cap} ) / ${rate} ))
+            clr_time=$(prompt_format_secs ${seconds})
+        fi
 
-      clr_logo=$(prompt_set_temp_color ${COLOR_LIGHTGREEN} ${clr_logo})
-   elif [ "${state}" == "Full" ]; then
-      clr_logo=$(prompt_set_temp_color ${COLOR_LIGHTGREEN} ${clr_logo})
-   else
-      if [ $rate -gt 0 ]; then
-         local seconds=$(( 3600 * ${rem_cap} / ${rate} ))
-         clr_time=$(prompt_format_secs ${seconds})
-      fi
-   fi
+        clr_logo=$(prompt_set_temp_color ${COLOR_LIGHTGREEN} ${clr_logo})
+    elif [ "${state}" == "Full" ]; then
+        clr_logo=$(prompt_set_temp_color ${COLOR_LIGHTGREEN} ${clr_logo})
+    else
+        if [ $rate -gt 0 ]; then
+            local seconds=$(( 3600 * ${rem_cap} / ${rate} ))
+            clr_time=$(prompt_format_secs ${seconds})
+        fi
+    fi
 
-   echo "(${clr_logo}: ${clr_charge}%${clr_time:+" ${clr_time}"}) "
+    echo "(${clr_logo}: ${clr_charge}%${clr_time:+" ${clr_time}"}) "
 }
 
 function prompt_virtualenv() {
-   if [ "$VIRTUAL_ENV" != "" ]; then
-      echo " (env: $(prompt_set_temp_color ${COLOR_RED} $(basename ${VIRTUAL_ENV})))"
-   fi
+    if [ "$VIRTUAL_ENV" != "" ]; then
+        echo " (env: $(prompt_set_temp_color ${COLOR_RED} $(basename ${VIRTUAL_ENV})))"
+    fi
 }
 
 function prompt_ssh() {
-   if [ "$SSH_TTY" != "" ]; then
-      echo $(prompt_set_temp_color ${COLOR_RED} "[ssh] ")
-   fi
+    if [ "$SSH_TTY" != "" ]; then
+        echo $(prompt_set_temp_color ${COLOR_RED} "[ssh] ")
+    fi
 }
 
 function prompt_command() {
-   if [ $UID -ne 0 ]; then
-      P_USER=$(prompt_set_temp_color $COLOR_GREEN "\u")
-      P_HOST=$(prompt_set_temp_color $COLOR_GREEN"\h")
-   else
-      P_USER=$(prompt_set_temp_color $COLOR_RED "\u")
-      P_HOST=$(prompt_set_temp_color $COLOR_RED "\h")
-   fi
-   P_DIR=$(prompt_set_temp_color $COLOR_LIGHTCYAN "\w")
-   P_DSTACK=$(prompt_dirs_stack_size)
-   P_BG_JOBS=$(prompt_get_bg_jobs)
-   P_STOPPED_JOBS=$(prompt_get_stopped_jobs)
-   P_GIT_BRANCH=$(prompt_parse_git_branch)
-   P_DETACHED_SCREEN=$(prompt_detached_screens)
-   P_BATTERY=$(prompt_battery_status)
-   P_VIRTUALENV=$(prompt_virtualenv)
-   P_SSH=$(prompt_ssh)
+    if [ $UID -ne 0 ]; then
+        P_USER=$(prompt_set_temp_color $COLOR_GREEN "\u")
+        P_HOST=$(prompt_set_temp_color $COLOR_GREEN"\h")
+    else
+        P_USER=$(prompt_set_temp_color $COLOR_RED "\u")
+        P_HOST=$(prompt_set_temp_color $COLOR_RED "\h")
+    fi
+    P_DIR=$(prompt_set_temp_color $COLOR_LIGHTCYAN "\w")
+    P_DSTACK=$(prompt_dirs_stack_size)
+    P_BG_JOBS=$(prompt_get_bg_jobs)
+    P_STOPPED_JOBS=$(prompt_get_stopped_jobs)
+    P_GIT_BRANCH=$(prompt_parse_git_branch)
+    P_DETACHED_SCREEN=$(prompt_detached_screens)
+    P_BATTERY=$(prompt_battery_status)
+    P_VIRTUALENV=$(prompt_virtualenv)
+    P_SSH=$(prompt_ssh)
 
-   PS1="${P_BATTERY}${P_SSH}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_VIRTUALENV}${P_GIT_BRANCH}\$ "
+    PS1="${P_BATTERY}${P_SSH}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_VIRTUALENV}${P_GIT_BRANCH}\$ "
 }
 
 #

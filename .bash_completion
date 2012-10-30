@@ -1,31 +1,31 @@
 #!/usr/bin/env bash
 
 _cdd() {
-   local dirnames cur
-   COMPREPLY=()
+    local dirnames cur
+    COMPREPLY=()
 
-   cur="${COMP_WORDS[COMP_CWORD]}"
+    cur="${COMP_WORDS[COMP_CWORD]}"
 
-   if [ ${#COMP_WORDS[*]} -lt 3 ]; then
-      cur_dir="$(pwd)"
-      dirnames="$(dirname "${cur_dir}" | tr '/' ' ')"
+    if [ ${#COMP_WORDS[*]} -lt 3 ]; then
+        cur_dir="$(pwd)"
+        dirnames="$(dirname "${cur_dir}" | tr '/' ' ')"
 
-      COMPREPLY=( $(compgen -W "${dirnames}" -- "${cur}") )
-   fi
+        COMPREPLY=( $(compgen -W "${dirnames}" -- "${cur}") )
+    fi
 } &&
 complete -F _cdd cdd
 
 _e() {
-   local cur prev
+    local cur prev
 
-   COMPREPLY=()
-   cur="${COMP_WORDS[COMP_CWORD]}"
-   prev="${COMP_WORDS[COMP_CWORD-1]}"
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-   if [[ "$prev" == "-t" || ${#COMP_WORDS[*]} -lt 3 ]]; then
-      # Use bash-completion package's functions
-      _filedir '?([ejw]ar|zip|[tr]ar|bz2|gz|tgz|7z)'
-   fi
+    if [[ "$prev" == "-t" || ${#COMP_WORDS[*]} -lt 3 ]]; then
+        # Use bash-completion package's functions
+        _filedir '?([ejw]ar|zip|[tr]ar|bz2|gz|tgz|7z)'
+    fi
 } &&
 complete -F _e $filenames e
 
