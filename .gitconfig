@@ -43,3 +43,5 @@
 	smtpserver = /usr/bin/msmtp
 [apply]
    whitespace = warn
+[push]
+    default = upstream
