@@ -357,6 +357,12 @@ noremap <leader>M mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
 " Spell toggle
 nmap <silent> <leader>s :set spell!<cr>
 
+" Toggle line numbers
+map <f1> :set number!<cr>
+
+" Remove indenting on empty lines
+map <f2> :%s/\s*$//g<cr>:set nohlsearch <cr>''
+
 " Paste toggle
 set pastetoggle=<f3>
 
@@ -365,12 +371,6 @@ nnoremap <F5> :GundoToggle<CR>
 
 map <f7> :py set_breakpoint()<cr>
 map <s-f7> :py remove_breakpoints()<cr>
-
-" Remove indenting on empty lines
-map <f2> :%s/\s*$//g<cr>:set nohlsearch <cr>''
-
-" Toggle line numbers
-map <f1> :set number!<cr>
 
 " Open current line in browser
 map <silent> <leader>w :call Browser()<cr>
