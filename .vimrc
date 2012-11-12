@@ -360,6 +360,9 @@ nmap <silent> <leader>s :set spell!<cr>
 " Paste toggle
 set pastetoggle=<f3>
 
+" Gundo
+nnoremap <F5> :GundoToggle<CR>
+
 map <f7> :py set_breakpoint()<cr>
 map <s-f7> :py remove_breakpoints()<cr>
 
