@@ -228,7 +228,7 @@ set printheader+=Page\ %N " Page number
 "
 "" Open current line in browser
 "
-let s:browser="firefox"
+let s:browser="x-www-browser"
 
 function! Browser()
     if exists("s:browser")
