@@ -45,4 +45,4 @@
 [apply]
     whitespace = warn
 [push]
-    default = upstream
+    default = tracking
