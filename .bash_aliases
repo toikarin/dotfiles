@@ -25,6 +25,9 @@ alias treel="tree -C | less -R"
 alias ff='find . -iname $*'
 alias sd='screen -Udr'
 alias se='sudoedit'
+# If the last character of the alias value is a space or tab character,
+# then the next command word following the alias is also checked for alias expansion.
+alias sudo='sudo '
 
 alias du1='du -h --max-depth=1'
 alias tf='tail -f -n 100'
