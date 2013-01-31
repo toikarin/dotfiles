@@ -6,6 +6,7 @@ set realname="Tomi Oikarinen"
 
 # MIME autoview
 auto_view text/html
+auto_view text/calendar
 
 # Disable beep on errors
 set nobeep
