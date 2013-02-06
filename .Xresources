@@ -6,6 +6,8 @@ XTerm.VT100.Foreground: white
 UXTerm.VT100.Background: black
 UXTerm.VT100.Foreground: white
 
+Rxvt.background: black
+Rxvt.foreground: white
 ! Highlight only the positions that contain text that can be selected
 XTerm*highlightSelection: true
 UXTerm*highlightSelection: true
@@ -13,13 +15,17 @@ UXTerm*highlightSelection: true
 !
 !! Scroll bar
 !
+URxvt*scrollstyle: plain
+
 XTerm.VT100.scrollBar: true
 UXTerm.VT100.scrollBar: true
 
 XTerm.VT100.rightScrollBar: true
 UXTerm.VT100.rightScrollBar: true
+URxvt*scrollBar_right: true
 
 XTerm.VT100.scrollbar.Thickness: 5
+URxvt.thickness: 5
 ! Use width for uxterm because debian seems to overwrite that using app-defaults.
 UXTerm.VT100.scrollbar.width: 5
 
@@ -28,6 +34,8 @@ XTerm.VT100.scrollbar.Foreground: white
 
 UXTerm.VT100.scrollbar.Background: black
 UXTerm.VT100.scrollbar.Foreground: white
+
+URxvt.scrollColor: white
 
 XTerm.VT100.scrollbar.borderWidth: 1
 UXTerm.VT100.scrollbar.borderWidth: 1
@@ -40,6 +48,7 @@ UXTerm*cutNewLine: on
 
 XTerm.VT100.saveLines: 64000
 UXTerm.VT100.saveLines: 64000
+URxvt.saveLines: 64000
 
 !
 !! Key bindings
@@ -48,3 +57,29 @@ UXTerm.VT100.saveLines: 64000
      Shift<Key>Delete: insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
     ~Shift<BtnUp>:    select-end(PRIMARY, CUT_BUFFER0) \n\
      Shift<BtnUp>:    select-end(CLIPBOARD, CUT_BUFFER1)
+
+URxvt.urlLauncher:      /usr/bin/x-www-browser
+URxvt.matcher.button:   1
+
+URxvt.perl-ext-common:  default,matcher,clipboard
+
+URxvt.keysym.M-c:   perl:clipboard:copy
+URxvt.keysym.M-v:   perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+
+urxvt*color0:    #6c6c6c
+urxvt*color1:    #e9897c
+urxvt*color2:    #b6e77d
+urxvt*color3:    #ecebbe
+urxvt*color4:    #a9cdeb
+urxvt*color5:    #ea96eb
+urxvt*color6:    #c9caec
+urxvt*color7:    #f2f2f2
+urxvt*color8:    #747474
+urxvt*color9:    #f99286
+urxvt*color10:    #c3f786
+urxvt*color11:    #fcfbcc
+urxvt*color12:    #b6defb
+urxvt*color13:    #fba1fb
+urxvt*color14:    #d7d9fc
+urxvt*color15:    #e2e2e2
