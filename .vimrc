@@ -300,6 +300,17 @@ function! CallMaven(type, clean, skip_tests)
     exe ':make '.args
 endfunction
 
+function! ToggleMyNotes()
+    if exists("g:my_notes_win")
+        exe g:my_notes_win.'wincmd w'
+        close
+        unlet g:my_notes_win
+    else
+        vsplit ~/notes/vim-notes.otl
+        let g:my_notes_win=winnr()
+    endif
+endfunction
+
 "
 "" Keyboard mappings
 "
@@ -392,6 +403,9 @@ nnoremap <silent> <C-l> :nohl<cr><C-l>
 
 " Toggle relative line numbers
 nnoremap <silent> <C-k> :call g:ToggleNumberMode()<cr>
+
+" Show my notes
+map <c-h> :call ToggleMyNotes()<cr>
 
 " When typing '#' as the first character in a new line, the indent for that line is removed, the '#' is
 " put in the first column. The indent is restored for the next line. If you don't want this, use this
