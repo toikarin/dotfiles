@@ -416,10 +416,10 @@ augroup OwnAutoCommands
     " Reload vimrc after editing
     autocmd BufWritePost ~/.vimrc source ~/.vimrc
     " Commit todo-list after write
-    autocmd BufWinEnter ~/notes/notes.otl loadview
-    autocmd BufWinLeave ~/notes/notes.otl mkview
-    autocmd BufRead,BufNewFile ~/notes/notes.otl set viewoptions=folds,options
-    autocmd BufWritePost ~/notes/notes.otl !git --git-dir=$HOME/notes/.git --work-tree=$HOME/notes commit -a --message="Updated todo list"
+    autocmd BufWinEnter ~/notes/*.otl loadview
+    autocmd BufWinLeave ~/notes/*.otl mkview
+    autocmd BufRead,BufNewFile ~/notes/*.otl set viewoptions=folds,options
+    autocmd BufWritePost ~/notes/*.otl !git --git-dir=$HOME/notes/.git --work-tree=$HOME/notes commit -a --message="Updated todo list"
     " Automatically make shell scripts executable
     autocmd BufWritePost *.sh call ChangeShellScriptMode()
     " Enable spelling for *.txt files
