@@ -1,0 +1,17 @@
+snippet serr
+	System.err.println("${1}");
+
+snippet sout
+	System.out.println("${1}");
+
+snippet exc
+	${1:public} ${2:static} class ${3:MyException} extends ${4:Exception} {
+		public $3(String message) {
+			super(message);
+		}
+
+		public $3(String message, Throwable cause) {
+			super(message, cause);
+		}
+	}
+	${5}
