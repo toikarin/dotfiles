@@ -35,11 +35,15 @@
     mt = mergetool
     dh = diff HEAD^1 HEAD
     dc = diff --cached
+    sc = stash show -p
     s  = status
     aliases = !git config --list | grep ^alias
     b = checkout -b
     ad = !git stash show -p | git apply && git stash drop
     rc = rebase --continue
+    lau = !git ls-files -v | grep "^[[:lower:]]"
+    au = update-index --assume-unchanged
+    nau = update-index --no-assume-unchanged
 [sendemail]
     smtpserver = /usr/bin/msmtp
 [apply]
