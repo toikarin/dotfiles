@@ -30,6 +30,7 @@ i.create_symlink(".bash_completion")
 i.create_symlink(".bash_functions")
 i.create_symlink(".bash_prompt")
 i.create_symlink(".bash_exports.tmpl")
+i.create_symlink(".bash_cdable.tmpl")
 
 i.create_directory("bin")
 i.create_symlink("bin/find-parent-dir")
