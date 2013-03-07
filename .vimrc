@@ -528,7 +528,7 @@ let hs_highlight_boolean=1
 let hs_highlight_types=1
 
 "
-" TagList plugin
+"" TagList plugin
 "
 let Tlist_Exit_OnlyWindow = 1
 
