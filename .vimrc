@@ -433,6 +433,7 @@ augroup OwnAutoCommands
     autocmd BufWinEnter ~/notes/*.otl loadview
     autocmd BufWinLeave ~/notes/*.otl mkview
     autocmd BufRead,BufNewFile ~/notes/*.otl set viewoptions=folds,options
+    autocmd BufWritePost ~/notes/*.otl !git --git-dir=$HOME/notes/.git --work-tree=$HOME/notes add '*.otl'
     autocmd BufWritePost ~/notes/*.otl !git --git-dir=$HOME/notes/.git --work-tree=$HOME/notes commit -a --message="Updated todo list"
     " Automatically make shell scripts executable
     autocmd BufWritePost *.sh call ChangeShellScriptMode()
