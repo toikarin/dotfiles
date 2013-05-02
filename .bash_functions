@@ -439,6 +439,10 @@ function du1() {
     {gsub(/^[0-9]+/, human($1)); print}'
 }
 
+function b360() {
+    growisofs -use-the-force-luke=dao -use-the-force-luke=break:1913760 -dvd-compat -speed=4 -Z /dev/cdrom1=$1
+}
+
 # Reload bash configuration
 function reload {
     load_file ~/.bashrc
