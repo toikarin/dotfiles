@@ -135,6 +135,7 @@ function e()
                 *.rar | *.r00)         unrar x "${file}"      ;;
                 *.zip)                 unzip "${file}"        ;;
                 *.jar | *.ear | *.war) jar -vxf "${file}"     ;;
+                *.sar)                 jar -vxf "${file}"     ;;
                 *)           echo "Don't know how to extract file '${file}'" ;;
             esac
         else
@@ -146,6 +147,7 @@ function e()
                 *.rar | *.r00)         unrar l "${file}"      ;;
                 *.zip)                 unzip -l "${file}"     ;;
                 *.jar | *.ear | *.war) jar -vtf "${file}"     ;;
+                *.sar)                 jar -vtf "${file}"     ;;
                 *)           echo "Don't know how to list files from '${file}'" ;;
             esac
         fi
@@ -162,6 +164,7 @@ function c() {
 
     case "${file}" in
         *.jar | *.ear | *.war) jar -vcf "${file}" "$@"      ;;
+        *.sar)                 jar -vcf "${file}" "$@"      ;;
         *.7z)                  7zr a "${file}" "$@"         ;;
         *.tar.bz2 | *.tbz2)    tar cvjf "${file}" "$@"      ;;
         *.tar.gz | *.tgz)      tar cvzf "${file}" "$@"      ;;

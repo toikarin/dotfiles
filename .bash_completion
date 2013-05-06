@@ -24,7 +24,7 @@ _e() {
 
     if [[ "$prev" == "-t" || ${#COMP_WORDS[*]} -lt 3 ]]; then
         # Use bash-completion package's functions
-        _filedir '?([ejw]ar|zip|[tr]ar|bz2|gz|tgz|7z)'
+        _filedir '?([ejws]ar|zip|[tr]ar|bz2|gz|tgz|7z)'
     fi
 } &&
 complete -F _e $filenames e
