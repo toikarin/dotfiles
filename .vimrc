@@ -445,6 +445,9 @@ augroup OwnAutoCommands
     autocmd Syntax * syntax match WhiteSpaceEOL /\s\+$\| \+\ze\t/
     " Resize splits when the window is resized
     autocmd VimResized * exe "normal! \<c-w>="
+    " Go
+    autocmd BufRead,BufNewFile *.go set filetype=go
+    autocmd FileType go setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 augroup END
 
 
