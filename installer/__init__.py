@@ -1,5 +1,8 @@
 import os
 import shutil
+import subprocess
+import sys
+
 
 def create_installer_from_parser_opts(data_root):
     from optparse import OptionParser
@@ -110,3 +113,17 @@ class Installer(object):
                 i += 1
             else:
                 return fn
+
+
+def git_submodule_init(verbosity):
+    _call(["git", "submodule", "init"], verbosity)
+
+
+def git_submodule_update(verbosity):
+    _call(["git", "submodule", "update"], verbosity)
+
+
+def _call(args, verbosity):
+    with open(os.devnull, 'w') as devnull:
+        stdout = sys.stdout if verbosity >= 3 else devnull
+        subprocess.call(args, stdout=stdout)
