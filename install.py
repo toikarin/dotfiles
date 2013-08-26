@@ -31,6 +31,9 @@ i.create_symlink(".screenrc")
 i.create_symlink(".vim")
 i.create_symlink(".vimrc")
 
+i.create_directory(".cmus")
+i.create_symlink(".cmus-rc", ".cmus/rc")
+
 i.create_symlink(".bashrc")
 i.create_symlink(".bash_aliases")
 i.create_symlink(".bash_bindings")
