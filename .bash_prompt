@@ -124,10 +124,10 @@ function prompt_battery_status {
         return
     fi
 
-    local rem_cap=$(cat "${bat}/charge_now" 2> /dev/null)
-    local full_cap=$(cat "${bat}/charge_full" 2> /dev/null)
+    local rem_cap=$(cat "${bat}/energy_now" 2> /dev/null)
+    local full_cap=$(cat "${bat}/energy_full" 2> /dev/null)
     local state=$(cat "${bat}/status" 2> /dev/null)
-    local rate=$(cat "${bat}/current_now" 2> /dev/null)
+    local rate=$(cat "${bat}/power_now" 2> /dev/null)
 
     if [[ "${rem_cap}" == "" || "${full_cap}" == "" ]]; then
         return
@@ -150,7 +150,7 @@ function prompt_battery_status {
     fi
 
     if [ "${state}" == "Charging" ]; then
-        if [ $rate -gt 0 ]; then
+        if [ ${rate} -gt 0 ]; then
             local seconds=$(( 3600 * ( ${full_cap} - ${rem_cap} ) / ${rate} ))
             clr_time=$(prompt_format_secs ${seconds})
         fi
@@ -159,7 +159,7 @@ function prompt_battery_status {
     elif [ "${state}" == "Full" ]; then
         clr_logo=$(prompt_set_temp_color ${COLOR_LIGHTGREEN} ${clr_logo})
     else
-        if [ $rate -gt 0 ]; then
+        if [ ${rate} -gt 0 ]; then
             local seconds=$(( 3600 * ${rem_cap} / ${rate} ))
             clr_time=$(prompt_format_secs ${seconds})
         fi
