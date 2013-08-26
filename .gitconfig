@@ -29,7 +29,7 @@
     lp = log -p -1
     co = checkout
     ci = commit -v
-    sci = svn dcommit
+    sci = !git-check-is-master-branch && git svn dcommit
     srb = svn rebase
     amend = commit -v --amend
     mt = mergetool

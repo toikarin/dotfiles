@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+COLOR_RED="\033[0;31m"
+COLOR_DEFAULT="\033[0m"
+
+branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+
+if [ "${branch}" != "master" ];
+then
+    echo -e "${COLOR_RED}Not in master branch${COLOR_DEFAULT}"
+    exit 1
+fi
