@@ -61,13 +61,15 @@ function sudo {
 # Show cdable directories
 function cdable {
     local cdable_file="$HOME/.bash_cdable"
-    local grep_bin=$(which grep)
-    local awk_bin=$(which awk)
 
-    if [ -f $cdable_file ]; then
-        $grep_bin "export" $cdable_file | $awk_bin '{print $2}'
+    if [ "$1" == "" ]; then
+        if [ -f "$cdable_file" ]; then
+            grep "export" $cdable_file | awk '{print $2}'
+        else
+            echo "File '$cdable_file' doesn't exist."
+        fi
     else
-        echo "File '$cdable_file' doesn't exist."
+        echo "export $1=$(pwd)" >> "${cdable_file}"
     fi
 }
 
