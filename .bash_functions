@@ -42,9 +42,7 @@ function budir {
 
 # Call bc with arguments
 function bcc {
-    bc_bin=$(which bc)
-
-    echo "scale=5; $@" | $bc_bin -l
+    echo "scale=5; $@" | bc -l
 }
 
 # Reminder to use sudoedit instead of sudo vim
@@ -84,23 +82,17 @@ function ob {
 
 # Find java classes by name
 function fj {
-    local find_bin=$(which find)
-    $find_bin . -iname "$1*.java"
+    find . -iname "$1*.java"
 }
 
 # Find java classes by name and open them in vim
 function fjv {
-    local find_bin=$(which find)
-    local vim_bin=$(which vim)
-
-    $find_bin . -iname "$1*.java" -exec "${vim_bin}" {} +
+    find . -iname "$1*.java" -exec "vim" {} +
 }
 
 # Compare file to stdout with vimdiff.
 function vimdifff() {
-    local vim_bin=$(which vim)
-
-    $vim_bin - -c ":vnew $1 | windo diffthis"
+    vim - -c ":vnew $1 | windo diffthis"
 }
 
 # Extract file
@@ -182,14 +174,10 @@ function c() {
 
 # Change keyboard layout between us and finnish
 function change_layout() {
-    local SETXKBMAP_BIN=$(which setxkbmap)
-    local XMODMAP_BIN=$(which xmodmap)
-    local GREP_BIN=$(which grep)
-    local AWK_BIN=$(which awk)
     local new_layout=${1:-""}
 
     if [ "$new_layout" == "" ]; then
-        local cur_layout=$($SETXKBMAP_BIN -print | $GREP_BIN "xkb_symbols" | $AWK_BIN '{ print $4 }' | $AWK_BIN -F"+" '{print $2}')
+        local cur_layout=$(setxkbmap -print | grep "xkb_symbols" | awk '{ print $4 }' | awk -F"+" '{print $2}')
 
         if [ "$cur_layout" != "us" ]; then
             new_layout="us"
@@ -290,7 +278,6 @@ function set_resolutions() {
 # Tar gz directory
 function tard {
     local dir=$1
-    local TAR_BIN=$(which tar)
 
     if [ "${#1}" -eq 0 ];
     then
@@ -298,7 +285,7 @@ function tard {
         return 1
     fi
 
-    $TAR_BIN -czf "$1.tar.gz" "$1"
+    tar -czf "$1.tar.gz" "$1"
 }
 
 # Clear tmp directory
