@@ -30,7 +30,7 @@
     co = checkout
     ci = commit -v
     sci = !git-check-is-master-branch && git svn dcommit
-    srb = svn rebase
+    srb = !git-check-is-master-branch && git svn rebase
     amend = commit -v --amend
     mt = mergetool
     dh = diff HEAD^1 HEAD
