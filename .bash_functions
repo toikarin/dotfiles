@@ -186,8 +186,8 @@ function change_layout() {
         fi
     fi
 
-    $SETXKBMAP_BIN -layout $new_layout
-    $XMODMAP_BIN ~/.Xmodmap
+    setxkbmap -layout $new_layout
+    xmodmap ~/.Xmodmap
     echo "Current layout: ${new_layout}"
 }
 
