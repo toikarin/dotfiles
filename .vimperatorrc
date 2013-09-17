@@ -35,6 +35,7 @@ silent qmark p http://www.reddit.com/r/programming
 silent qmark r http://www.reddit.com
 silent qmark y http://www.youtube.com
 silent qmark n https://solo1.nordea.fi/nsp/engine
+silent qmark a http://www.ampparit.com/äänestetyimmät
 
 source! ~/.vimperatorrc-sensitive
 
