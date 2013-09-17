@@ -87,7 +87,7 @@ function fj {
 
 # Find java classes by name and open them in vim
 function fjv {
-    find . -iname "$1*.java" -exec "vim" {} +
+    find . -iname "$1*.java" -exec vim {} +
 }
 
 # Compare file to stdout with vimdiff.
