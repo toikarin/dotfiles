@@ -439,6 +439,10 @@ function manh() {
     man --html=firefox $@
 }
 
+function b() {
+    "$@" & disown && exit
+}
+
 # Reload bash configuration
 function reload {
     load_file ~/.bashrc

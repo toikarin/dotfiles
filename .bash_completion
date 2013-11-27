@@ -29,3 +29,11 @@ _e() {
 } &&
 complete -F _e $filenames e
 
+# Works only with bash-completion installed
+type -t _command_offset > /dev/null
+if [ $? == 0 ]; then
+    _b() {
+        _command_offset 1
+    } &&
+    complete -F _b b
+fi
