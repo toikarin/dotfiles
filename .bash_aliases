@@ -39,6 +39,3 @@ alias tarsnap-list-files='sudo tarsnap --configfile /etc/tarsnap.conf -tv -f'
 alias tarsnap-restore-archive='sudo tarsnap --configfile /etc/tarsnap.conf -x -p -f'
 alias tarsnap-delete-archive='sudo tarsnap --configfile /etc/tarsnap.conf -d -f'
 alias tarsnap-stats='sudo tarsnap --configfile /etc/tarsnap.conf --print-stats'
-
-alias mntssh='sshfs patteri.ath.cx:sshfs /mnt/sshfs/'
-alias umntssh='fusermount -u ~/sshfs'
