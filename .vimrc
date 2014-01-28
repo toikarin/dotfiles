@@ -247,7 +247,7 @@ function! g:ToggleNumberMode()
     endif
 
     if &rnu == 1
-        set number
+        set norelativenumber
     else
         set relativenumber
     endif
