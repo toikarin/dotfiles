@@ -46,6 +46,9 @@
     sl = stash list
     ss = stash show -p
     sa = !git stash show -p | git apply && git stash drop
+    e1 = !vim $(git status --short | sed -n 's/^[DU]U \\(.*\\)/\\1/p' | head -n1)
+    a1 = !git add $(git status --short | sed -n 's/^[DU]U \\(.*\\)/\\1/p' | head -n1)
+    d1 = !git rm $(git status --short | sed -n 's/^[DU]U \\(.*\\)/\\1/p' | head -n1)
 [sendemail]
     smtpserver = /usr/bin/msmtp
 [apply]
