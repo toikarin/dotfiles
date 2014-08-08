@@ -27,6 +27,7 @@
     lf = log --pretty=format:'%Cred%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset' --stat -M
     lg = log --pretty=format:'%Cred%h%Creset - %Cgreen%an%Creset: %s (%C(bold green)%cr%Creset, %cD)%C(red)%d%Creset' --graph
     lp = log -p -1 -M
+    root = rev-parse --show-toplevel
     co = checkout
     ci = commit -v
     sci = !git-check-is-master-branch && git svn dcommit
