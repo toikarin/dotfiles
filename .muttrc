@@ -20,8 +20,9 @@ set mime_forward=yes
 # will be attached to the newly composed message.
 set mime_forward_rest=yes
 
-# Set default sort to reverse-date
+# Set default sort order
 set sort=reverse-threads
+set sort_aux=last-date-received
 
 # Ask before quitting mutt, (default answer: no)
 set quit=ask-no
