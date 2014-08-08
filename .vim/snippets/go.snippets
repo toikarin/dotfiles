@@ -1,0 +1,24 @@
+snippet fn
+	func ${1:funcName}(${2:i int}) ${3:int} {
+		${4}
+	}
+
+snippet mfn
+	func (self ${1:Type}) ${2:funcName}(${3:parameters}) ${4:int} {
+		${5}
+	}
+
+snippet struct
+	type ${1} struct {
+		${2}
+	}
+
+snippet range
+	for ${1:_}, ${2:v} := range ${3} {
+		${4}
+	}
+
+snippet test
+	func Test${1:Func}(t *testing.T) {
+		${2}
+	}
