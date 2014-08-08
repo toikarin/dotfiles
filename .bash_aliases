@@ -39,3 +39,5 @@ alias tarsnap-list-files='sudo tarsnap --configfile /etc/tarsnap.conf -tv -f'
 alias tarsnap-restore-archive='sudo tarsnap --configfile /etc/tarsnap.conf -x -p -f'
 alias tarsnap-delete-archive='sudo tarsnap --configfile /etc/tarsnap.conf -d -f'
 alias tarsnap-stats='sudo tarsnap --configfile /etc/tarsnap.conf --print-stats'
+
+alias mci='mvn clean install'
