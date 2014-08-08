@@ -240,6 +240,16 @@ function! Browser()
     endif
 endfunction
 
+function! g:ToggleSignColumn()
+    if &number == 1
+        set nonumber
+        execute ":GitGutterDisable"
+    else
+        set number
+        execute ":GitGutterEnable"
+    endif
+endfunction
+
 function! g:ToggleNumberMode()
     if version < 703
         echomsg "Relative numbers not supported in version < 7.03"
@@ -369,7 +379,7 @@ noremap <leader>M mmHmt:%s/<c-v><cr>//ge<cr>'tzt'm
 nmap <silent> <leader>s :set spell!<cr>
 
 " Toggle line numbers
-map <f1> :set number!<cr>
+nnoremap <silent> <f1> :call g:ToggleSignColumn()<cr>
 
 " Remove indenting on empty lines
 map <f2> :%s/\s*$//g<cr>:set nohlsearch <cr>''
