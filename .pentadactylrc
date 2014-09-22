@@ -26,7 +26,7 @@ set! browser.download.lastDir="~/downloads"
 set! browser.download.folderList=2
 
 silent qmark f https://www.facebook.com
-silent qmark g http://github.com/blakki
+silent qmark g http://github.com/toikarin
 silent qmark h https://news.ycombinator.com/
 silent qmark i http://ilmatieteenlaitos.fi/saa/Oulu
 silent qmark l https://www.linkedin.com
