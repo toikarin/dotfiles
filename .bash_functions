@@ -249,6 +249,12 @@ function set_resolutions() {
 
     local main_mon="${BS_MAIN_MONITOR}"
     local def_res="$(xrandr | grep -A1 """${main_mon} connected""" | tail -1 | cut -f4 -d' ')"
+
+    if [ "${def_res}" == "" ]; then
+        echo "Unable to find resolution for monitor '${main_mon}'. Is it really the main monitor? (check xrandr --query)"
+        return
+    fi
+
     local other_connected_mon="$(xrandr | grep ' connected' | grep -v "${main_mon}" | cut -f1 -d' ')"
     local disconnected_ports=( $(xrandr | grep ' disconnected' | cut -f1 -d' ') )
 
