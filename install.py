@@ -35,6 +35,7 @@ i.create_directory(".cmus")
 i.create_symlink(".cmus-rc", ".cmus/rc")
 
 i.create_symlink(".bashrc")
+i.create_symlink(".bash_profile")
 i.create_symlink(".bash_aliases")
 i.create_symlink(".bash_bindings")
 i.create_symlink(".bash_completion")
