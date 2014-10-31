@@ -453,3 +453,8 @@ function b() {
 function reload {
     load_file ~/.bashrc
 }
+
+function sep() {
+    marker=${@:-"$(date)"}
+    echo -e "\n\n\n\n\n========================= ${marker} =========================\n\n\n\n\n"
+}
