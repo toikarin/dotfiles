@@ -37,6 +37,8 @@ silent qmark y http://www.youtube.com
 silent qmark n https://solo1.nordea.fi/nsp/engine
 silent qmark a http://www.ampparit.com/äänestetyimmät
 
+command! priv window -private open about:privatebrowsing
+
 source! ~/.vimperatorrc-sensitive
 
 echo "Configuration (re)loaded."
