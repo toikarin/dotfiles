@@ -349,8 +349,8 @@ map <leader>f :FufFile<cr>
 
 " Disable arrows
 map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+map <left> :N<cr>
+map <right> :n<cr>
 map <up> <nop>
 
 imap <down> <nop>
