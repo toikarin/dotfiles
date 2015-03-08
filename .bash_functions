@@ -121,6 +121,7 @@ function e()
         if [ ${list} -eq 0 ]; then
             case "${file}" in
                 *.7z)                  7zr e "${file}"        ;;
+                *.deb)                 dpkg -x "${file}" .    ;;
                 *.tar.bz2 | *.tbz2)    tar xvjf "${file}"     ;;
                 *.tar.gz | *.tgz)      tar xvzf "${file}"     ;;
                 *.tar)                 tar xvf "${file}"      ;;
@@ -135,6 +136,7 @@ function e()
         else
             case "${file}" in
                 *.7z)                  7zr l "${file}"        ;;
+                *.deb)                 dpkg -c "${file}"      ;;
                 *.tar.bz2 | *.tbz2)    tar tvjf "${file}"     ;;
                 *.tar.gz | *.tgz)      tar tvzf "${file}"     ;;
                 *.tar)                 tar tvf "${file}"      ;;
