@@ -423,6 +423,16 @@ function ssh() {
     command ssh $@
 }
 
+function sshfs() {
+    $(ssh-add -l > /dev/null)
+
+    if [ $? == 1 ]; then
+        ssh-add
+    fi
+
+    command sshfs $@
+}
+
 function du1() {
     du -b --max-depth=1 | sort -n | awk 'function human(x) {
         s="  B KB MB GB TB";
