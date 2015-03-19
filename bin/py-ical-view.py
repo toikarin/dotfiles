@@ -6,7 +6,10 @@ import vobject
 
 
 def get_value(event, key):
-    return tostr(event.__getattr__(key))
+    try:
+        return tostr(event.__getattr__(key))
+    except AttributeError:
+        return "<not-set>"
 
 
 def tostr(key):
