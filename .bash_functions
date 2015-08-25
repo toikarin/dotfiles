@@ -439,7 +439,9 @@ function du1() {
             output=$(du -b --max-depth=1)
             ;;
         "freebsd"*)
-            output=$(du -k -A -d 1 | awk '{ print $1 * 1024 $0 }')
+            # FreeBSD does not support --block-size=1 so we need to use -k and change the output
+            # to bytes ourselves.
+            output=$(du -k -A -d 1 | awk '{ size=$1; $1=""; print size * 1024 $0 }')
             ;;
         *)
             echo "Unknown OS: ${OSTYPE}"
