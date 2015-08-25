@@ -434,7 +434,20 @@ function sshfs() {
 }
 
 function du1() {
-    du -b --max-depth=1 | sort -n | awk 'function human(x) {
+    case $OSTYPE in
+        "linux-gnu")
+            output=$(du -b --max-depth=1)
+            ;;
+        "freebsd"*)
+            output=$(du -k -A -d 1 | awk '{ print $1 * 1024 $0 }')
+            ;;
+        *)
+            echo "Unknown OS: ${OSTYPE}"
+            return
+            ;;
+    esac
+
+    echo "${output}" | sort -n | awk 'function human(x) {
         s="  B KB MB GB TB";
 
         while (x >= 1024 && length(s) > 1) {
