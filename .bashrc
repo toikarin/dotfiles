@@ -33,9 +33,6 @@ export HISTIGNORE="lsl:lsa:cd:cd ..:[bf]g:exit:sd"
 export HISTSIZE=50000
 # The maximum number of lines contained in the history file.
 export HISTFILESIZE=$HISTSIZE
-# save bash histories per process
-export HISTFILE="${HOME}/.bash_histories/$(date -u +%Y%m%d/%H%M%S)_$$"
-mkdir -p $(dirname $HISTFILE)
 
 # Week starts on monday, show week number, show finnish holidays
 export GCAL="-s1 -K --cc-holidays=FI"
