@@ -2,6 +2,9 @@ import os
 import shutil
 import subprocess
 import sys
+import platform
+import contextlib
+import re
 
 
 def create_installer_from_parser_opts(data_root):
@@ -21,13 +24,10 @@ class Installer(object):
         self.destination_root = os.path.expanduser(dest_root)
         self.dry_run = dry_run
         self.verbosity = verbosity
+        self._aptget_update_run = False
 
         if not os.path.exists(self.destination_root):
             self.create_directory("")
-
-    def _log(self, msg, level):
-        if self.verbosity >= level:
-            print(msg)
 
     def create_directory(self, target):
         dst = self._d(target)
@@ -94,6 +94,75 @@ class Installer(object):
             with open(dst, 'a'):
                 pass
 
+    def install_package(self, target, freebsd=None, freebsd_cat=None, debian=None):
+        if sys.platform.startswith('freebsd'):
+            if freebsd is not False and freebsd_cat:
+                self._install_package_freebsd(target if freebsd is None else freebsd, freebsd_cat)
+        elif sys.platform.startswith('linux'):
+            if platform.linux_distribution()[0] == 'debian':
+                if debian is not False:
+                    self._install_package_debian(target if debian is None else debian)
+            else:
+                self._log("Unknown distribution {dist}. Unable to install package {pkg}.".format(dist=platform.linux_distribution()[0], pkg=target))
+
+    def _package_installed_debian(self, target):
+        code, out, err = self._execute("apt-cache", "policy", target)
+        if code != 0:
+            self._log("error: {err}".format(err=err), 1)
+            return
+
+        for line in out.splitlines():
+            m = re.match("\s\sInstalled: (.+)$", line)
+            if m:
+                return m.group(1) != "(none)"
+
+        self._log("error: unable to check if package {pkg} is installed".format(pkg=target), 1)
+        return False
+
+    def _install_package_debian(self, target):
+        if self._package_installed_debian(target):
+            return
+
+        self._log("Installing package '{pkg}' via apt-get.".format(pkg=target), 1)
+
+        if not self.dry_run:
+            # Run apt-get update (once)
+            if not self._aptget_update_run:
+                code, out, err = self._execute("sudo", "apt-get", "-q", "update")
+                if code != 0:
+                    self._log("error: {err}".format(err=err), 1)
+                    return
+
+                self._aptget_update_run = True
+
+            code, out, err = self._execute("sudo", "apt-get", "install", "-q", "-y", target)
+            if code != 0:
+                self._log("error: {err}".format(err=err), 1)
+
+    def _install_package_freebsd(self, target, category):
+        package = target + "/" + category
+
+        code, out, _ = self._execute("pkg", "version", "-e", package)
+        if code != 0:
+            self._log("error", 1)
+            return
+
+        # check if installed
+        if out != "":
+            return
+
+        self._log("Installing package '{pkg}' via ports.".format(pkg=package), 1)
+
+        if not self.dry_run:
+            with chdir(os.path.join("/usr/ports", package)):
+                code, out, err = self._execute("sudo", "make", "install", "BATCH=yes")
+                if code != 0:
+                    self._log("error: {err}".format(err=err), 1)
+
+    def _log(self, msg, level):
+        if self.verbosity >= level:
+            print(msg)
+
     def _s(self, f):
         return os.path.abspath(os.path.join(self.data_root, f))
 
@@ -115,15 +184,27 @@ class Installer(object):
                 return fn
 
 
-def git_submodule_init(verbosity):
-    _call(["git", "submodule", "init"], verbosity)
+    def git_submodule_init(self):
+        self._call(["git", "submodule", "init"])
+
+    def git_submodule_update(self):
+        self._call(["git", "submodule", "update"])
+
+    def _call(self, args):
+        _, out, err = self._execute(*args)
+        self._log(out, 3)
+
+    def _execute(self, *args):
+        proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = proc.communicate()
+        exitcode = proc.returncode
+
+        return exitcode, out, err
 
 
-def git_submodule_update(verbosity):
-    _call(["git", "submodule", "update"], verbosity)
-
-
-def _call(args, verbosity):
-    with open(os.devnull, 'w') as devnull:
-        stdout = sys.stdout if verbosity >= 3 else devnull
-        subprocess.call(args, stdout=stdout)
+@contextlib.contextmanager
+def chdir(path):
+    old_dir = os.getcwd()
+    os.chdir(path)
+    yield
+    os.chdir(old_dir)

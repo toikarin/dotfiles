@@ -10,11 +10,11 @@ i = installer.create_installer_from_parser_opts(script_dir)
 
 if i.verbosity >= 3:
     print("Initializing git submodules.")
-installer.git_submodule_init(i.verbosity)
+i.git_submodule_init()
 
 if i.verbosity >= 3:
     print("Updating git submodules.")
-installer.git_submodule_update(i.verbosity)
+i.git_submodule_update()
 
 if i.dry_run and i.verbosity >= 2:
     print("")
@@ -71,3 +71,13 @@ i.create_symlink(".Xresources")
 i.create_directory(".i3")
 i.create_symlink(".i3-config", ".i3/config")
 i.create_symlink(".i3status.conf")
+
+i.install_package("vim", freebsd_cat="editors")
+i.install_package("ctags", freebsd_cat="devel", debian="exuberant-ctags")
+i.install_package("gcal", freebsd_cat="deskutils")
+i.install_package("tree", freebsd_cat="sysutils")
+i.install_package("colordiff", freebsd_cat="textproc")
+i.install_package("git", freebsd_cat="devel")
+i.install_package("gnupg", freebsd_cat="security")
+i.install_package("netcat", debian=False, freebsd=False)
+i.install_package("tcpdump", freebsd=False)
