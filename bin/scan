@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+type -P "scanimage" &> /dev/null || {
+    echo "sane not installed."
+    echo ""
+    echo "Use 'apt-get install sane' to install."
+    exit 1
+}
+
+type -P "convert" &> /dev/null || {
+    echo "imagemagick not installed."
+    echo ""
+    echo "Use 'apt-get install imagemagick' to install."
+    exit 1
+}
+
+if [ -z "$1" ]; then
+    echo "Usage: scan <name>"
+    exit 1
+fi
+
+ppm="${1}.ppm"
+png="${1}.png"
+scanner="Canon LiDE 100"
+resolution=300  # 300, 600, 1200...
+
+if [ -f "${ppm}" ]; then
+    echo "File '${ppm}' already exists."
+    exit 1
+fi
+
+if [ -f "${png}" ]; then
+    echo "File '${png}' already exists."
+    exit 1
+fi
+
+echo "Detecting scanner..."
+scanimage_output=$(scanimage -L | grep "${scanner}")
+if [ ${?} != 0 ]; then
+    echo "Unable to find scanner."
+    exit 1
+fi
+
+device=$(echo ${scanimage_output} | awk '{print substr($2, 2, length($2) - 2)}')
+echo "Scanner found, starting scanning."
+
+scanimage --device-name="${device}" --resolution "${resolution}" -p > "${ppm}" || rm "${ppm}"
+
+echo # skip Progress: line from scanimage"
+echo "Compressing..."
+
+convert "${ppm}" -resize 50% -selective-blur 0x4+10% -brightness-contrast -20x20 -resize 80% "${png}" && rm "${ppm}"
+
+echo "Done! File saved as '${png}'."
+
+x-www-browser "${png}"
