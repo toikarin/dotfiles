@@ -11,7 +11,7 @@ def create_installer_from_parser_opts(data_root):
     parser.add_option("-d", "--destination", default="~/", dest="dest", help="Destination directory.")
     parser.add_option("-v", "--verbosity-level", type="int", default=2, dest="verbosity", help="Be more verbose.")
     parser.add_option("--vim", action="store_false", default=True, help="Skip vim install")
-    parser.add_option("--bin", action="store_false", default=True, help="Skip bin tuils")
+    parser.add_option("--bin", action="store_false", default=True, help="Skip bin utils")
     parser.add_option("--bash", action="store_false", default=True, help="Skip bash files")
     parser.add_option("--mutt", action="store_false", default=True, help="Skip mutt files")
     parser.add_option("--i3", action="store_false", default=True, help="Skip i3 files")
@@ -42,7 +42,7 @@ class Installer(object):
 
     def create_directory(self, target, skip=False):
         if skip:
-            print("Skipping create directory %s" % target)
+            self._log("Skipping create directory '{target}'".format(target=target), 1)
             return
         
         dst = self._d(target)
@@ -55,7 +55,7 @@ class Installer(object):
 
     def create_symlink(self, source, target=None, skip=False):
         if skip:
-            print("Skipping create symlink %s" % source)
+            self._log("Skipping create symlink '{source}'".format(source=source), 1)
             return
         
         if not target:
@@ -103,7 +103,7 @@ class Installer(object):
 
     def create_file(self, target, skip=False):
         if skip:
-            print("Skipping create file %s" % target)
+            self._log("Skipping create file '{target}'".format(target=target), 1)
             return
         dst = self._d(target)
 

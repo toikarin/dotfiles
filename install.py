@@ -25,7 +25,7 @@ i.create_symlink(".git-hook-post-receive", os.path.join(script_dir, ".git", "hoo
 
 i.create_symlink(".gitconfig", skip=not opts.git)
 i.create_symlink(".git-excludes", skip=not opts.git)
-i.create_symlink(".pentadactylrc", skip=not opts.git)
+i.create_symlink(".pentadactylrc", skip=not opts.pentadactyl)
 i.create_symlink(".vimperatorrc", skip=not opts.vimperator)
 i.create_symlink(".screenrc", skip=not opts.screen)
 i.create_symlink(".vim", skip=not opts.vim)
