@@ -10,9 +10,20 @@ def create_installer_from_parser_opts(data_root):
     parser.add_option("-n", "--no-dry-run", action="store_false", default=True, dest="dryrun", help="Don't do a dry run.")
     parser.add_option("-d", "--destination", default="~/", dest="dest", help="Destination directory.")
     parser.add_option("-v", "--verbosity-level", type="int", default=2, dest="verbosity", help="Be more verbose.")
-
+    parser.add_option("--vim", action="store_false", default=True, help="Skip vim install")
+    parser.add_option("--bin", action="store_false", default=True, help="Skip bin tuils")
+    parser.add_option("--bash", action="store_false", default=True, help="Skip bash files")
+    parser.add_option("--mutt", action="store_false", default=True, help="Skip mutt files")
+    parser.add_option("--i3", action="store_false", default=True, help="Skip i3 files")
+    parser.add_option("--X", action="store_false", default=True, help="Skip X files")
+    parser.add_option("--git", action="store_false", default=True, help="Skip git files")
+    parser.add_option("--screen", action="store_false", default=True, help="Skip screen files")
+    parser.add_option("--vimperator", action="store_false", default=True, help="Skip vimperator files")
+    parser.add_option("--pentadactyl", action="store_false", default=True, help="Skip pentadactyl files")
+    parser.add_option("--cmus", action="store_false", default=True, help="Skip cmus files")
+    
     (opts, args) = parser.parse_args()
-    return Installer(data_root=data_root, dest_root=opts.dest, dry_run=opts.dryrun, verbosity=opts.verbosity)
+    return Installer(data_root=data_root, dest_root=opts.dest, dry_run=opts.dryrun, verbosity=opts.verbosity), opts
 
 
 class Installer(object):
@@ -29,7 +40,11 @@ class Installer(object):
         if self.verbosity >= level:
             print(msg)
 
-    def create_directory(self, target):
+    def create_directory(self, target, skip=False):
+        if skip:
+            print("Skipping create directory %s" % target)
+            return
+        
         dst = self._d(target)
 
         if not os.path.exists(dst):
@@ -38,7 +53,11 @@ class Installer(object):
             if not self.dry_run:
                 os.makedirs(dst)
 
-    def create_symlink(self, source, target=None):
+    def create_symlink(self, source, target=None, skip=False):
+        if skip:
+            print("Skipping create symlink %s" % source)
+            return
+        
         if not target:
             target = source
 
@@ -82,7 +101,10 @@ class Installer(object):
         if not self.dry_run:
             shutil.copyfile(src, dst)
 
-    def create_file(self, target):
+    def create_file(self, target, skip=False):
+        if skip:
+            print("Skipping create file %s" % target)
+            return
         dst = self._d(target)
 
         if os.path.exists(dst):
