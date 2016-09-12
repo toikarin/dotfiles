@@ -13,9 +13,21 @@ def create_installer_from_parser_opts(data_root):
     parser.add_option("-n", "--no-dry-run", action="store_false", default=True, dest="dryrun", help="Don't do a dry run.")
     parser.add_option("-d", "--destination", default="~/", dest="dest", help="Destination directory.")
     parser.add_option("-v", "--verbosity-level", type="int", default=2, dest="verbosity", help="Be more verbose.")
+    parser.add_option("--skip-vim", action="store_false", default=True, help="Skip vim install")
+    parser.add_option("--skip-bin", action="store_false", default=True, help="Skip bin utils")
+    parser.add_option("--skip-bash", action="store_false", default=True, help="Skip bash files")
+    parser.add_option("--skip-mutt", action="store_false", default=True, help="Skip mutt files")
+    parser.add_option("--skip-i3", action="store_false", default=True, help="Skip i3 files")
+    parser.add_option("--skip-X", action="store_false", default=True, help="Skip X files")
+    parser.add_option("--skip-git", action="store_false", default=True, help="Skip git files")
+    parser.add_option("--skip-screen", action="store_false", default=True, help="Skip screen files")
+    parser.add_option("--skip-vimperator", action="store_false", default=True, help="Skip vimperator files")
+    parser.add_option("--skip-pentadactyl", action="store_false", default=True, help="Skip pentadactyl files")
+    parser.add_option("--skip-cmus", action="store_false", default=True, help="Skip cmus files")
+    parser.add_option("--skip-packages", action="store_false", default=True, help="Skip package installation")
 
     (opts, args) = parser.parse_args()
-    return Installer(data_root=data_root, dest_root=opts.dest, dry_run=opts.dryrun, verbosity=opts.verbosity)
+    return Installer(data_root=data_root, dest_root=opts.dest, dry_run=opts.dryrun, verbosity=opts.verbosity), opts
 
 
 class Installer(object):
@@ -29,7 +41,11 @@ class Installer(object):
         if not os.path.exists(self.destination_root):
             self.create_directory("")
 
-    def create_directory(self, target):
+    def create_directory(self, target, skip=False):
+        if skip:
+            self._log("Skipping create directory '{target}'".format(target=target), 1)
+            return
+
         dst = self._d(target)
 
         if not os.path.exists(dst):
@@ -38,7 +54,11 @@ class Installer(object):
             if not self.dry_run:
                 os.makedirs(dst)
 
-    def create_symlink(self, source, target=None):
+    def create_symlink(self, source, target=None, skip=False):
+        if skip:
+            self._log("Skipping create symlink '{source}'".format(source=source), 1)
+            return
+
         if not target:
             target = source
 
@@ -82,7 +102,10 @@ class Installer(object):
         if not self.dry_run:
             shutil.copyfile(src, dst)
 
-    def create_file(self, target):
+    def create_file(self, target, skip=False):
+        if skip:
+            self._log("Skipping create file '{target}'".format(target=target), 1)
+            return
         dst = self._d(target)
 
         if os.path.exists(dst):
@@ -94,7 +117,11 @@ class Installer(object):
             with open(dst, 'a'):
                 pass
 
-    def install_package(self, target, freebsd=None, freebsd_cat=None, debian=None):
+    def install_package(self, target, freebsd=None, freebsd_cat=None, debian=None, skip=False):
+        if skip:
+            self._log("Skipping package installation '{target}'".format(target=target), 1)
+            return
+
         if sys.platform.startswith('freebsd'):
             if freebsd is not False and freebsd_cat:
                 self._install_package_freebsd(target if freebsd is None else freebsd, freebsd_cat)
