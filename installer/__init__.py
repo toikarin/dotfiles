@@ -126,11 +126,11 @@ class Installer(object):
             if freebsd is not False and freebsd_cat:
                 self._install_package_freebsd(target if freebsd is None else freebsd, freebsd_cat)
         elif sys.platform.startswith('linux'):
-            if platform.linux_distribution()[0] == 'debian':
+            if platform.linux_distribution()[0] in ['debian', 'Ubuntu']:
                 if debian is not False:
                     self._install_package_debian(target if debian is None else debian)
             else:
-                self._log("Unknown distribution {dist}. Unable to install package {pkg}.".format(dist=platform.linux_distribution()[0], pkg=target))
+                self._log("Unknown distribution {dist}. Unable to install package {pkg}.".format(dist=platform.linux_distribution()[0], pkg=target), 1)
 
     def _package_installed_debian(self, target):
         code, out, err = self._execute("apt-cache", "policy", target)
