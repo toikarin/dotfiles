@@ -50,6 +50,7 @@
     e1 = !vim $(git status --short | sed -n 's/^[DU]U \\(.*\\)/\\1/p' | head -n1)
     a1 = !git add $(git status --short | sed -n 's/^[DU]U \\(.*\\)/\\1/p' | head -n1)
     d1 = !git rm $(git status --short | sed -n 's/^[DU]U \\(.*\\)/\\1/p' | head -n1)
+    lb = !git for-each-ref --sort=committerdate refs/heads/
 [sendemail]
     smtpserver = /usr/bin/msmtp
 [apply]
