@@ -436,14 +436,26 @@ function sshfs() {
 }
 
 function du1() {
+    sudo=""
+    while [[ $# -gt 0 ]]; do
+        key="$1"
+
+        case "${key}" in
+            -s)
+                sudo="sudo"
+                shift
+                ;;
+        esac
+    done
+
     case $OSTYPE in
         "linux-gnu")
-            output=$(du -b --max-depth=1)
+            output=$(${sudo} du -b --max-depth=1)
             ;;
         "freebsd"*)
             # FreeBSD does not support --block-size=1 so we need to use -k and change the output
             # to bytes ourselves.
-            output=$(du -k -A -d 1 | awk '{ size=$1; $1=""; print size * 1024 $0 }')
+            output=$(${sudo} du -k -A -d 1 | awk '{ size=$1; $1=""; print size * 1024 $0 }')
             ;;
         *)
             echo "Unknown OS: ${OSTYPE}"
