@@ -131,6 +131,7 @@ function e()
                 *.zip)                 unzip "${file}"        ;;
                 *.jar | *.ear | *.war) jar -vxf "${file}"     ;;
                 *.sar)                 jar -vxf "${file}"     ;;
+                *.xz | *.lzma)         unxz "${file}"           ;;
                 *)           echo "Don't know how to extract file '${file}'" ;;
             esac
         else
@@ -144,6 +145,7 @@ function e()
                 *.zip)                 unzip -l "${file}"     ;;
                 *.jar | *.ear | *.war) jar -vtf "${file}"     ;;
                 *.sar)                 jar -vtf "${file}"     ;;
+                *.xz | *.lzma)         xz -l "${file}"        ;;
                 *)           echo "Don't know how to list files from '${file}'" ;;
             esac
         fi
