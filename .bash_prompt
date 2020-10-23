@@ -180,7 +180,17 @@ function prompt_ssh() {
     fi
 }
 
+function prompt_last_cmd() {
+    if [[ ${1} -eq 0 ]]; then
+        echo -e $(prompt_set_temp_color ${COLOR_GREEN} "\u2713 ")
+    else
+        echo -e $(prompt_set_temp_color ${COLOR_RED} "\u2718 ")
+    fi
+}
+
 function prompt_command() {
+    LAST_EXIT=$?
+
     if [ $UID -ne 0 ]; then
         P_USER=$(prompt_set_temp_color $COLOR_GREEN "\u")
         P_HOST=$(prompt_set_temp_color $COLOR_GREEN"\h")
@@ -188,6 +198,7 @@ function prompt_command() {
         P_USER=$(prompt_set_temp_color $COLOR_RED "\u")
         P_HOST=$(prompt_set_temp_color $COLOR_RED "\h")
     fi
+    P_LAST_CMD=$(prompt_last_cmd $LAST_EXIT)
     P_DIR=$(prompt_set_temp_color $COLOR_LIGHTCYAN "\w")
     P_DSTACK=$(prompt_dirs_stack_size)
     P_BG_JOBS=$(prompt_get_bg_jobs)
@@ -198,7 +209,7 @@ function prompt_command() {
     P_VIRTUALENV=$(prompt_virtualenv)
     P_SSH=$(prompt_ssh)
 
-    PS1="${P_BATTERY}${P_SSH}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_VIRTUALENV}${P_GIT_BRANCH}\$ "
+    PS1="${P_LAST_CMD}\t ${P_BATTERY}${P_SSH}${P_USER}@${P_HOST}:${P_DIR}${P_BG_JOBS}${P_STOPPED_JOBS}${P_DSTACK}${P_DETACHED_SCREEN}${P_VIRTUALENV}${P_GIT_BRANCH}\$ "
 }
 
 #
