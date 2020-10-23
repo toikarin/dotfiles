@@ -37,3 +37,9 @@ if [ $? == 0 ]; then
     } &&
     complete -F _b b
 fi
+
+# Kubernetes
+type -t kubectl > /dev/null
+if [ $? == 0 ]; then
+    source <(kubectl completion bash)
+fi
